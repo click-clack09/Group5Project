@@ -15,9 +15,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" styleClass="background" stylesheets="@application/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <children>
-      <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="657.0">
+      <ImageView fitHeight="227.0" fitWidth="403.0" layoutX="221.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/mysti/Desktop/LifeHub.png" />
+         </image>
+      </ImageView>
+      <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="800.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -36,37 +41,42 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Label layoutX="269.0" layoutY="44.0" text="Welcome User!">
-         <font>
-            <Font name="Arial Narrow Italic" size="21.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="227.0" fitWidth="403.0" layoutX="147.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="file:/C:/Users/mysti/Desktop/LifeHub.png" />
-         </image>
-      </ImageView>
-      <VBox layoutX="14.0" layoutY="251.0" prefHeight="188.0" prefWidth="622.0">
+      <VBox alignment="CENTER" layoutX="324.0" layoutY="35.0" prefHeight="116.0">
+         <children>
+            <Label text="Welcome User!" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Narrow Italic" size="21.0" />
+               </font>
+            </Label>
+            <Label text="Select your choice below:" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <ChoiceBox prefWidth="150.0" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="14.0" layoutY="251.0" prefHeight="370.0" prefWidth="770.0">
          <children>
             <Separator prefHeight="0.0" prefWidth="622.0" />
             <Label text="or start a new project from the templates below:">
                <VBox.margin>
-                  <Insets left="188.0" top="11.0" />
+                  <Insets top="11.0" />
                </VBox.margin>
             </Label>
-            <HBox prefHeight="182.0" prefWidth="619.0">
+            <HBox alignment="CENTER" prefHeight="182.0" prefWidth="619.0">
                <children>
-                  <Button mnemonicParsing="false" text="Student/Educator">
+                  <Button mnemonicParsing="false" prefWidth="200.0" text="Student/Educator">
                      <HBox.margin>
-                        <Insets left="20.0" top="50.0" />
+                        <Insets top="50.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Business/Professional">
+                  <Button mnemonicParsing="false" prefWidth="200.0" text="Business/Professional">
                      <HBox.margin>
                         <Insets left="123.0" top="50.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Home/Personal">
+                  <Button mnemonicParsing="false" prefWidth="200.0" text="Home/Personal">
                      <HBox.margin>
                         <Insets left="121.0" top="50.0" />
                      </HBox.margin>
@@ -75,7 +85,5 @@
             </HBox>
          </children>
       </VBox>
-      <ChoiceBox layoutX="253.0" layoutY="122.0" prefWidth="150.0" />
-      <Label layoutX="261.0" layoutY="96.0" text="Select your choice below:" />
    </children>
 </AnchorPane>

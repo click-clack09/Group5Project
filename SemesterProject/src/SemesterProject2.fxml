@@ -21,9 +21,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <children>
-      <MenuBar prefHeight="26.0" prefWidth="650.0">
+      <MenuBar prefHeight="26.0" prefWidth="800.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
