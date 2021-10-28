@@ -1,13 +1,15 @@
 package application.Model;
 
-public class SocialEvent extends Event
+import java.util.ArrayList;
+
+public class SocialEvent extends LifeEvent
 {
 	private String location;
 	private Date eventDate;
 	private Boolean hasRSVP;
 	private Boolean hasAttendees;
-	private ArrayList<RSVP> rsvpList;
-	private ArrayList<Attendess> attendeeList;
+	private ArrayList<Rsvp> rsvpList;
+	private ArrayList<Attendee> attendeeList;
 	
 	public SocialEvent()
 	{
@@ -15,7 +17,7 @@ public class SocialEvent extends Event
 	}
 	
 	public SocialEvent(String location, Date eventDate, Boolean hasRSVP, Boolean hasAtendees,
-			ArrayList<RSVP> resvpList, ArrayList<Attendees> attenedeeList)
+			ArrayList<Rsvp> resvpList, ArrayList<Attendee> attenedeeList)
 	{
 		this.location = location;
 		this.eventDate = eventDate;
@@ -84,28 +86,28 @@ public class SocialEvent extends Event
 	/**
 	 * @return the rsvpList
 	 */
-	public ArrayList<RSVP> getRsvpList() {
+	public ArrayList<Rsvp> getRsvpList() {
 		return rsvpList;
 	}
 
 	/**
 	 * @param rsvpList the rsvpList to set
 	 */
-	public void setRsvpList(ArrayList<RSVP> rsvpList) {
+	public void setRsvpList(ArrayList<Rsvp> rsvpList) {
 		this.rsvpList = rsvpList;
 	}
 
 	/**
 	 * @return the attendeeList
 	 */
-	public ArrayList<Attendess> getAttendeeList() {
+	public ArrayList<Attendee> getAttendeeList() {
 		return attendeeList;
 	}
 
 	/**
 	 * @param attendeeList the attendeeList to set
 	 */
-	public void setAttendeeList(ArrayList<Attendess> attendeeList) {
+	public void setAttendeeList(ArrayList<Attendee> attendeeList) {
 		this.attendeeList = attendeeList;
 	}
 	

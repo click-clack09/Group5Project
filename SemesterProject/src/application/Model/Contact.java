@@ -14,7 +14,7 @@ public class Contact
 		
 	}
 	
-	public Contact(String name, ArrayList<Phone> phoneList, ArrayList<Email> emailsList, Sttring type)
+	public Contact(String name, ArrayList<Phone> phoneList, ArrayList<Email> emailsList, String type)
 	{
 		this.name = name;
 		this.phoneList = phoneList;
