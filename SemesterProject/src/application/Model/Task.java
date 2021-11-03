@@ -1,9 +1,9 @@
-package application.model;
+package application.Model;
 
-public class Task implements Comparable<Task> extends CalendarItem {
+public class Task extends CalendarItem implements Comparable<Task>{
 	
 	private Date dueDate;
-	private CheckList<Task> subtasks;
+	//private CheckList<Task> subtasks;
 
 	
 	/*
@@ -14,27 +14,27 @@ public class Task implements Comparable<Task> extends CalendarItem {
 		super(name);
 		
 		dueDate = new Date();
-		subtasks = new CheckList<Task>();
+	//	subtasks = new CheckList<Task>();
 	}
 	
 	public Task(String name, Date dueDate) {
 		super(name);
 		
 		this.dueDate = dueDate;
-		subtasks = new CheckList<Task>();
+	//	subtasks = new CheckList<Task>();
 	}
 	
 	public Task(String name, String description) {
 		super(name, description);
 		
 		dueDate = new Date();
-		subtasks = new CheckList<Task>();
+	//	subtasks = new CheckList<Task>();
 	}
 	public Task(String name, Date dueDate, String description) {
 		super(name, description);
 		
 		this.dueDate = dueDate;
-		subtasks = new CheckList<Task>();
+	//	subtasks = new CheckList<Task>();
 	}
 	/*
 	 * + addSubtask(subtask: Task)
@@ -54,36 +54,36 @@ public class Task implements Comparable<Task> extends CalendarItem {
 	 */
 	
 	public Date getDate() {
-		return date;
+		return dueDate;
 	}
-	
-	public CheckList<Task> getSubtasks() {
-		return subtasks;
-	}
-	
-	/*
-	 * SETTERS
-	 */
-	
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	
-	public void setSubtasks(CheckList<Task> subtasks) {
-		this.subtasks = subtasks;
-	}
-	
-	/*
-	 * OVERRIDES
-	 */
-	
+//	
+//	public CheckList<Task> getSubtasks() {
+//		return subtasks;
+//	}
+//	
+//	/*
+//	 * SETTERS
+//	 */
+//	
+//	public void setDate(Date date) {
+//		this.date = date;
+//	}
+//	
+//	public void setSubtasks(CheckList<Task> subtasks) {
+//		this.subtasks = subtasks;
+//	}
+//	
+//	/*
+//	 * OVERRIDES
+//	 */
+//	
 	@Override
 	public int compareTo(Task task) {
-		return this.date.compareTo(task.getDate());
+		return this.dueDate.compareTo(task.getDate());
 	}
-	
-	@Override
-	public String toString() {
-		return name + " " + date + "\nSubtasks: " + subtasks.size() + "\n" + description;
-	}
+//	
+//	@Override
+//	public String toString() {
+//		return name + " " + date + "\nSubtasks: " + subtasks.size() + "\n" + description;
+//	}
 }
