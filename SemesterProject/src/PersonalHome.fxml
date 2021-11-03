@@ -31,7 +31,8 @@
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#changeTheme" text="Change Theme" />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteHub" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteHub" text="Delete Hub" />
+                  <MenuItem mnemonicParsing="false" onAction="#addHub" text="Add Hub" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

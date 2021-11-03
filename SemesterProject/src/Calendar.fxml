@@ -32,7 +32,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="changeTheme" mnemonicParsing="false" text="Change Theme" />
+              <MenuItem mnemonicParsing="false" onAction="#changeTheme" text="Change Theme" />
+                  <MenuItem mnemonicParsing="false" onAction="#addHub" text="Add Hub" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
