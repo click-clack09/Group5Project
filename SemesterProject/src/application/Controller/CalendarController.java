@@ -27,6 +27,11 @@ public class CalendarController {
     	System.out.println("testChangeTheme");
     }
     
+    @FXML
+    void addHub(ActionEvent event) {
+    	System.out.println("testAddHub");
+    }
+    
 	 @FXML
 	    void tutorial(ActionEvent event) {
 		 System.out.println("testTutorial");
