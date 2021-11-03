@@ -22,6 +22,7 @@ public class UserController {
 	@FXML
     private ChoiceBox<?> selection;
 	
+	
 	@FXML
 		void initialize()
 	{
@@ -32,6 +33,11 @@ public class UserController {
 		userHubs.add("PersonalHome");
 		selection.getItems().addAll(userHubs);
 	}
+	
+	@FXML
+    void addHub(ActionEvent event) {
+    	System.out.println("testHub");
+    }
 	
 	@FXML
     void changeTheme(ActionEvent event) {

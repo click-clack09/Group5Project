@@ -57,7 +57,10 @@ public class EducationController {
 	    void addItem(ActionEvent event) {
 	    	System.out.println("testAddItem");
 	    }
-
+	    @FXML
+	    void addHub(ActionEvent event) {
+	    	System.out.println("testHub");
+	    }
 	    
 	    @FXML
 	    void goToClass2(ActionEvent event) {

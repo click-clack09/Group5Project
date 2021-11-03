@@ -1,8 +1,8 @@
-package application.model;
+package application.Model;
 
 import java.util.ArrayList;
 
-public class GroceryList extends CheckList {
+public class GroceryList extends LifeHubCheckBoxList {
 	
 	private ArrayList<String> imageRefs;
 	
