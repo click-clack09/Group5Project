@@ -1,16 +1,11 @@
 package application.model;
 
-import java.util.ArrayList;
-
-public class Event extends CalendarItem {	
-
-	private User owner;
-	private Date startDate;
-	private Date endDate;
-	private String location;
+public class RecurringEvent extends Event {
 	
-	private ArrayList<Contact> attendees;
-		
+	private int frequency;
+	private Date recurringStart;
+	private Date recurringEnd;
+	
 	/*
 	 * CONSTRUCTORS
 	 */

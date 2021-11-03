@@ -1,73 +1,66 @@
-package application.Model;
+package application.model;
 
-public class Task implements Comparable<Task> {
+public class Task extends CalendarItem implements Comparable<Task> {
 	
-	private String name;
-	private Date date;
-	private String description;
-	private ToDoList subtasks;
-
+	private Date dueDate;
+	private CheckList<Task> subtasks;
 	
 	/*
 	 * CONSTRUCTORS
 	 */
 	
 	public Task(String name) {
-		this.name = name;
-		date = new Date();
-		description = "";
-		subtasks = new ToDoList();
+		super(name);
+		
+		dueDate = new Date();
+		subtasks = new CheckList<Task>();
 	}
 	
-	public Task(String name, Date date) {
-		this.name = name;
-		this.date = date;
-		description = "";
-		subtasks = new ToDoList();
+	public Task(String name, Date dueDate) {
+		super(name);
+		
+		this.dueDate = dueDate;
+		subtasks = new CheckList<Task>();
 	}
 	
 	public Task(String name, String description) {
-		this.name = name;
-		date = new Date();
-		this.description = description;
-		subtasks = new ToDoList();
+		super(name, description);
+		
+		dueDate = new Date();
+		subtasks = new CheckList<Task>();
 	}
-	public Task(String name, Date date, String description) {
-		this.name = name;
-		this.date = date;
-		this.description = description;
-		subtasks = new ToDoList();
+	public Task(String name, Date dueDate, String description) {
+		super(name, description);
+		
+		this.dueDate = dueDate;
+		subtasks = new CheckList<Task>();
 	}
-	/*
-	 * + addSubtask(subtask: Task)
-	 * + checkSubtask(subtask: Task)
-	 * + removeSubtask(subtask: Task)
-	 * + toString(): String
-	 */
 	
 	/*
 	 * HELPER METHODS
 	 */
 	
-	//helper methods here
+	public void addSubtask(Task subtask) {
+		//MUST FINISH
+	}
+	
+	public void checkSubtask(Task subtask) {
+		//MUST FINISH
+	}
+	
+	public void removeSubtask(Task subtask) {
+		//MUST FINISH
+	}
 	
 	/*
 	 * GETTERS
 	 */
 	
-	public String getName() {
-		return name;
+	public Date getDueDate() {
+		return dueDate;
 	}
 	
-	public Date getDate() {
-		return date;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public ToDoList getSubtasks() {
+	public CheckList<Task> getSubtasks() {
 		return subtasks;
 	}
 	
@@ -75,19 +68,11 @@ public class Task implements Comparable<Task> {
 	 * SETTERS
 	 */
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 	
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public void setSubtasks(ToDoList subtasks) {
+	public void setSubtasks(CheckList<Task> subtasks) {
 		this.subtasks = subtasks;
 	}
 	
@@ -97,11 +82,11 @@ public class Task implements Comparable<Task> {
 	
 	@Override
 	public int compareTo(Task task) {
-		return this.date.compareTo(task.getDate());
+		return this.dueDate.compareTo(task.getDueDate());
 	}
 	
 	@Override
 	public String toString() {
-		return name + " " + date + "\nSubtasks: " + subtasks.size() + "\n" + description;
+		return name + " " + dueDate + "\nSubtasks: " + subtasks.size() + "\n" + description;
 	}
 }
