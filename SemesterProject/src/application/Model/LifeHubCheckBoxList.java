@@ -6,6 +6,11 @@ import javafx.scene.control.CheckBox;
 public class LifeHubCheckBoxList extends LifeHubList{
 	private ArrayList<CheckBox> items = new ArrayList<CheckBox>();
 
+	public LifeHubCheckBoxList()
+	{
+		super();
+	}
+	
 	public LifeHubCheckBoxList(String listName, ArrayList items) {
 		super(listName);
 		this.items = items;

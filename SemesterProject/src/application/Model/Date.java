@@ -1,4 +1,4 @@
-package application.model;
+package application.Model;
 
 public class Date implements Comparable<Date> {
 	

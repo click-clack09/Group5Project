@@ -1,4 +1,4 @@
-package application.model;
+package application.Model;
 
 public class Task implements Comparable<Task> {
 	
