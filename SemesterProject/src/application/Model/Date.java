@@ -1,6 +1,6 @@
 package application.Model;
 
-public class Date {
+public abstract class Date {
 	
 	public Date() 
 	{
