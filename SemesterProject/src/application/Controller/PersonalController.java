@@ -28,6 +28,11 @@ public class PersonalController {
     void addItem(ActionEvent event) {
 
     }
+    
+    @FXML
+    void addHub(ActionEvent event) {
+    	System.out.println("testAddHub");
+    }
 
     @FXML
     void addList(ActionEvent event) {

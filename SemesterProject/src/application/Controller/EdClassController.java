@@ -18,7 +18,13 @@ public class EdClassController {
 	@FXML
 	private AnchorPane mainPane;
 	
-	 
+	@FXML
+    void addHub(ActionEvent event) {
+    	System.out.println("testAddHub");
+    }
+	
+	
+	
 	@FXML
     void changeTheme(ActionEvent event) {
     	System.out.println("testChangeTheme");

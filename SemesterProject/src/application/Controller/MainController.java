@@ -19,6 +19,11 @@ public class MainController {
     }
 
     @FXML
+    void addHub(ActionEvent event) {
+    	System.out.println("testAddHub");
+    }
+    
+    @FXML
     void close(ActionEvent event) {
     	System.out.println("testClose");
     }

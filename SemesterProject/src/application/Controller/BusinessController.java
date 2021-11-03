@@ -21,7 +21,12 @@ public class BusinessController {
 
     @FXML
     private Label businessHomeLabel;
-
+    
+    @FXML
+    void addHub(ActionEvent event) {
+    	System.out.println("testAddHub");
+    }
+    
     @FXML
     void changeTheme(ActionEvent event) {
     	System.out.println("testChangeTheme");
