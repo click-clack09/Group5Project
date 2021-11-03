@@ -1,11 +1,9 @@
-package application.Model;
+package application.model;
 
-public class Task implements Comparable<Task> {
+public class Task implements Comparable<Task> extends CalendarItem {
 	
-	private String name;
-	private Date date;
-	private String description;
-	private ToDoList subtasks;
+	private Date dueDate;
+	private CheckList<Task> subtasks;
 
 	
 	/*
@@ -13,30 +11,30 @@ public class Task implements Comparable<Task> {
 	 */
 	
 	public Task(String name) {
-		this.name = name;
-		date = new Date();
-		description = "";
-		subtasks = new ToDoList();
+		super(name);
+		
+		dueDate = new Date();
+		subtasks = new CheckList<Task>();
 	}
 	
-	public Task(String name, Date date) {
-		this.name = name;
-		this.date = date;
-		description = "";
-		subtasks = new ToDoList();
+	public Task(String name, Date dueDate) {
+		super(name);
+		
+		this.dueDate = dueDate;
+		subtasks = new CheckList<Task>();
 	}
 	
 	public Task(String name, String description) {
-		this.name = name;
-		date = new Date();
-		this.description = description;
-		subtasks = new ToDoList();
+		super(name, description);
+		
+		dueDate = new Date();
+		subtasks = new CheckList<Task>();
 	}
-	public Task(String name, Date date, String description) {
-		this.name = name;
-		this.date = date;
-		this.description = description;
-		subtasks = new ToDoList();
+	public Task(String name, Date dueDate, String description) {
+		super(name, description);
+		
+		this.dueDate = dueDate;
+		subtasks = new CheckList<Task>();
 	}
 	/*
 	 * + addSubtask(subtask: Task)
@@ -55,19 +53,11 @@ public class Task implements Comparable<Task> {
 	 * GETTERS
 	 */
 	
-	public String getName() {
-		return name;
-	}
-	
 	public Date getDate() {
 		return date;
 	}
 	
-	public String getDescription() {
-		return description;
-	}
-	
-	public ToDoList getSubtasks() {
+	public CheckList<Task> getSubtasks() {
 		return subtasks;
 	}
 	
@@ -75,19 +65,11 @@ public class Task implements Comparable<Task> {
 	 * SETTERS
 	 */
 	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	public void setDate(Date date) {
 		this.date = date;
 	}
 	
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public void setSubtasks(ToDoList subtasks) {
+	public void setSubtasks(CheckList<Task> subtasks) {
 		this.subtasks = subtasks;
 	}
 	
