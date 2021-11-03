@@ -10,19 +10,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class BusinessController {
+public class EdClassController {
 	
 	@FXML
-	 private AnchorPane mainPane;
-
-    @FXML
-    private Label businessHomeLabel;
-
-    @FXML
+	private AnchorPane mainPane;
+	
+	 
+	@FXML
     void changeTheme(ActionEvent event) {
     	System.out.println("testChangeTheme");
     }
@@ -31,6 +28,13 @@ public class BusinessController {
 	    void tutorial(ActionEvent event) {
 		 System.out.println("testTutorial");
 	    }
+	 
+	 @FXML
+	    void addItem(ActionEvent event) {
+		 System.out.println("testAddItem");
+	    }
+	 
+	 
 	 
 	 @FXML
 	    void about(ActionEvent event) {
@@ -53,32 +57,20 @@ public class BusinessController {
     }
 
     @FXML
-    void addContact(ActionEvent event) {
+    void goBack(ActionEvent event) throws IOException {
+   		//URL url = new File("src/EducationHome.fxml").toURI().toURL();
+   		//mainPane = FXMLLoader.load(url);
+    	mainPane = FXMLLoader.load(User.getLast());
+    	User.setLast(new File("src/EdClass.fxml").toURI().toURL());
+    	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
+   		Scene scene = new Scene(mainPane);// pane you are GOING TO show
+        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+   		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+	    window.setScene(scene);
+	    window.show();
+	}
 
-    }
-
-    @FXML
-    void addItem(ActionEvent event) {
-
-    }
-
-     @FXML
-     void goToCalendar(ActionEvent event) throws IOException {
-    	User.setLast(new File("src/BusinessHome.fxml").toURI().toURL());
-     	URL url = new File("src/Calendar.fxml").toURI().toURL();
-     	mainPane = FXMLLoader.load(url);
-     	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
-         Scene scene = new Scene(mainPane);// pane you are GOING TO show
-         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-         window.setScene(scene);
-         window.show();
- 	    }
-
-    @FXML
-    void removeContact(ActionEvent event) {
-
-    }
+    
 
     @FXML
     void saveNote(ActionEvent event) {
@@ -89,15 +81,16 @@ public class BusinessController {
 
     @FXML
     void userHome(ActionEvent event) throws IOException {
-    	User.setLast(new File("src/BusinessHome.fxml").toURI().toURL());
-   		URL url = new File("src/UserHome.fxml").toURI().toURL();
+    	URL url = new File("src/UserHome.fxml").toURI().toURL();
    		mainPane = FXMLLoader.load(url);
    		//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
    		Scene scene = new Scene(mainPane);// pane you are GOING TO show
-        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+   		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
    		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-	    window.setScene(scene);
+   		System.out.println("5");
+   		window.setScene(scene);
+   		System.out.println("6");
 	    window.show();
 	}
-
+    
 }

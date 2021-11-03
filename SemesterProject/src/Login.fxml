@@ -19,14 +19,14 @@
    <children>
       <ImageView fitHeight="227.0" fitWidth="403.0" layoutX="218.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/C:/Users/mysti/Desktop/LifeHub.png" />
+            <Image url="@../Data/LifeHub.png" />
          </image>
       </ImageView>
       <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="800.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -36,7 +36,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#tutorial" text="Tutorial" />
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
             </items>
           </Menu>
         </menus>
@@ -56,24 +57,24 @@
             <VBox alignment="CENTER_LEFT" maxWidth="250.0">
                <children>
                   <Label text="User Name:" />
-                  <TextField />
+                  <TextField fx:id="userName" />
                   <Label text="Password:">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <PasswordField>
+                  <PasswordField fx:id="password">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin></PasswordField>
                   <VBox alignment="CENTER" prefHeight="151.0" prefWidth="250.0">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="200.0" text="Login/Create">
+                        <Button mnemonicParsing="false" onAction="#login" prefWidth="200.0" text="Login/Create">
                            <VBox.margin>
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="200.0" text="Forgot My Password" />
+                        <Button mnemonicParsing="false" onAction="#forgot" prefWidth="200.0" text="Forgot My Password" />
                      </children>
                   </VBox>
                </children>
