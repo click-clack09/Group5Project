@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -77,9 +78,7 @@ public class UserController {
     		URL url = new File("src/"+userChoice+".fxml").toURI().toURL();
     		User.setLast(new File("src/UserHome.fxml").toURI().toURL());
         	mainPane = FXMLLoader.load(url);
-        	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
-            Scene scene = new Scene(mainPane);// pane you are GOING TO show
-            //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        	Scene scene = new Scene(mainPane);// pane you are GOING TO show
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
             window.setScene(scene);
             window.show();
@@ -92,17 +91,109 @@ public class UserController {
 
     @FXML
     void newBusiness(ActionEvent event) {
-
+    	 TextInputDialog textDialog = new TextInputDialog();
+    	 String hubName = "";
+    	//while(!validInput)
+        //{
+            textDialog.getEditor().clear();
+            textDialog.setTitle("New Business Hub");
+            textDialog.setHeaderText("Please enter the new hub name");
+            textDialog.setContentText("Hub name:");
+            textDialog.showAndWait();
+            hubName = textDialog.getResult();
+            //pull next index from database
+            //index will be used to populate all events, lists, etc on the page
+            //any calendar visible on the hub page will only be from this hub
+            //when switching to calendar view, ALL of the users events be added to the calendar
+            try
+        	{
+        		URL url = new File("src/BusinessHome.fxml").toURI().toURL();
+        		User.setLast(new File("src/UserHome.fxml").toURI().toURL());
+            	mainPane = FXMLLoader.load(url);
+            	//use FXMLloader to pass all user data to next controller
+            	Scene scene = new Scene(mainPane);// pane you are GOING TO show
+                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+                window.setScene(scene);
+                window.show();
+        	}
+        	catch (IOException e)
+        	{
+        		//popup error window
+        	}   
+            //validInput = textInputChecker(tempUser,0);
+        //}
     }
 
     @FXML
     void newEducation(ActionEvent event) {
-
+    	TextInputDialog textDialog = new TextInputDialog();
+   	 String hubName = "";
+   	//while(!validInput)
+       //{
+		   //pull next index from database
+	       //index will be used to populate all events, lists, etc on the page
+           //any calendar visible on the hub page will only be from this hub
+	       //when switching to calendar view, ALL of the users events be added to the calendar
+		     
+           textDialog.getEditor().clear();
+           textDialog.setTitle("New Education Hub");
+           textDialog.setHeaderText("Please enter the new hub name");
+           textDialog.setContentText("Hub name:");
+           textDialog.showAndWait();
+           hubName = textDialog.getResult();
+           try
+       	{
+       		URL url = new File("src/EducationHome.fxml").toURI().toURL();
+       		User.setLast(new File("src/UserHome.fxml").toURI().toURL());
+       		//use FXMLloader to pass all user data to next controller
+           	mainPane = FXMLLoader.load(url);
+           	   Scene scene = new Scene(mainPane);// pane you are GOING TO show
+               Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+               window.setScene(scene);
+               window.show();
+       	}
+       	catch (IOException e)
+       	{
+       		//popup error window
+       	} 
+           //validInput = textInputChecker(tempUser,0);
+       //}
     }
 
     @FXML
     void newPersonal(ActionEvent event) {
-
+    	TextInputDialog textDialog = new TextInputDialog();
+   	 String hubName = "";
+   	//while(!validInput)
+       //{
+   	 		//pull next index from database
+   	 		//index will be used to populate all events, lists, etc on the page
+   	 		//any calendar visible on the hub page will only be from this hub
+   	 		//when switching to calendar view, ALL of the users events be added to the calendar
+     
+           textDialog.getEditor().clear();
+           textDialog.setTitle("New Personal Hub");
+           textDialog.setHeaderText("Please enter the new hub name");
+           textDialog.setContentText("Hub name:");
+           textDialog.showAndWait();
+           hubName = textDialog.getResult();
+           try
+       	{
+       		URL url = new File("src/PersonalHome.fxml").toURI().toURL();
+       		User.setLast(new File("src/UserHome.fxml").toURI().toURL());
+       	//use FXMLloader to pass all user data to next controller
+           	mainPane = FXMLLoader.load(url);
+           	Scene scene = new Scene(mainPane);// pane you are GOING TO show
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+            window.setScene(scene);
+            window.show();
+       	}
+       	catch (IOException e)
+       	{
+       		//popup error window
+       	} 
+           //validInput = textInputChecker(tempUser,0);
+       //}
     }
 
     
