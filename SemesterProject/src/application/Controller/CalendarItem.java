@@ -1,8 +1,7 @@
-package application.Model;
+package application.model;
 
 public abstract class CalendarItem {
 	
-
 	protected String name;
 	protected String description;
 	
@@ -43,5 +42,4 @@ public abstract class CalendarItem {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 }

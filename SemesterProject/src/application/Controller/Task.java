@@ -1,10 +1,11 @@
 package application.model;
 
-
-public class Task extends CalendarItem implements Comparable<Task> {
+public class Task implements Comparable<Task> extends CalendarItem {
 	
 	private Date dueDate;
 	private CheckList<Task> subtasks;
+
+	
 	/*
 	 * CONSTRUCTORS
 	 */
@@ -27,7 +28,6 @@ public class Task extends CalendarItem implements Comparable<Task> {
 		super(name, description);
 		
 		dueDate = new Date();
-
 		subtasks = new CheckList<Task>();
 	}
 	public Task(String name, Date dueDate, String description) {
@@ -36,30 +36,25 @@ public class Task extends CalendarItem implements Comparable<Task> {
 		this.dueDate = dueDate;
 		subtasks = new CheckList<Task>();
 	}
+	/*
+	 * + addSubtask(subtask: Task)
+	 * + checkSubtask(subtask: Task)
+	 * + removeSubtask(subtask: Task)
+	 * + toString(): String
+	 */
 	
 	/*
 	 * HELPER METHODS
 	 */
 	
-	public void addSubtask(Task subtask) {
-		//MUST FINISH
-	}
-	
-
-	public void checkSubtask(Task subtask) {
-		//MUST FINISH
-	}
-	
-	public void removeSubtask(Task subtask) {
-		//MUST FINISH
-	}
+	//helper methods here
 	
 	/*
 	 * GETTERS
 	 */
 	
-	public Date getDueDate() {
-		return dueDate;
+	public Date getDate() {
+		return date;
 	}
 	
 	public CheckList<Task> getSubtasks() {
@@ -70,8 +65,8 @@ public class Task extends CalendarItem implements Comparable<Task> {
 	 * SETTERS
 	 */
 	
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	public void setSubtasks(CheckList<Task> subtasks) {
@@ -84,17 +79,11 @@ public class Task extends CalendarItem implements Comparable<Task> {
 	
 	@Override
 	public int compareTo(Task task) {
-		return this.dueDate.compareTo(task.getDueDate());
+		return this.date.compareTo(task.getDate());
 	}
 	
 	@Override
 	public String toString() {
-		return name + " " + dueDate + "\nSubtasks: " + subtasks.size() + "\n" + description;
-
+		return name + " " + date + "\nSubtasks: " + subtasks.size() + "\n" + description;
 	}
-//	
-//	@Override
-//	public String toString() {
-//		return name + " " + date + "\nSubtasks: " + subtasks.size() + "\n" + description;
-//	}
 }
