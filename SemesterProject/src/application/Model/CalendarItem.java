@@ -2,7 +2,7 @@ package application.Model;
 
 public abstract class CalendarItem {
 	
-	protected int id;
+
 	protected String name;
 	protected String description;
 	
@@ -43,4 +43,5 @@ public abstract class CalendarItem {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 }

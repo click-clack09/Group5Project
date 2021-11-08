@@ -1,10 +1,10 @@
 package application.model;
 
+
 public class Task extends CalendarItem implements Comparable<Task> {
 	
 	private Date dueDate;
 	private CheckList<Task> subtasks;
-	
 	/*
 	 * CONSTRUCTORS
 	 */
@@ -27,6 +27,7 @@ public class Task extends CalendarItem implements Comparable<Task> {
 		super(name, description);
 		
 		dueDate = new Date();
+
 		subtasks = new CheckList<Task>();
 	}
 	public Task(String name, Date dueDate, String description) {
@@ -44,6 +45,7 @@ public class Task extends CalendarItem implements Comparable<Task> {
 		//MUST FINISH
 	}
 	
+
 	public void checkSubtask(Task subtask) {
 		//MUST FINISH
 	}
@@ -88,5 +90,11 @@ public class Task extends CalendarItem implements Comparable<Task> {
 	@Override
 	public String toString() {
 		return name + " " + dueDate + "\nSubtasks: " + subtasks.size() + "\n" + description;
+
 	}
+//	
+//	@Override
+//	public String toString() {
+//		return name + " " + date + "\nSubtasks: " + subtasks.size() + "\n" + description;
+//	}
 }
