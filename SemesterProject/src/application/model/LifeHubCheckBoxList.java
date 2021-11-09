@@ -2,8 +2,8 @@ package application.model;
 
 import java.util.ArrayList;
 import javafx.scene.control.CheckBox;
-
-public class LifeHubCheckBoxList extends LifeHubList{
+//redundant, kill
+public class LifeHubCheckBoxList extends LifeHub{
 	private ArrayList<CheckBox> items = new ArrayList<CheckBox>();
 
 	public LifeHubCheckBoxList()

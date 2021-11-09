@@ -3,7 +3,9 @@ package application.model;
 import java.net.URL;
 
 public class User {
-	
+	//holds all data
+	//userID
+	//password
 	private static URL last;
 	private static String username;
 	/**

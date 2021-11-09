@@ -1,6 +1,6 @@
 package application.model;
-
-public class Meeting extends Event{
+//kill
+public class Meeting extends HubEvent{
 	
 	protected String note;
 	protected Time time;
@@ -15,9 +15,9 @@ public class Meeting extends Event{
 	public Meeting(String name, int id, String eventName, Owner owner, Date date, String note, String location,
 			Time time, boolean recurring) {
 		super(name, date, date);
-		this.id = id;
+		//this.id = id;
 		//this.eventName = eventName;
-		this.owner = owner;
+		//this.owner = owner;
 		//this.date = date;
 		this.note = note;
 		this.location = location;
@@ -25,29 +25,29 @@ public class Meeting extends Event{
 		this.recurring = recurring;
 	}
 
-	public String getEventName() {
-		return name;
-	}
-
-	public void setEventName(String eventName) {
-		this.name = eventName;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Owner getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Owner owner) {
-		this.owner = owner;
-	}
+//	public String getEventName() {
+//		return name;
+//	}
+//
+//	public void setEventName(String eventName) {
+//		this.name = eventName;
+//	}
+//
+//	public int getId() {
+//		return id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+//
+//	public Owner getOwner() {
+//		return owner;
+//	}
+//
+//	public void setOwner(Owner owner) {
+//		this.owner = owner;
+//	}
 
 //	public Date getDate() {
 //		return this.getDate();
