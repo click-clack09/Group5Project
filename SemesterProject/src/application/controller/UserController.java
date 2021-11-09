@@ -32,6 +32,7 @@ public class UserController {
 		userHubs.add("EducationHome");
 		userHubs.add("BusinessHome");
 		userHubs.add("PersonalHome");
+		//will return the event type use this to navigate to the correct hub view
 		selection.getItems().addAll(userHubs);
 	}
 	
@@ -75,8 +76,28 @@ public class UserController {
     	try
     	{
     		String userChoice = selection.getSelectionModel().getSelectedItem().toString();
-    		URL url = new File("src/application/view/"+userChoice+".fxml").toURI().toURL();
+    		//temporary solution, will pull from DB to populate list. this will pass hub name
+    		String hubView = userChoice;
+    		//this will be a switch, get the int Hub type for the Hub
+    		//Hub (1 school, 3 personal, or 2 business)
+    		int hubType = 0;
+    		switch (hubType)
+    		{
+    			case 1:
+    				hubView="EducationHome";
+    				break;
+    			case 2:
+    				hubView="BusinessHome";
+    				break;
+    			case 3:
+    				hubView="PersonalHome";
+    				break;
+    			default:
+    				break;
+    		}
+    		URL url = new File("src/application/view/"+hubView+".fxml").toURI().toURL();
     		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());
+    		User.setCurrentHub(userChoice);
         	mainPane = FXMLLoader.load(url);
         	Scene scene = new Scene(mainPane);// pane you are GOING TO show
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
@@ -108,8 +129,9 @@ public class UserController {
             try
         	{
         		URL url = new File("src/application/view/BusinessHome.fxml").toURI().toURL();
-        		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());
-            	mainPane = FXMLLoader.load(url);
+        		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());        		
+            	User.setCurrentHub(hubName);
+        		mainPane = FXMLLoader.load(url);
             	//use FXMLloader to pass all user data to next controller
             	Scene scene = new Scene(mainPane);// pane you are GOING TO show
                 Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
@@ -145,6 +167,7 @@ public class UserController {
        	{
        		URL url = new File("src/application/view/EducationHome.fxml").toURI().toURL();
        		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());
+       		User.setCurrentHub(hubName);
        		//use FXMLloader to pass all user data to next controller
            	mainPane = FXMLLoader.load(url);
            	   Scene scene = new Scene(mainPane);// pane you are GOING TO show
@@ -181,6 +204,7 @@ public class UserController {
        	{
        		URL url = new File("src/application/view/PersonalHome.fxml").toURI().toURL();
        		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());
+       		User.setCurrentHub(hubName);
        	//use FXMLloader to pass all user data to next controller
            	mainPane = FXMLLoader.load(url);
            	Scene scene = new Scene(mainPane);// pane you are GOING TO show

@@ -10,6 +10,7 @@ public class User {
 	private static URL last;
 	private static String username;
 	private static int userID;
+	private static String currentHub;
 		
 	public static Boolean validate(String userName, String password)
 	{
@@ -40,6 +41,13 @@ public class User {
 	}
 
 	/**
+	 * @return the currentHub
+	 */
+	public static String getCurrentHub() {
+		return currentHub;
+	}
+
+	/**
 	 * @param last the last to set
 	 */
 	public static void setLast(URL last) {
@@ -59,6 +67,15 @@ public class User {
 	public static void setUserID(int userID) {
 		User.userID = userID;
 	}
+
+	/**
+	 * @param currentHub the currentHub to set
+	 */
+	public static void setCurrentHub(String currentHub) {
+		User.currentHub = currentHub;
+	}
+
+	
 	
 	
 }

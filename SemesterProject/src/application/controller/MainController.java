@@ -60,6 +60,7 @@ public class MainController {
     	
 	    	{
 	    		User.setLast(new File("src/application/view/Login.fxml").toURI().toURL());
+	    		User.setUsername(userName.getText());
 	        	URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
 	        	mainPane = FXMLLoader.load(url);
 	            Scene scene = new Scene(mainPane);// pane you are GOING TO show
