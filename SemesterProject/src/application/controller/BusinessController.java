@@ -27,6 +27,7 @@ public class BusinessController {
     void initialize()
     {
     	//this will instantiate the LifeHub object based on the DB query
+    	//pull all tasks, events and notes associated with the User.getCurrentHub() String
     	LifeHub currentHub = new LifeHub(User.getCurrentHub());
     	businessHomeLabel.setText(User.getUsername()+", "+User.getCurrentHub());
     }

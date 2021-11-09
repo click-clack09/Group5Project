@@ -3,20 +3,43 @@ package application.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
-import application.model.User;
+import application.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class EducationController {
 	 @FXML
 	 private AnchorPane mainPane;
+	 
+	 @FXML
+    private Label educationLabel;
+	 
+	 @FXML
+    private VBox classButtonBox;
+	 
+	 private ArrayList<Button> classButtonList;
+	 
+	 @FXML
+    void initialize()
+    {
+    	//this will instantiate the LifeHub object based on the DB query
+    	//pull all tasks, events, notes and classes associated with the User.getCurrentHub() String
+		//use the listed to set the ArrayList<Button>
+		classButtonList = new ArrayList<Button>();
+    	LifeHub currentHub = new LifeHub(User.getCurrentHub());
+    	educationLabel.setText(User.getUsername()+", "+User.getCurrentHub());
+    }
 	 
 	 @FXML
 	    void changeTheme(ActionEvent event) {
@@ -50,7 +73,42 @@ public class EducationController {
 	    
 	    @FXML
 	    void addClass(ActionEvent event) {
-	    	System.out.println("testAddClass");
+	    	TextInputDialog textDialog = new TextInputDialog();
+	    	String className = "";
+	    	String location = "";
+	    	String professor = "";
+	      	//while(!validInput)
+	          //{
+	      	 		
+              textDialog.getEditor().clear();
+              textDialog.setTitle("New Class");
+              textDialog.setHeaderText("Please enter the new class name");
+              textDialog.setContentText("Class name:");
+              textDialog.showAndWait();
+              
+              className = textDialog.getResult();
+              textDialog.getEditor().clear();
+              textDialog.setTitle("New Class");
+              textDialog.setHeaderText("Please enter the new class location");
+              textDialog.setContentText("Location:");
+              textDialog.showAndWait();
+              location = textDialog.getResult();
+              
+              className = textDialog.getResult();
+              textDialog.getEditor().clear();
+              textDialog.setTitle("New Class");
+              textDialog.setHeaderText("Please enter the new class instructor");
+              textDialog.setContentText("Instructor:");
+              textDialog.showAndWait();
+              
+              HubEvent meetingTime = new HubEvent(); 
+              professor = textDialog.getResult();
+              SchoolClass newClass = new SchoolClass(professor, location, new ArrayList<Task>(), meetingTime);
+            //SCHOOL_CLASS_ID	USER_ID	SCHOOL_CLASS_NAME	SCHOOL_CLASS_LOCATION	SCHOOL_CLASS_PROFESSOR
+              //classButtonList.add(new Button().setText(className));
+              //classButtonBox.getChildren();
+              System.out.println(newClass.getProfessor()+" "+newClass.getLocation()+" "+newClass.getMeetingTime());
+              
 	    }
 
 	    @FXML

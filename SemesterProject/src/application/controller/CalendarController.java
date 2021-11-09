@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import application.model.LifeHub;
 import application.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,14 @@ public class CalendarController {
 
     @FXML
     private Label calendarLabel;
+    
+    @FXML
+    void initialize()
+    {
+    	//this will instantiate the LifeHub object based on the DB query
+    	//pull all tasks, events and notes associated with the User.getUserID() int
+    	calendarLabel.setText(User.getUsername()+", Monthly Calendar");
+    }
     
     @FXML
     void changeTheme(ActionEvent event) {
