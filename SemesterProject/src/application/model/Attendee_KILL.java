@@ -1,9 +1,9 @@
 package application.model;
 
-public class Attendee {
-	//replace with arrayLIst of contacts
+public class Attendee_KILL {
+	//replace with arrayLIst of contacts, delete
 	protected int id;
-	protected Owner owner;
+	protected Owner_KILL owner_KILL;
 	private Contact contact;
 	//trim if need be
 	private boolean RSVP;
@@ -12,12 +12,12 @@ public class Attendee {
 	 * CONSTRUCTORS
 	 */
 	
-	public Attendee(String name) {
+	public Attendee_KILL(String name) {
 		contact = new Contact(name);
 		RSVP = false;
 	}
 	
-	public Attendee(Contact contact) {
+	public Attendee_KILL(Contact contact) {
 		this.contact = contact;
 		RSVP = false;
 	}

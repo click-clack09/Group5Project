@@ -2,7 +2,7 @@ package application.model;
 
 import java.util.ArrayList;
 //redundant, use checklist
-public class GroceryList extends LifeHubCheckBoxList {
+public class GroceryList_KILL extends LifeHubCheckBoxList_KILL {
 	
 	private ArrayList<String> imageRefs;
 	
@@ -10,7 +10,7 @@ public class GroceryList extends LifeHubCheckBoxList {
 	 * CONSTRUCTORS
 	 */
 	
-	public GroceryList() {
+	public GroceryList_KILL() {
 		super(); //NEED TO ADD PARAMETERS
 		
 		imageRefs = new ArrayList<String>();

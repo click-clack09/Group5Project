@@ -6,8 +6,10 @@ public class User {
 	//holds all data
 	//userID
 	//password
+	//list of contacts
 	private static URL last;
 	private static String username;
+	private static int userID;
 	/**
 	 * @return the last
 	 */
@@ -32,5 +34,12 @@ public class User {
 	 */
 	public static void setUserName(String username) {
 		User.username = username;
+	}
+	
+	public static Boolean validate(String userName, String password)
+	{
+		Boolean result =true;
+		//Donny will do the query return result;
+		return result;
 	}
 }

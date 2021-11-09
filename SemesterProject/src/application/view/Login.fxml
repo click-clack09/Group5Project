@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="800.0" styleClass="background" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MainController">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="800.0" styleClass="background" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MainController">
    <children>
       <ImageView fitHeight="227.0" fitWidth="403.0" layoutX="218.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
          <image>

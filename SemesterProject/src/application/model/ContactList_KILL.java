@@ -1,8 +1,8 @@
 package application.model;
 
 import java.util.ArrayList;
-
-public class ContactList
+//add to user, remove here
+public class ContactList_KILL
 {
 	ArrayList<Contact> contacts;
 	int userID;

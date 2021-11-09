@@ -1,7 +1,7 @@
 package application.model;
 
 import java.util.ArrayList;
-
+//wishlist
 public class SocialEvent extends HubEvent
 {
 	private String location;
@@ -9,7 +9,7 @@ public class SocialEvent extends HubEvent
 	private Boolean hasRSVP;
 	private Boolean hasAttendees;
 	//private ArrayList<Rsvp> rsvpList;
-	private ArrayList<Attendee> attendeeList;
+	private ArrayList<Attendee_KILL> attendeeList;
 	
 	public SocialEvent()
 	{
@@ -17,7 +17,7 @@ public class SocialEvent extends HubEvent
 	}
 	
 	public SocialEvent(String location, Date eventDate, Boolean hasRSVP, Boolean hasAtendees,
-			/*ArrayList<Rsvp> resvpList,*/ ArrayList<Attendee> attenedeeList)
+			/*ArrayList<Rsvp> resvpList,*/ ArrayList<Attendee_KILL> attenedeeList)
 	{
 		this.location = location;
 		this.eventDate = eventDate;
@@ -100,14 +100,14 @@ public class SocialEvent extends HubEvent
 	/**
 	 * @return the attendeeList
 	 */
-	public ArrayList<Attendee> getAttendeeList() {
+	public ArrayList<Attendee_KILL> getAttendeeList() {
 		return attendeeList;
 	}
 
 	/**
 	 * @param attendeeList the attendeeList to set
 	 */
-	public void setAttendeeList(ArrayList<Attendee> attendeeList) {
+	public void setAttendeeList(ArrayList<Attendee_KILL> attendeeList) {
 		this.attendeeList = attendeeList;
 	}
 	
