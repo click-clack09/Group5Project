@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import application.model.LifeHub;
 import application.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,15 @@ public class BusinessController {
 
     @FXML
     private Label businessHomeLabel;
+    
+    @FXML
+    void initialize()
+    {
+    	//this will instantiate the LifeHub object based on the DB query
+    	LifeHub currentHub = new LifeHub(User.getCurrentHub());
+    	businessHomeLabel.setText(User.getUsername()+", "+User.getCurrentHub());
+    }
+
     
     @FXML
     void addHub(ActionEvent event) {
@@ -66,7 +76,7 @@ public class BusinessController {
     void addItem(ActionEvent event) {
 
     }
-
+    
      @FXML
      void goToCalendar(ActionEvent event) throws IOException {
     	User.setLast(new File("src/application/view/BusinessHome.fxml").toURI().toURL());
@@ -82,7 +92,7 @@ public class BusinessController {
 
     @FXML
     void removeContact(ActionEvent event) {
-
+    	
     }
 
     @FXML
