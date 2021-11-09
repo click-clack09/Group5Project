@@ -53,7 +53,7 @@
                         <Insets top="60.0" />
                      </HBox.margin>
                      <children>
-                        <Label text="Education Home">
+                        <Label fx:id="educationLabel" text="Education Home">
                            <font>
                               <Font name="Arial Narrow Italic" size="21.0" />
                            </font>
@@ -163,7 +163,7 @@
                               <Insets bottom="3.0" />
                            </VBox.margin>
                         </Separator>
-                        <VBox alignment="CENTER" spacing="3.0">
+                        <VBox fx:id="classButtonList" alignment="CENTER" spacing="3.0">
                            <children>
                               <Button layoutX="24.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToClass1" prefWidth="150.0" text="Go to class1 page" textAlignment="CENTER" />
                               <Button mnemonicParsing="false" onAction="#goToClass2" prefWidth="150.0" text="Go to class2 page" textAlignment="CENTER" />
