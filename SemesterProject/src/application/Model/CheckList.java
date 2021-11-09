@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 public class CheckList<T>  extends ArrayList{
 
-	public String size() {
-		// TODO Auto-generated method stub
-		return null;
+	private ArrayList<T> unchecked;
+	private ArrayList<T> checked;
+	
+	public Checklist<T> () {
+		unchecked = new ArrayList<T>();
+		checked = new ArrayList<T>();
 	}
-
+	
+	
+	
 }
