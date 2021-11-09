@@ -7,19 +7,17 @@ public class Contact
 	private String name;
 	private ArrayList<Phone> phoneList;
 	private ArrayList<Email> emailsList;
-	private String type;
 	
-	public Contact()
+	public Contact(String name)
 	{
-		
+		this.name = name;
 	}
 	
-	public Contact(String name, ArrayList<Phone> phoneList, ArrayList<Email> emailsList, String type)
+	public Contact(String name, ArrayList<Phone> phoneList, ArrayList<Email> emailsList)
 	{
 		this.name = name;
 		this.phoneList = phoneList;
 		this.emailsList = emailsList;
-		this.type = type;
 	}
 
 	/**
@@ -63,20 +61,4 @@ public class Contact
 	public void setEmailsList(ArrayList<Email> emailsList) {
 		this.emailsList = emailsList;
 	}
-
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-	
 }
