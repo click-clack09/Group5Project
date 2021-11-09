@@ -4,19 +4,27 @@ import java.util.ArrayList;
 
 public class Event extends CalendarItem {	
 
-	private User owner;
-	private Date startDate;
-	private Date endDate;
-	private String location;
+	protected Date startDate;
+	protected Date endDate;
+	protected String location;
 	
-	private ArrayList<Contact> attendees;
+	protected ArrayList<Contact> attendees;
 		
 	/*
 	 * CONSTRUCTORS
 	 */
 		
-	//constructors here
+	public Event(String name) {
+		super(name);
 		
+		startDate = new Date();
+		
+		endDate = new Date();
+		location = "";
+		
+		attendees = new ArrayList<Contact>();
+	}
+	
 	/*
 	 * HELPER METHODS
 	 */
