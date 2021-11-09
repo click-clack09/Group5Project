@@ -7,9 +7,10 @@ public class Date implements Comparable<Date> {
 	private int day;
 	private int hour;
 	private int minute;
-	private int display;
 	
 	private boolean valid;
+	
+	private int display;
 	
 	/*
 	 * CONSTRUCTORS
@@ -22,9 +23,9 @@ public class Date implements Comparable<Date> {
 		hour = -1;
 		minute = -1;
 		
-		display = -1;
-		
 		valid = false;
+		
+		display = -1;
 	}
 	
 	public Date(int year, int month, int day) {
