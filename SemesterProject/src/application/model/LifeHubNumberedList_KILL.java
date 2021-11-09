@@ -1,9 +1,9 @@
 package application.model;
 //kill
-public class LifeHubNumberedList extends LifeHub{
+public class LifeHubNumberedList_KILL extends LifeHub{
 	private String data;
 	private int numOnList;
-	public LifeHubNumberedList(String listName, String data, int numOnList) {
+	public LifeHubNumberedList_KILL(String listName, String data, int numOnList) {
 		super(listName);
 		//this.listName = listName;
 		this.data = data;

@@ -15,7 +15,7 @@ public class SchoolClass{
 		super();
 	}
 	
-	public SchoolClass(int id, String eventName, Owner owner, Date date, String note, String location,
+	public SchoolClass(int id, String eventName, Owner_KILL owner_KILL, Date date, String note, String location,
 			Time time, String professor, boolean recurring) {
 		//super(eventName);
 		//this.id = id;

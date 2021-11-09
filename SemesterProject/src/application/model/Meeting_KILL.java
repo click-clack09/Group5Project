@@ -1,18 +1,18 @@
 package application.model;
-//kill
-public class Meeting extends HubEvent{
+//kill, use recurring event instead
+public class Meeting_KILL extends HubEvent{
 	
 	protected String note;
 	protected Time time;
 	protected Boolean recurring;
 	
 	//constructor, non-parameterized
-	public Meeting() {
+	public Meeting_KILL() {
 		
 	}
 	
 	//parameterized constructor
-	public Meeting(String name, int id, String eventName, Owner owner, Date date, String note, String location,
+	public Meeting_KILL(String name, int id, String eventName, Owner_KILL owner_KILL, Date date, String note, String location,
 			Time time, boolean recurring) {
 		super(name, date, date);
 		//this.id = id;
@@ -20,7 +20,7 @@ public class Meeting extends HubEvent{
 		//this.owner = owner;
 		//this.date = date;
 		this.note = note;
-		this.location = location;
+		//this.location = location;
 		this.time = time;
 		this.recurring = recurring;
 	}
@@ -65,13 +65,13 @@ public class Meeting extends HubEvent{
 		this.note = note;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
+//	public String getLocation() {
+//		return location;
+//	}
+//
+//	public void setLocation(String location) {
+//		this.location = location;
+//	}
 
 	public Time getTime() {
 		return time;

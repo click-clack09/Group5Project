@@ -1,6 +1,6 @@
 package application.model;
 //keep, later if time
-public class RecurringEvent extends HubEvent {
+public class RecurringEvent_HOLD extends HubEvent {
 	
 	private int frequency;
 	private Date recurringStart;
@@ -10,7 +10,7 @@ public class RecurringEvent extends HubEvent {
 	 * CONSTRUCTORS
 	 */
 		
-	public RecurringEvent(String name) {
+	public RecurringEvent_HOLD(String name) {
 		super(name);
 		
 		frequency = 0;

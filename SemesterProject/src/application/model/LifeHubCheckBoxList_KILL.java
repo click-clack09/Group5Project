@@ -3,15 +3,15 @@ package application.model;
 import java.util.ArrayList;
 import javafx.scene.control.CheckBox;
 //redundant, kill
-public class LifeHubCheckBoxList extends LifeHub{
+public class LifeHubCheckBoxList_KILL extends LifeHub{
 	private ArrayList<CheckBox> items = new ArrayList<CheckBox>();
 
-	public LifeHubCheckBoxList()
+	public LifeHubCheckBoxList_KILL()
 	{
 		super();
 	}
 	
-	public LifeHubCheckBoxList(String listName, ArrayList items) {
+	public LifeHubCheckBoxList_KILL(String listName, ArrayList items) {
 		super(listName);
 		this.items = items;
 	}

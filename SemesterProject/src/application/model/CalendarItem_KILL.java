@@ -1,10 +1,10 @@
 package application.model;
 
-public abstract class CalendarItem {
-	//replace this with event 
+public abstract class CalendarItem_KILL {
+	//replace this with event, delete
 	protected int id;
 	
-	protected Owner owner;
+	protected Owner_KILL owner_KILL;
 	
 	protected String name;
 	protected String description;
@@ -12,11 +12,11 @@ public abstract class CalendarItem {
 	/*
 	 * CONSTRUCTORS
 	 */
-	public CalendarItem()
+	public CalendarItem_KILL()
 	{
 		
 	}
-	public CalendarItem(String name) {
+	public CalendarItem_KILL(String name) {
 		id = 0;
 		
 		//owner = User.getUsername();
@@ -33,8 +33,8 @@ public abstract class CalendarItem {
 		return id;
 	}
 	
-	public Owner getOwner() {
-		return owner;
+	public Owner_KILL getOwner() {
+		return owner_KILL;
 	}
 		
 	public String getName() {
@@ -53,8 +53,8 @@ public abstract class CalendarItem {
 		this.id = id;
 	}
 	
-	public void setOwner(Owner owner) {
-		this.owner = owner;
+	public void setOwner(Owner_KILL owner_KILL) {
+		this.owner_KILL = owner_KILL;
 	}
 	
 	public void setName(String name) {

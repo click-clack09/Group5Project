@@ -3,7 +3,7 @@ package application.model;
 public abstract class LifeHub {
 	private String listName;
 
-	//this will be a Hub (school, personal, or business)
+	//this will be a Hub (1 school, 3 personal, or 2 business)
 	//it should a user, category/event Type, a name, an ArrayList of events, tasks, and notes.
 	//for the calendar to show all of the users events, query for all of the users events.
 	//This is independent of the hub currently instantiated.

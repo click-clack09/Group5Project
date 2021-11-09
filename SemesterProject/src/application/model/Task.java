@@ -1,11 +1,11 @@
 package application.model;
 
-public class Task extends CalendarItem implements Comparable<Task> {
-	//remove do date
+public class Task extends CalendarItem_KILL implements Comparable<Task> {
+	//remove due date
 	private Date dueDate;
 	private CheckList<Task> subtasks;//this is unnecessary
 	//all details to instantiate object
-	
+	//Name, description, all database metadata
 	/*
 	 * CONSTRUCTORS
 	 */
