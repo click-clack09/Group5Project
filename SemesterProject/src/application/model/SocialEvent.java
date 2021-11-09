@@ -2,7 +2,7 @@ package application.model;
 
 import java.util.ArrayList;
 
-public class SocialEvent extends LifeEvent
+public class SocialEvent extends HubEvent
 {
 	private String location;
 	private Date eventDate;

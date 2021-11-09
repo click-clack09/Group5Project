@@ -1,27 +1,29 @@
 package application.model;
 
 import java.util.ArrayList;
-
-public class SchoolEvent extends Event{
+//this represents the class / course
+public class SchoolClass{
 	
 	private String professor;
-	
-	private ArrayList<String> assignments;
+	private String location;
+	//needs metadata for database
+	private ArrayList<Task> assignments;//to do list for this course
+	private HubEvent meetingTime; //this would be the place for recurring handle on the front end
 	
 	//constructor, non-parameterized
-	public SchoolEvent() {
+	public SchoolClass() {
 		super();
 	}
 	
-	public SchoolEvent(int id, String eventName, Owner owner, Date date, String note, String location,
+	public SchoolClass(int id, String eventName, Owner owner, Date date, String note, String location,
 			Time time, String professor, boolean recurring) {
-		super(eventName);
-		this.id = id;
-		//this.eventName = eventName;
-		this.owner = owner;
+		//super(eventName);
+		//this.id = id;
+		////this.eventName = eventName;
+		//this.owner = owner;
 		//this.date = date;
 		//this.note = note;
-		this.location = location;
+		//this.location = location;
 		//this.time = time;
 		this.professor = professor;
 		//this.recurring = recurring;
@@ -43,21 +45,21 @@ public class SchoolEvent extends Event{
 //		this.eventName = eventName;
 //	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Owner getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Owner owner) {
-		this.owner = owner;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+//
+//	public Owner getOwner() {
+//		return owner;
+//	}
+//
+//	public void setOwner(Owner owner) {
+//		this.owner = owner;
+//	}
 
 //	public Date getDate() {
 //		return date;

@@ -1,7 +1,7 @@
 package application.model;
 
 import java.util.ArrayList;
-
+//redundant, use checklist
 public class GroceryList extends LifeHubCheckBoxList {
 	
 	private ArrayList<String> imageRefs;

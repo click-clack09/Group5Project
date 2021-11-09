@@ -1,6 +1,6 @@
 package application.model;
-
-public class LifeHubNumberedList extends LifeHubList{
+//kill
+public class LifeHubNumberedList extends LifeHub{
 	private String data;
 	private int numOnList;
 	public LifeHubNumberedList(String listName, String data, int numOnList) {

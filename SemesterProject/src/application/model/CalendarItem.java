@@ -1,7 +1,7 @@
 package application.model;
 
 public abstract class CalendarItem {
-	
+	//replace this with event 
 	protected int id;
 	
 	protected Owner owner;

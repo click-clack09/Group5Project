@@ -4,6 +4,7 @@ public class Note {
 
 	private String imagePath;
 	private String text;
+	//
 	
 	/*
 	 * CONSTRUCTORS

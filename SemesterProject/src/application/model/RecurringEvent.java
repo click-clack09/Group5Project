@@ -1,6 +1,6 @@
 package application.model;
-
-public class RecurringEvent extends Event {
+//keep, later if time
+public class RecurringEvent extends HubEvent {
 	
 	private int frequency;
 	private Date recurringStart;

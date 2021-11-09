@@ -2,10 +2,11 @@ package application.model;
 
 import java.util.ArrayList;
 
-public class Event extends CalendarItem {	
+public class HubEvent {	
 
+	//add database metadata
 	protected Date startDate;
-	protected Date endDate;
+	protected Date endDate;//kill this
 	protected String location;
 	
 	protected ArrayList<Contact> attendees;
@@ -13,13 +14,13 @@ public class Event extends CalendarItem {
 	/*
 	 * CONSTRUCTORS
 	 */
-	public Event()
+	public HubEvent()
 	{
 		super();
 	}
 	
-	public Event(String name) {
-		super(name);
+	public HubEvent(String name) {
+		//super(name);
 		
 		startDate = new Date();
 		
@@ -29,8 +30,8 @@ public class Event extends CalendarItem {
 		attendees = new ArrayList<Contact>();
 	}
 	
-	public Event(String name, Date startDate, Date endDate) {
-		super(name);
+	public HubEvent(String name, Date startDate, Date endDate) {
+		//super(name);
 		
 		this.startDate = startDate;
 		

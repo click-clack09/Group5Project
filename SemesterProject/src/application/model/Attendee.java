@@ -1,8 +1,11 @@
 package application.model;
 
 public class Attendee {
-	
+	//replace with arrayLIst of contacts
+	protected int id;
+	protected Owner owner;
 	private Contact contact;
+	//trim if need be
 	private boolean RSVP;
 	
 	/*
