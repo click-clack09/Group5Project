@@ -163,7 +163,8 @@
                               <Insets bottom="3.0" />
                            </VBox.margin>
                         </Separator>
-                        <VBox fx:id="classButtonList" alignment="CENTER" spacing="3.0">
+                        <VBox fx:id="classButtonBox" alignment="CENTER" layoutX="11.0" layoutY="36.0" spacing="3.0" />
+                        <VBox alignment="CENTER" spacing="3.0">
                            <children>
                               <Button layoutX="24.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToClass1" prefWidth="150.0" text="Go to class1 page" textAlignment="CENTER" />
                               <Button mnemonicParsing="false" onAction="#goToClass2" prefWidth="150.0" text="Go to class2 page" textAlignment="CENTER" />

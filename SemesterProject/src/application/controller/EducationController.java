@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import application.model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,15 +30,19 @@ public class EducationController {
 	 @FXML
     private VBox classButtonBox;
 	 
-	 private ArrayList<Button> classButtonList;
+	 //private ArrayList<Button> classButtonList;
+	 private ObservableList<Button> classButtonList = FXCollections.observableArrayList();
 	 
 	 @FXML
     void initialize()
     {
     	//this will instantiate the LifeHub object based on the DB query
     	//pull all tasks, events, notes and classes associated with the User.getCurrentHub() String
-		//use the listed to set the ArrayList<Button>
-		classButtonList = new ArrayList<Button>();
+		//use the listed to set the ObservableList<Button>
+		classButtonBox.getChildren().clear();
+		//get the SchoolClasses, make a array list of them. This will let us pull their names, tasks, etc 
+		
+		classButtonBox.getChildren().addAll(classButtonList);
     	LifeHub currentHub = new LifeHub(User.getCurrentHub());
     	educationLabel.setText(User.getUsername()+", "+User.getCurrentHub());
     }
@@ -105,9 +111,12 @@ public class EducationController {
               professor = textDialog.getResult();
               SchoolClass newClass = new SchoolClass(professor, location, new ArrayList<Task>(), meetingTime);
             //SCHOOL_CLASS_ID	USER_ID	SCHOOL_CLASS_NAME	SCHOOL_CLASS_LOCATION	SCHOOL_CLASS_PROFESSOR
-              //classButtonList.add(new Button().setText(className));
-              //classButtonBox.getChildren();
-              System.out.println(newClass.getProfessor()+" "+newClass.getLocation()+" "+newClass.getMeetingTime());
+             Button button = new Button();
+              button.setText(className);
+              classButtonList.add(button);
+              classButtonBox.getChildren().clear();
+      		classButtonBox.getChildren().addAll(classButtonList);
+//              System.out.println(newClass.getProfessor()+" "+newClass.getLocation()+" "+newClass.getMeetingTime());
               
 	    }
 
