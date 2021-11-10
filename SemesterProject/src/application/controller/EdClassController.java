@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -18,6 +19,16 @@ public class EdClassController {
 	@FXML
 	private AnchorPane mainPane;
 	
+    @FXML
+    private Label classLabel;
+	
+    @FXML
+    void initialize()
+    {
+    	//do DB query based on User.getUserID(), return tasks for class and all events for the day
+    	classLabel.setText(User.getUserName()+", "+User.getCurrentClass());
+    } 
+    
 	@FXML
     void addHub(ActionEvent event) {
     	System.out.println("testAddHub");
@@ -61,13 +72,13 @@ public class EdClassController {
     void deleteHub(ActionEvent event) {
     	System.out.println("testDelete");
     }
-
+    
     @FXML
     void goBack(ActionEvent event) throws IOException {
    		//URL url = new File("src/application/view/EducationHome.fxml").toURI().toURL();
    		//mainPane = FXMLLoader.load(url);
-    	mainPane = FXMLLoader.load(User.getLast());
-    	User.setLast(new File("src/application/view/EdClass.fxml").toURI().toURL());
+    	mainPane = FXMLLoader.load(User.getLastHub());
+    	User.setLastHub(new File("src/application/view/EdClass.fxml").toURI().toURL());
     	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
    		Scene scene = new Scene(mainPane);// pane you are GOING TO show
         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

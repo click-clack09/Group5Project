@@ -4,44 +4,31 @@ import java.util.ArrayList;
 //this represents the class / course
 public class SchoolClass{
 	
+	private String className;
 	private String professor;
 	private String location;
 	//needs metadata for database
 	private ArrayList<Task> assignments;//to do list for this course
 	private HubEvent meetingTime; //this would be the place for recurring handle on the front end
 	
-	//constructor, non-parameterized
-	public SchoolClass() {
+	public SchoolClass(String className, String professor, String location, ArrayList<Task> assignments,
+			HubEvent meetingTime) {
 		super();
-	}
-	
-	
-	
-	public SchoolClass(String professor, String location, ArrayList<Task> assignments, HubEvent meetingTime) {
-		super();
+		this.className = className;
 		this.professor = professor;
 		this.location = location;
 		this.assignments = assignments;
 		this.meetingTime = meetingTime;
 	}
 
+	
 
-
-	public SchoolClass(int id, String eventName, Owner_KILL owner_KILL, Date date, String note, String location,
-			Time time, String professor, boolean recurring) {
-		//super(eventName);
-		//this.id = id;
-		////this.eventName = eventName;
-		//this.owner = owner;
-		//this.date = date;
-		//this.note = note;
-		//this.location = location;
-		//this.time = time;
-		this.professor = professor;
-		//this.recurring = recurring;
+	/**
+	 * @return the className
+	 */
+	public String getClassName() {
+		return className;
 	}
-
-
 
 	/**
 	 * @return the professor
@@ -50,16 +37,12 @@ public class SchoolClass{
 		return professor;
 	}
 
-
-
 	/**
 	 * @return the location
 	 */
 	public String getLocation() {
 		return location;
 	}
-
-
 
 	/**
 	 * @return the assignments
@@ -68,8 +51,6 @@ public class SchoolClass{
 		return assignments;
 	}
 
-
-
 	/**
 	 * @return the meetingTime
 	 */
@@ -77,7 +58,12 @@ public class SchoolClass{
 		return meetingTime;
 	}
 
-
+	/**
+	 * @param className the className to set
+	 */
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 	/**
 	 * @param professor the professor to set
@@ -86,16 +72,12 @@ public class SchoolClass{
 		this.professor = professor;
 	}
 
-
-
 	/**
 	 * @param location the location to set
 	 */
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
-
 
 	/**
 	 * @param assignments the assignments to set
@@ -104,8 +86,6 @@ public class SchoolClass{
 		this.assignments = assignments;
 	}
 
-
-
 	/**
 	 * @param meetingTime the meetingTime to set
 	 */
@@ -113,5 +93,5 @@ public class SchoolClass{
 		this.meetingTime = meetingTime;
 	}
 
-
+	
 }

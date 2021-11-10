@@ -29,7 +29,7 @@ public class BusinessController {
     	//this will instantiate the LifeHub object based on the DB query
     	//pull all tasks, events and notes associated with the User.getCurrentHub() String
     	LifeHub currentHub = new LifeHub(User.getCurrentHub());
-    	businessHomeLabel.setText(User.getUsername()+", "+User.getCurrentHub());
+    	businessHomeLabel.setText(User.getUserName()+", "+User.getCurrentHub());
     }
 
     
@@ -80,7 +80,7 @@ public class BusinessController {
     
      @FXML
      void goToCalendar(ActionEvent event) throws IOException {
-    	User.setLast(new File("src/application/view/BusinessHome.fxml").toURI().toURL());
+    	User.setLastHub(new File("src/application/view/BusinessHome.fxml").toURI().toURL());
      	URL url = new File("src/application/view/Calendar.fxml").toURI().toURL();
      	mainPane = FXMLLoader.load(url);
      	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
@@ -105,7 +105,7 @@ public class BusinessController {
 
     @FXML
     void userHome(ActionEvent event) throws IOException {
-    	User.setLast(new File("src/application/view/BusinessHome.fxml").toURI().toURL());
+    	User.setLastHub(new File("src/application/view/BusinessHome.fxml").toURI().toURL());
    		URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
    		mainPane = FXMLLoader.load(url);
    		//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
