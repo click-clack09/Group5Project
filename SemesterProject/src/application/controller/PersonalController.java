@@ -95,7 +95,7 @@ public class PersonalController {
     
     @FXML
     void goToCalendar(ActionEvent event) throws IOException {
-   	User.setLast(new File("src/application/view/PersonalHome.fxml").toURI().toURL());
+   	User.setLastHub(new File("src/application/view/PersonalHome.fxml").toURI().toURL());
     	URL url = new File("src/application/view/Calendar.fxml").toURI().toURL();
     	mainPane = FXMLLoader.load(url);
     	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO

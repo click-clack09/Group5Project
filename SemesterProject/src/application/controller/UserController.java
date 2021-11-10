@@ -27,13 +27,15 @@ public class UserController {
 	@FXML
 		void initialize()
 	{
-		ArrayList userHubs = new ArrayList();
+		//User.setFirstView(true);
+		ArrayList userHubNames = new ArrayList<>();
+		//User.setUserHubs();
 		//for testing only. Will read from user data
-		userHubs.add("EducationHome");
-		userHubs.add("BusinessHome");
-		userHubs.add("PersonalHome");
+		userHubNames.add("EducationHome");
+		userHubNames.add("BusinessHome");
+		userHubNames.add("PersonalHome");
 		//will return the event type use this to navigate to the correct hub view
-		selection.getItems().addAll(userHubs);
+		selection.getItems().addAll(userHubNames);
 	}
 	
 	@FXML
@@ -96,7 +98,7 @@ public class UserController {
     				break;
     		}
     		URL url = new File("src/application/view/"+hubView+".fxml").toURI().toURL();
-    		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());
+    		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());
     		User.setCurrentHub(userChoice);
         	mainPane = FXMLLoader.load(url);
         	Scene scene = new Scene(mainPane);// pane you are GOING TO show
@@ -129,7 +131,7 @@ public class UserController {
             try
         	{
         		URL url = new File("src/application/view/BusinessHome.fxml").toURI().toURL();
-        		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());        		
+        		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());        		
             	User.setCurrentHub(hubName);
         		mainPane = FXMLLoader.load(url);
             	//use FXMLloader to pass all user data to next controller
@@ -166,7 +168,7 @@ public class UserController {
            try
        	{
        		URL url = new File("src/application/view/EducationHome.fxml").toURI().toURL();
-       		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());
+       		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());
        		User.setCurrentHub(hubName);
        		//use FXMLloader to pass all user data to next controller
            	mainPane = FXMLLoader.load(url);
@@ -203,7 +205,7 @@ public class UserController {
            try
        	{
        		URL url = new File("src/application/view/PersonalHome.fxml").toURI().toURL();
-       		User.setLast(new File("src/application/view/UserHome.fxml").toURI().toURL());
+       		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());
        		User.setCurrentHub(hubName);
        	//use FXMLloader to pass all user data to next controller
            	mainPane = FXMLLoader.load(url);

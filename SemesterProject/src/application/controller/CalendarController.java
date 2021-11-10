@@ -28,7 +28,7 @@ public class CalendarController {
     {
     	//this will instantiate the LifeHub object based on the DB query
     	//pull all tasks, events and notes associated with the User.getUserID() int
-    	calendarLabel.setText(User.getUsername()+", Monthly Calendar");
+    	calendarLabel.setText(User.getUserName()+", Monthly Calendar");
     }
     
     @FXML
@@ -79,8 +79,8 @@ public class CalendarController {
     @FXML
     void goBack(ActionEvent event) throws IOException {
    		//URL url = new File("src/EducationHome.fxml").toURI().toURL();
-    	mainPane = FXMLLoader.load(User.getLast());
-    	User.setLast(new File("src/application/view/Calendar.fxml").toURI().toURL());
+    	mainPane = FXMLLoader.load(User.getLastHub());
+    	User.setLastHub(new File("src/application/view/Calendar.fxml").toURI().toURL());
     	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
    		Scene scene = new Scene(mainPane);// pane you are GOING TO show
         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

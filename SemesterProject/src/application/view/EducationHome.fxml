@@ -103,13 +103,18 @@
                            </children>
                         </VBox>
                         <Separator prefWidth="200.0" />
-                        <Label text="Class1" textFill="WHITE">
-                           <VBox.margin>
-                              <Insets left="3.0" />
-                           </VBox.margin>
-                        </Label>
+                        <VBox fx:id="toDoList" alignment="CENTER_LEFT" layoutX="14.0" layoutY="32.0" spacing="2.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
                         <VBox alignment="CENTER_LEFT" spacing="2.0">
                            <children>
+                              <Label text="Class1" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="3.0" />
+                                 </VBox.margin>
+                              </Label>
                               <CheckBox mnemonicParsing="false" text="Semester Project Template" textFill="WHITE" />
                               <CheckBox mnemonicParsing="false" text="Lab 3" textFill="WHITE" />
                               <CheckBox mnemonicParsing="false" text="Quiz 3" textFill="WHITE" />
@@ -123,9 +128,9 @@
                            </VBox.margin>
                         </VBox>
                         <Separator prefWidth="200.0" />
-                        <Label text="Class2" textFill="WHITE" />
                         <VBox spacing="3.0">
                            <children>
+                              <Label text="Class2" textFill="WHITE" />
                               <CheckBox mnemonicParsing="false" text="Read for Class" textFill="WHITE" />
                               <CheckBox mnemonicParsing="false" text="Assignment 2" textFill="WHITE">
                                  <VBox.margin>
@@ -163,7 +168,10 @@
                               <Insets bottom="3.0" />
                            </VBox.margin>
                         </Separator>
-                        <VBox fx:id="classButtonBox" alignment="CENTER" layoutX="11.0" layoutY="36.0" spacing="3.0" />
+                        <VBox fx:id="classButtonBox" alignment="CENTER" layoutX="11.0" layoutY="36.0" spacing="3.0">
+                           <VBox.margin>
+                              <Insets bottom="3.0" />
+                           </VBox.margin></VBox>
                         <VBox alignment="CENTER" spacing="3.0">
                            <children>
                               <Button layoutX="24.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToClass1" prefWidth="150.0" text="Go to class1 page" textAlignment="CENTER" />

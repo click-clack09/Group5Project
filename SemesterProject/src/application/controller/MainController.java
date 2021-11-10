@@ -59,8 +59,8 @@ public class MainController {
     		if (User.validate(userName.getText(),password.getText()))
     	
 	    	{
-	    		User.setLast(new File("src/application/view/Login.fxml").toURI().toURL());
-	    		User.setUsername(userName.getText());
+	    		User.setLastHub(new File("src/application/view/Login.fxml").toURI().toURL());
+	    		User.setUserName(userName.getText());
 	        	URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
 	        	mainPane = FXMLLoader.load(url);
 	            Scene scene = new Scene(mainPane);// pane you are GOING TO show

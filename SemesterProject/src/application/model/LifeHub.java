@@ -1,7 +1,22 @@
 package application.model;
+
+import java.net.URL;
+import java.util.ArrayList;
+
 //kill
 public class LifeHub {
 	private String hubName;
+	private int eventType;
+	private ArrayList<HubEvent> events;
+	private ArrayList<Task> tasks;
+	private ArrayList<Note> notes;
+	
+	//user class has the following:
+	//private static URL last;
+//	private static String username;
+//	private static int userID;
+//	private static String currentHub;
+		
 
 	//this will be a Hub (1 school, 3 personal, or 2 business)
 	//it should a user, category/event Type, a name, an ArrayList of events, tasks, and notes.
@@ -16,17 +31,87 @@ public class LifeHub {
 	{
 		this.hubName = listName;
 	}
+
+	public LifeHub(String hubName, int eventType, ArrayList<HubEvent> events, ArrayList<Task> tasks,
+			ArrayList<Note> notes) {
+		super();
+		this.hubName = hubName;
+		this.eventType = eventType;
+		this.events = events;
+		this.tasks = tasks;
+		this.notes = notes;
+	}
+
 	/**
-	 * @return the listName
+	 * @return the hubName
 	 */
-	public String getListName() {
+	public String getHubName() {
 		return hubName;
 	}
 
 	/**
-	 * @param listName the listName to set
+	 * @return the eventType
 	 */
-	public void setListName(String listName) {
-		this.hubName = listName;
+	public int getEventType() {
+		return eventType;
 	}
+
+	/**
+	 * @return the events
+	 */
+	public ArrayList<HubEvent> getEvents() {
+		return events;
+	}
+
+	/**
+	 * @return the tasks
+	 */
+	public ArrayList<Task> getTasks() {
+		return tasks;
+	}
+
+	/**
+	 * @return the notes
+	 */
+	public ArrayList<Note> getNotes() {
+		return notes;
+	}
+
+	/**
+	 * @param hubName the hubName to set
+	 */
+	public void setHubName(String hubName) {
+		this.hubName = hubName;
+	}
+
+	/**
+	 * @param eventType the eventType to set
+	 */
+	public void setEventType(int eventType) {
+		this.eventType = eventType;
+	}
+
+	/**
+	 * @param events the events to set
+	 */
+	public void setEvents(ArrayList<HubEvent> events) {
+		this.events = events;
+	}
+
+	/**
+	 * @param tasks the tasks to set
+	 */
+	public void setTasks(ArrayList<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(ArrayList<Note> notes) {
+		this.notes = notes;
+	}
+	
+	
+	
 }
