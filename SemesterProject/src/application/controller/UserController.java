@@ -26,7 +26,7 @@ public class UserController {
     @FXML
     private Label welcomeLabel;
 	
-	ArrayList<UserNameRecord> userHubRecords;
+	ArrayList<UserHubRecord> userHubRecords;
 	ArrayList<HubEvent> events;
 	ArrayList<Contact> contacts;
 	
@@ -39,7 +39,7 @@ public class UserController {
     	
     	welcomeLabel.setText("Welcome "+User.getUserName());
     	
-    	userHubRecords = new ArrayList<UserNameRecord>();
+    	userHubRecords = new ArrayList<UserHubRecord>();
 		
 		//How will data come back from query? Each record read should be added to userHubNames
 		
@@ -65,17 +65,17 @@ public class UserController {
 		
 		//Dynamically Added Hubs
 		for (LifeHub hub: User.getUserHubs())
-			userHubRecords.add(new UserNameRecord(hub.getHubName(),hub.getEventType()));
+			userHubRecords.add(new UserHubRecord(hub.getHubName(),hub.getEventType()));
 		//Hard coded hubs for testing
-		userHubRecords.add(new UserNameRecord("Fall 2021",1));
-		userHubRecords.add(new UserNameRecord("My Business Hub",2));
-		userHubRecords.add(new UserNameRecord("Personal Hub",3));
+		userHubRecords.add(new UserHubRecord("Fall 2021",1));
+		userHubRecords.add(new UserHubRecord("My Business Hub",2));
+		userHubRecords.add(new UserHubRecord("Personal Hub",3));
 		
 		//make a list of the names
 		ArrayList<String> hubNames = new ArrayList<String>();
-		for (UserNameRecord record:userHubRecords)
+		for (UserHubRecord record:userHubRecords)
 		{
-			hubNames.add(record.getUserName());
+			hubNames.add(record.getHubName());
 		}
 		
 		//This will print all of the hubs
@@ -140,7 +140,7 @@ public class UserController {
 				if (hubType > 0)
 					find = false;
 	
-				System.out.println(userHubRecords.get(count).getUserName()+" "+hubType);
+				System.out.println(userHubRecords.get(count).getHubName()+" "+hubType);
 			}
 			//Ends search when all values have been checked
 			else
@@ -162,13 +162,22 @@ public class UserController {
 				/*Constructor for SchoolClass(String className, String professor, String location, ArrayList<Task> assignments,
 					HubEvent meetingTime)*/
 				//for testing, should just be the else part
-				if (User.getClasses() ==null)
+				if (User.getClasses() == null)
 				{
-					classes.add(new SchoolClass("Application Programming","Rathore","NPB",new ArrayList<Task>(), new HubEvent()));
-					classes.add(new SchoolClass("Systems Programming","Sylvestro","SEB",new ArrayList<Task>(), new HubEvent()));
+				ArrayList<Note> appNotes = new ArrayList<Note>();
+					appNotes.add(new Note("This is my first note"));
+					appNotes.add(new Note("Second note"));
+					classes.add(new SchoolClass("Application Programming","Rathore","NPB",new ArrayList<Task>(), new HubEvent(),appNotes));
+					classes.add(new SchoolClass("Systems Programming","Sylvestro","SEB",new ArrayList<Task>(), new HubEvent(),new ArrayList<Note>()));
 				}
 				else
 				{
+//					User.getClasses().clear();
+//					User.getUserHubs().get
+
+				
+	////////////////////Need to deal with only pulling in the right classes for the hub. Also, need to decide if we should extend hub to SchoolHub
+				//to be SOLID compliant
 					for (SchoolClass sc: User.getClasses())
 						classes.add(sc);
 				}

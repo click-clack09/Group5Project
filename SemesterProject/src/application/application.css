@@ -2,3 +2,7 @@
 .background {
 	-fx-background-color:white
 }
+
+.scroll-pane {
+   /*-fx-background: transparent;*/
+}

@@ -1,8 +1,9 @@
 package application.model;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 //this represents the class / course
-public class SchoolClass{
+public class SchoolClass implements Comparable{
 	
 	private String className;
 	private String professor;
@@ -13,13 +14,13 @@ public class SchoolClass{
 	private ArrayList<Note> notes;
 	
 	public SchoolClass(String className, String professor, String location, ArrayList<Task> assignments,
-			HubEvent meetingTime) {
-		super();
+			HubEvent meetingTime, ArrayList<Note> notes) {
 		this.className = className;
 		this.professor = professor;
 		this.location = location;
 		this.assignments = assignments;
 		this.meetingTime = meetingTime;
+		this.notes = notes;
 	}
 
 	
@@ -60,6 +61,13 @@ public class SchoolClass{
 	}
 
 	/**
+	 * @return the notes
+	 */
+	public ArrayList<Note> getNotes() {
+		return notes;
+	}
+
+	/**
 	 * @param className the className to set
 	 */
 	public void setClassName(String className) {
@@ -92,6 +100,23 @@ public class SchoolClass{
 	 */
 	public void setMeetingTime(HubEvent meetingTime) {
 		this.meetingTime = meetingTime;
+	}
+
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(ArrayList<Note> notes) {
+		this.notes = notes;
+	}
+
+
+
+
+	@Override
+	public int compareTo(Object arg0) {
+		if (arg0.equals(this.className))
+			return 1;
+		return -1;
 	}
 
 	

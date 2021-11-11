@@ -78,7 +78,7 @@ public class EducationController {
 			//make task class labels
 			Label classLabel = new Label();
             //deal with css
-			classLabel.setStyle("-fx-text-fill:white");
+			//classLabel.setStyle("-fx-text-fill:white");
             classLabel.setText(classes.get(i));
             //For every class, add an observable checkList
             ObservableList<CheckBox> checkList = FXCollections.observableArrayList();
@@ -97,7 +97,7 @@ public class EducationController {
             {
             	//Make a CheckBox for each task
             	CheckBox cb = new CheckBox(User.getClasses().get(i).getAssignments().get(j).getText());
-                cb.setStyle("-fx-text-fill:white");
+                //cb.setStyle("-fx-text-fill:white");
                 cb.setPadding(new Insets(10, 10, 0, 0));
                 checkList.add(cb);
                 //add HashMap Entry for task text and className (String)
@@ -112,6 +112,7 @@ public class EducationController {
             classesVBoxList.add(temp);
 		}
 		
+		//assign an action to the buttons
     	for (int i =0; i <classButtonList.size(); i++)
     	{
     		
@@ -193,8 +194,9 @@ public class EducationController {
               classButtonList.add(button);
               
               //add the class to the User classes ArrayList
-              SchoolClass tempClass =new SchoolClass(className,professor,location, new ArrayList<Task>(),new HubEvent());
-              User.getClasses().add(tempClass);
+              //SchoolClass tempClass =new SchoolClass(className,professor,location, new ArrayList<Task>(),new HubEvent(), new ArrayList<Task>());
+              
+              //User.getClasses().add(tempClass);
               
               //add the String className to the classes ArrayList and to the classhash with the index
               classes.add(className);
@@ -203,12 +205,13 @@ public class EducationController {
               //make a new task class CheckList
               Label classLabel = new Label();
               //deal with css
-              classLabel.setStyle("-fx-text-fill:white");
+              //classLabel.setStyle("-fx-text-fill:white");
               classLabel.setText(className);
               //add this here, or is this part of parent ObservableList?
               ObservableList<CheckBox> checkList = FXCollections.observableArrayList();
               Separator separator = new Separator();
               VBox temp = new VBox();
+              temp.setPadding(new Insets(10, 10, 0, 0));
               temp.getChildren().addAll(classLabel,separator);
               toDoList.getChildren().add(temp);
               classesVBoxList.add(temp);
@@ -231,8 +234,13 @@ public class EducationController {
               System.out.println(className+" "+location+" "+professor);
               
               //use this class to set DB entry
-              SchoolClass newClass = new SchoolClass(className, professor, location, new ArrayList<Task>(), meetingTime);
+              SchoolClass newClass = new SchoolClass(className, professor, location, new ArrayList<Task>(), meetingTime, new ArrayList<Note>());
             //SCHOOL_CLASS_ID	USER_ID	SCHOOL_CLASS_NAME	SCHOOL_CLASS_LOCATION	SCHOOL_CLASS_PROFESSOR
+              
+            //add the class to the User classes ArrayList
+              //SchoolClass tempClass =new SchoolClass(className,professor,location, new ArrayList<Task>(),new HubEvent(), new ArrayList<Task>());
+              
+              User.getClasses().add(newClass);
               User.getCurrentHub();
              
               //get the last button add the setOnAction
@@ -265,7 +273,7 @@ public class EducationController {
 	    {
 	    	String[] buttonSplit;
 	    	buttonSplit=caller.split("\'");
-  			System.out.println(buttonSplit[1]);
+  			//System.out.println(buttonSplit[1]);
 	    	User.setCurrentClass(buttonSplit[1]);
 	    	System.out.println(User.getCurrentClass());
 	    }
@@ -306,7 +314,7 @@ public class EducationController {
 	      	//deal with css
 			//add this here, or is this part of parent ObservableList?
             CheckBox cb = new CheckBox(taskString);
-            cb.setStyle("-fx-text-fill:white");
+            //cb.setStyle("-fx-text-fill:white");
             cb.setPadding(new Insets(10, 10, 0, 0));
             
             //This adds it to the appropriate observable VBox

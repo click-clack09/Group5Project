@@ -12,7 +12,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class BusinessController {
@@ -22,6 +25,18 @@ public class BusinessController {
 
     @FXML
     private Label businessHomeLabel;
+    
+    @FXML
+    private VBox toDoList;
+
+    @FXML
+    private ListView<String> contactList;
+
+    @FXML
+    private TextArea notes;
+
+    @FXML
+    private ListView<String> archivedNotes;
     
     @FXML
     void initialize()

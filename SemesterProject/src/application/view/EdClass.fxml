@@ -2,9 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -104,18 +103,16 @@
                         <Separator prefWidth="200.0" />
                         <VBox alignment="TOP_CENTER">
                            <children>
-                              <Label text="Class1" textFill="WHITE" />
-                              <VBox spacing="3.0">
-                                 <children>
-                                    <CheckBox mnemonicParsing="false" text="Semester Project Template" textFill="WHITE" />
-                                    <CheckBox mnemonicParsing="false" text="Lab 3" textFill="WHITE" />
-                                    <CheckBox mnemonicParsing="false" text="Quiz 3" textFill="WHITE" />
-                                    <CheckBox mnemonicParsing="false" text="Read for Class" textFill="WHITE" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="3.0" />
-                                 </padding>
-                              </VBox>
+                              <Label fx:id="toDoClassName" text="Class1" textFill="WHITE" />
+                              <ScrollPane>
+                                 <content>
+                                    <VBox fx:id="classToDo" spacing="3.0">
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </VBox>
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </VBox>
                         <Separator prefWidth="200.0">
@@ -152,7 +149,7 @@
                                           <Insets left="3.0" right="3.0" />
                                        </VBox.margin>
                                     </Separator>
-                                    <TextArea prefHeight="200.0" prefWidth="396.0" />
+                                    <TextArea fx:id="classNotes" prefHeight="200.0" prefWidth="396.0" />
                                     <Button mnemonicParsing="false" onAction="#saveNote" text="Save Note">
                                        <VBox.margin>
                                           <Insets bottom="3.0" top="3.0" />
@@ -163,7 +160,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="189.0" style="-fx-border-color: black; -fx-background-color: #324c5e;">
+                              <VBox alignment="TOP_CENTER" prefHeight="180.0" prefWidth="227.0" style="-fx-border-color: black; -fx-background-color: #324c5e;">
                                  <children>
                                     <Label text="Archived Notes" textFill="WHITE">
                                        <font>
@@ -174,11 +171,22 @@
                                        </VBox.margin>
                                     </Label>
                                     <Separator prefWidth="200.0" />
-                                    <DatePicker prefHeight="26.0" prefWidth="219.0">
+                                    <VBox>
                                        <VBox.margin>
                                           <Insets left="3.0" right="3.0" top="3.0" />
                                        </VBox.margin>
-                                    </DatePicker>
+                                       <children>
+                                          <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ListView fx:id="archivedClassNotes" prefHeight="200.0" prefWidth="200.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </VBox>
                            </children>
@@ -202,8 +210,8 @@
                                        <children>
                                           <GridPane gridLinesVisible="true" layoutY="2.0" prefHeight="398.0" prefWidth="581.0">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.4" minWidth="10.0" prefWidth="43.99997940063477" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.8000205993652" minWidth="0.0" prefWidth="288.8000205993652" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="0.0" prefWidth="400.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

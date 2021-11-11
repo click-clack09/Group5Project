@@ -11,6 +11,7 @@ public class LifeHub {
 	private ArrayList<Task> tasks;
 	private ArrayList<Note> notes;
 	
+	
 	//user class has the following:
 	//private static URL last;
 //	private static String username;

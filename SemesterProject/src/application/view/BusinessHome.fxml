@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -107,7 +106,7 @@
                            <children>
                               <ScrollPane prefHeight="200.0" prefWidth="200.0">
                                  <content>
-                                    <VBox spacing="3.0">
+                                    <VBox fx:id="toDoList" spacing="3.0">
                                        <children>
                                           <CheckBox mnemonicParsing="false" text="Semester Project Template" />
                                           <CheckBox mnemonicParsing="false" text="Lab 3" />
@@ -146,7 +145,7 @@
                               </Label>
                               <ScrollPane prefHeight="200.0" prefWidth="200.0">
                                  <content>
-                                    <ListView prefHeight="312.0" prefWidth="200.0" />
+                                    <ListView fx:id="contactList" prefHeight="312.0" prefWidth="200.0" />
                                  </content>
                               </ScrollPane>
                               <HBox alignment="CENTER" spacing="5.0">
@@ -184,7 +183,7 @@
                                           <Insets left="3.0" right="3.0" />
                                        </VBox.margin>
                                     </Separator>
-                                    <TextArea prefHeight="200.0" prefWidth="396.0" />
+                                    <TextArea fx:id="notes" prefHeight="200.0" prefWidth="396.0" />
                                     <Button mnemonicParsing="false" onAction="#saveNote" text="Save Note">
                                        <VBox.margin>
                                           <Insets bottom="3.0" top="3.0" />
@@ -206,11 +205,18 @@
                                        </VBox.margin>
                                     </Label>
                                     <Separator prefWidth="200.0" />
-                                    <DatePicker prefHeight="26.0" prefWidth="219.0">
+                                    <ScrollPane>
                                        <VBox.margin>
                                           <Insets left="3.0" right="3.0" top="3.0" />
                                        </VBox.margin>
-                                    </DatePicker>
+                                       <content>
+                                          <AnchorPane prefHeight="200.0" prefWidth="275.0">
+                                             <children>
+                                                <ListView fx:id="archivedNotes" prefHeight="200.0" prefWidth="200.0" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </ScrollPane>
                                  </children>
                               </VBox>
                            </children>

@@ -14,6 +14,11 @@ public class Note {
 		this.imagePath = imagePath;
 		this.text = text;
 	}
+	
+	public Note(String text) {
+		this.imagePath = "";
+		this.text = text;
+	}
 
 	/*
 	 * GETTERS

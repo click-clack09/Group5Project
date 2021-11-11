@@ -9,22 +9,22 @@ public class SocialEvent extends HubEvent
 	private Boolean hasRSVP;
 	private Boolean hasAttendees;
 	//private ArrayList<Rsvp> rsvpList;
-	private ArrayList<Attendee_KILL> attendeeList;
+	//private ArrayList<Attendee_KILL> attendeeList;
 	
 	public SocialEvent()
 	{
 		
 	}
 	
-	public SocialEvent(String location, Date eventDate, Boolean hasRSVP, Boolean hasAtendees,
-			/*ArrayList<Rsvp> resvpList,*/ ArrayList<Attendee_KILL> attenedeeList)
+	public SocialEvent(String location, Date eventDate, Boolean hasRSVP, Boolean hasAtendees/*,
+			ArrayList<Rsvp> resvpList, ArrayList<Attendee_KILL> attenedeeList*/)
 	{
 		this.location = location;
 		this.eventDate = eventDate;
 		this.hasRSVP = hasRSVP;
 		this.hasAttendees = hasAttendees;
 		//this.rsvpList = rsvpList;
-		this.attendeeList = attenedeeList;
+		//this.attendeeList = attenedeeList;
 	}
 
 	/**
@@ -97,19 +97,19 @@ public class SocialEvent extends HubEvent
 //		this.rsvpList = rsvpList;
 //	}
 
-	/**
-	 * @return the attendeeList
-	 */
-	public ArrayList<Attendee_KILL> getAttendeeList() {
-		return attendeeList;
-	}
-
-	/**
-	 * @param attendeeList the attendeeList to set
-	 */
-	public void setAttendeeList(ArrayList<Attendee_KILL> attendeeList) {
-		this.attendeeList = attendeeList;
-	}
+//	/**
+//	 * @return the attendeeList
+//	 */
+//	public ArrayList<Attendee_KILL> getAttendeeList() {
+//		return attendeeList;
+//	}
+//
+//	/**
+//	 * @param attendeeList the attendeeList to set
+//	 */
+//	public void setAttendeeList(ArrayList<Attendee_KILL> attendeeList) {
+//		this.attendeeList = attendeeList;
+//	}
 	
 	
 }
