@@ -10,6 +10,7 @@ public class SchoolClass{
 	//needs metadata for database
 	private ArrayList<Task> assignments;//to do list for this course
 	private HubEvent meetingTime; //this would be the place for recurring handle on the front end
+	private ArrayList<Note> notes;
 	
 	public SchoolClass(String className, String professor, String location, ArrayList<Task> assignments,
 			HubEvent meetingTime) {

@@ -10,6 +10,7 @@ public class HubEvent {
 	private int eventType; //1,2,3 business, personal, education, verify this with Donny prior to use
 	private Date startDate;
 	//this will need to be referenced with a LifeHub name, but should that come from the sending method?
+	private String hubName;
 	private String location;
 	private ArrayList<Contact> attendees;
 	private String eventName;
@@ -24,6 +25,7 @@ public class HubEvent {
 		this.userID = -1;
 		this.eventType = -1;
 		this.startDate = new Date();
+		this.hubName = "";
 		this.location = "";
 		this.attendees = new ArrayList<Contact>();
 		this.eventName = "";
@@ -31,37 +33,29 @@ public class HubEvent {
 	}
 	
 	public HubEvent(String name) {
-		startDate = new Date();
-		endDate = new Date();
-		location = "";
-		attendees = new ArrayList<Contact>();
+		this.eventID = -1;
+		this.userID = -1;
+		this.eventType = -1;
+		this.startDate = new Date();
+		this.hubName = "";
+		this.location = "";
+		this.attendees = new ArrayList<Contact>();
+		this.eventName = name;
 	}
 	
-	public HubEvent(int eventID, int userID, int eventType, Date startDate, String location,
+	public HubEvent(int eventID, int userID, int eventType, Date startDate, String hubName, String location,
 			ArrayList<Contact> attendees, String eventName, Date endDate) {
+
 		this.eventID = eventID;
 		this.userID = userID;
 		this.eventType = eventType;
 		this.startDate = startDate;
+		this.hubName = hubName;
 		this.location = location;
 		this.attendees = attendees;
 		this.eventName = eventName;
-		//this.endDate = endDate;
-	}
-
-	public HubEvent(String name, Date startDate, Date endDate) {
-		this.startDate = startDate;
 		this.endDate = endDate;
-		location = "";
-		attendees = new ArrayList<Contact>();
 	}
-	
-	/*
-	 * HELPER METHODS
-	 */
-		
-	//helper methods here
-		
 
 	/**
 	 * @return the eventID
@@ -92,6 +86,13 @@ public class HubEvent {
 	}
 
 	/**
+	 * @return the hubName
+	 */
+	public String getHubName() {
+		return hubName;
+	}
+
+	/**
 	 * @return the location
 	 */
 	public String getLocation() {
@@ -110,6 +111,13 @@ public class HubEvent {
 	 */
 	public String getEventName() {
 		return eventName;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
 	}
 
 	/**
@@ -141,6 +149,13 @@ public class HubEvent {
 	}
 
 	/**
+	 * @param hubName the hubName to set
+	 */
+	public void setHubName(String hubName) {
+		this.hubName = hubName;
+	}
+
+	/**
 	 * @param location the location to set
 	 */
 	public void setLocation(String location) {
@@ -161,13 +176,23 @@ public class HubEvent {
 		this.eventName = eventName;
 	}
 
-	//default for now, probably not what will be used
-	@Override
-	public String toString() {
-		return "HubEvent [eventID=" + eventID + ", userID=" + userID + ", eventType=" + eventType + ", startDate="
-				+ startDate + ", location=" + location + ", attendees=" + attendees + ", eventName=" + eventName
-				+ ", endDate=" + endDate + "]";
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
+
+	
+
+	/*
+	 * HELPER METHODS
+	 */
+		
+	//helper methods here
+		
+
+	
 	
 		
 	/*
@@ -175,5 +200,11 @@ public class HubEvent {
 	 */
 		
 	//overrides for abstract classes here
+	@Override
+	public String toString() {
+		return "HubEvent [eventID=" + eventID + ", userID=" + userID + ", eventType=" + eventType + ", startDate="
+				+ startDate + ", hubName=" + hubName + ", location=" + location + ", attendees=" + attendees
+				+ ", eventName=" + eventName + ", endDate=" + endDate + "]";
+	}
 	
 }

@@ -26,10 +26,8 @@ public class BusinessController {
     @FXML
     void initialize()
     {
-    	//this will instantiate the LifeHub object based on the DB query
-    	//pull all tasks, events and notes associated with the User.getCurrentHub() String
-    	LifeHub currentHub = new LifeHub(User.getCurrentHub());
-    	businessHomeLabel.setText(User.getUserName()+", "+User.getCurrentHub());
+    	
+    	businessHomeLabel.setText(User.getUserName()+", "+User.getCurrentHub().getHubName());
     }
 
     

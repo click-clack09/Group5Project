@@ -4,7 +4,7 @@ public abstract class CalendarItem_KILL {
 	//replace this with event, delete
 	protected int id;
 	
-	protected Owner_KILL owner_KILL;
+	protected UserNameRecord userNameRecord;
 	
 	protected String name;
 	protected String description;
@@ -33,8 +33,8 @@ public abstract class CalendarItem_KILL {
 		return id;
 	}
 	
-	public Owner_KILL getOwner() {
-		return owner_KILL;
+	public UserNameRecord getOwner() {
+		return userNameRecord;
 	}
 		
 	public String getName() {
@@ -53,8 +53,8 @@ public abstract class CalendarItem_KILL {
 		this.id = id;
 	}
 	
-	public void setOwner(Owner_KILL owner_KILL) {
-		this.owner_KILL = owner_KILL;
+	public void setOwner(UserNameRecord userNameRecord) {
+		this.userNameRecord = userNameRecord;
 	}
 	
 	public void setName(String name) {

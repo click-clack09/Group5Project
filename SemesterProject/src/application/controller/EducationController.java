@@ -4,17 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import application.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
@@ -35,9 +37,11 @@ public class EducationController {
      @FXML
      private VBox toDoList;
 	 
-	 //private ArrayList<Button> classButtonList;
 	 private ObservableList<Button> classButtonList = FXCollections.observableArrayList();
-	 private ObservableList<VBox> classesList = FXCollections.observableArrayList();
+	 private ObservableList<VBox> classesVBoxList = FXCollections.observableArrayList();
+	 private ArrayList<String> classes;
+	 private HashMap<String, Integer> classHash;
+	 private HashMap<String, String> taskHash;
 	 //watch VBox. Add class to observable classesList. with each class add, add an observable ToDoList in a VBox
 	 //The part below gets dynamically added to the parent classesList
 	 //private ObservableList<CheckBox> classToDoList = FXCollections.observableArrayList();
@@ -45,38 +49,94 @@ public class EducationController {
 	 @FXML
     void initialize()
     {
-		 educationLabel.setText(User.getUserName()+", "+User.getCurrentHub());
-    	//this will instantiate the LifeHub object based on the DB query
-    	//pull all tasks, events, notes and classes associated with the User.getCurrentHub() String
-		//use the listed to set the ObservableList<Button>
-
-//		 classButtonBox.getChildren().clear();
-
-		//get the SchoolClasses fromDB, make a array list of them. This will let us pull their names, tasks, etc 
-		classButtonBox.getChildren().addAll(classButtonList);
-    	LifeHub currentHub = new LifeHub(User.getCurrentHub());
+		 //make String ArrayList of classes
+		 classes = new ArrayList<String>();
+		 for (SchoolClass schoolClass : User.getClasses())
+			 classes.add(schoolClass.getClassName());
+		 
+		 classHash = new HashMap<String, Integer>();
+		 taskHash = new HashMap<String, String>();
+		 //Set Label
+		 educationLabel.setText(User.getUserName()+", "+User.getCurrentHub().getHubName());
+    	//this will instantiate the LifeHub object based on the DB query from the user view
+		
+		
+		//LifeHub currentHub = new LifeHub(User.getCurrentHub().getHubName());
     	
+		//populate the Hub (below)
+		
+		//add buttons and checkboxes using User.getClasses
+		Button button;
+		for (int i = 0; i < classes.size(); i++)
+		{
+			//make a class button
+			button = new Button();
+			button.setText(classes.get(i));
+			classButtonList.add(button);
+			
+			//make task class labels
+			Label classLabel = new Label();
+            //deal with css
+			classLabel.setStyle("-fx-text-fill:white");
+            classLabel.setText(classes.get(i));
+            //For every class, add an observable checkList
+            ObservableList<CheckBox> checkList = FXCollections.observableArrayList();
+            
+            //make a separator and a VBox 
+            Separator separator = new Separator();
+            VBox temp = new VBox();
+            temp.setPadding(new Insets(10, 10, 10, 10));
+            
+            //Add an entry to the classHash tying the class name to the index.
+            //We can use this later to remove classes by index.
+            classHash.put(classes.get(i), i);
+            
+            //this will get all tasks in ArrayList for class
+            for (int j = 0; j < User.getClasses().get(i).getAssignments().size(); j++)
+            {
+            	//Make a CheckBox for each task
+            	CheckBox cb = new CheckBox(User.getClasses().get(i).getAssignments().get(j).getText());
+                cb.setStyle("-fx-text-fill:white");
+                cb.setPadding(new Insets(10, 10, 0, 0));
+                checkList.add(cb);
+                //add HashMap Entry for task text and className (String)
+                taskHash.put(cb.getText(), classes.get(i));
+            }
+            
+            //only add tempInner when adding new class, otherwise reference it
+            VBox tempInner = new VBox();
+            tempInner.getChildren().addAll(checkList);
+            temp.getChildren().addAll(classLabel,tempInner,separator);
+            toDoList.getChildren().add(temp);
+            classesVBoxList.add(temp);
+		}
+		
     	for (int i =0; i <classButtonList.size(); i++)
     	{
     		
     		classButtonList.get(i).setOnAction(event ->{
     			try
     			{
-    			User.setLastHub(new File("src/application/view/EducationHome.fxml").toURI().toURL());
-    			URL url = new File("src/application/view/EdClass.fxml").toURI().toURL();
-    	    	mainPane = FXMLLoader.load(url);
-    	        Scene scene = new Scene(mainPane);// pane you are GOING TO show
-    	        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-    	        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-    	        window.setScene(scene);
-    	        window.show();
+    				//Where did you come from?
+    				setCallingClass(event.getSource().toString());
+	    			User.setLastHub(new File("src/application/view/EducationHome.fxml").toURI().toURL());
+	    			//Where should you go?
+	    			URL url = new File("src/application/view/EdClass.fxml").toURI().toURL();
+	    	    	mainPane = FXMLLoader.load(url);
+	    	        Scene scene = new Scene(mainPane);// pane you are GOING TO show
+	    	        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+	    	        window.setScene(scene);
+	    	        window.show();
     			}
+    			
     			catch(IOException e)
     			{
     				
     			}
     		});
     	}
+    	
+    	classButtonBox.getChildren().addAll(classButtonList);
     }
 	 
 	 @FXML
@@ -117,7 +177,8 @@ public class EducationController {
 	    	String professor = "";
 	      	//while(!validInput)
 	          //{
-	      	 		
+	      	 
+	    	  //this will need input validation, particularly for "New Class"
               textDialog.getEditor().clear();
               textDialog.setTitle("New Class");
               textDialog.setHeaderText("Please enter the new class name");
@@ -130,9 +191,18 @@ public class EducationController {
               button.setText(className);
               classButtonList.add(button);
               
+              //add the class to the User classes ArrayList
+              SchoolClass tempClass =new SchoolClass(className,professor,location, new ArrayList<Task>(),new HubEvent());
+              User.getClasses().add(tempClass);
+              
+              //add the String className to the classes ArrayList and to the classhash with the index
+              classes.add(className);
+              classHash.put(classes.get(classes.size()-1), classes.size()-1);
+              
               //make a new task class CheckList
               Label classLabel = new Label();
               //deal with css
+              classLabel.setStyle("-fx-text-fill:white");
               classLabel.setText(className);
               //add this here, or is this part of parent ObservableList?
               ObservableList<CheckBox> checkList = FXCollections.observableArrayList();
@@ -140,7 +210,7 @@ public class EducationController {
               VBox temp = new VBox();
               temp.getChildren().addAll(classLabel,separator);
               toDoList.getChildren().add(temp);
-              classesList.add(temp);
+              classesVBoxList.add(temp);
               
               textDialog.getEditor().clear();
               textDialog.setTitle("New Class");
@@ -162,7 +232,9 @@ public class EducationController {
               //use this class to set DB entry
               SchoolClass newClass = new SchoolClass(className, professor, location, new ArrayList<Task>(), meetingTime);
             //SCHOOL_CLASS_ID	USER_ID	SCHOOL_CLASS_NAME	SCHOOL_CLASS_LOCATION	SCHOOL_CLASS_PROFESSOR
+              User.getCurrentHub();
              
+              //get the last button add the setOnAction
               classButtonList.get(classButtonList.size()-1).setOnAction(event1 ->{
 	        	  try
 	        	  {
@@ -187,35 +259,58 @@ public class EducationController {
               
 	    }
 	    
+	    //Used to determine the source of the event and set the Current class when changing to class view
 	    public void setCallingClass(String caller)
 	    {
 	    	String[] buttonSplit;
 	    	buttonSplit=caller.split("\'");
   			System.out.println(buttonSplit[1]);
 	    	User.setCurrentClass(buttonSplit[1]);
+	    	System.out.println(User.getCurrentClass());
 	    }
 
 	    //This will add a task
 	    @FXML
 	    void addItem(ActionEvent event) {
+	    	
+	    	//This is added to allow for new classes to be added on the fly
+	    	//classes.add(0,"New Class");	
+	    	ChoiceDialog<String> selection = new ChoiceDialog<String>("Select Class",classes);
 	    	TextInputDialog textDialog = new TextInputDialog();
 	    	String className = "";
-	    	String location = "";
-	    	String professor = "";
+	    	String taskString = "";
+	    	
+	    	selection.setTitle("New Task");
+	    	selection.setHeaderText("Which class is the task for?");
+	    	selection.setContentText("Class:");
+	      	selection.showAndWait();
+            className = selection.getResult();
+            //remove it here though to not disrupt indexing
+	      	//classes.remove("New Class");
+	      	//if className.equals("New Class"); <------------deal with this
+            
 	      	textDialog.getEditor().clear();
 	      	textDialog.setTitle("New Task");
-	      	textDialog.setHeaderText("Which class is the task for?");
-	      	textDialog.setContentText("Class name:");
+	      	textDialog.setHeaderText("Please enter the To-Do item");
+	      	textDialog.setContentText("Task:");
 	      	textDialog.showAndWait();
-              
-	      	className = textDialog.getResult();
-	      	for (int i = 0; i <classesList.size(); i++)
-	      	{
-	      		if (classesList.get(i).getChildren().contains(className))
-	      		{
-	      			System.out.println(className+" found in vbox "+i);
-	      		}
-	      	}
+	      	taskString = textDialog.getResult();
+	      	
+	      	//add HashMap Entry for task text and className (String)
+	      	taskHash.put(taskString, className);
+	      	
+	      	//Add task to class
+	      	User.getClasses().get((int) classHash.get(className)).getAssignments().add(new Task(taskString));
+	      	
+	      	//deal with css
+			//add this here, or is this part of parent ObservableList?
+            CheckBox cb = new CheckBox(taskString);
+            cb.setStyle("-fx-text-fill:white");
+            cb.setPadding(new Insets(10, 10, 0, 0));
+            
+            //This adds it to the appropriate observable VBox
+            int VBoxIndex = (int) classHash.get(className);
+            classesVBoxList.get(VBoxIndex).getChildren().add(cb);
 	      	
 	    }
 	    @FXML
@@ -223,23 +318,22 @@ public class EducationController {
 	    	System.out.println("testHub");
 	    }
 	    
-	    @FXML
-	    void goToClass2(ActionEvent event) {
-	    	System.out.println("testClass2");
-	    }
+//	    @FXML
+//	    void goToClass2(ActionEvent event) {
+//	    	System.out.println("testClass2");
+//	    }
 	    	
-	 @FXML
-	    void goToClass1(ActionEvent event) throws IOException {
-		 System.out.println("testClass1");
-		User.setLastHub(new File("src/application/view/EducationHome.fxml").toURI().toURL());
-    	URL url = new File("src/application/view/EdClass.fxml").toURI().toURL();
-    	mainPane = FXMLLoader.load(url);
-        Scene scene = new Scene(mainPane);// pane you are GOING TO show
-        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-        window.setScene(scene);
-        window.show();
-    }
+//	 @FXML
+//	    void goToClass1(ActionEvent event) throws IOException {
+//		User.setLastHub(new File("src/application/view/EducationHome.fxml").toURI().toURL());
+//    	URL url = new File("src/application/view/EdClass.fxml").toURI().toURL();
+//    	mainPane = FXMLLoader.load(url);
+//        Scene scene = new Scene(mainPane);// pane you are GOING TO show
+//        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+//        window.setScene(scene);
+//        window.show();
+//    }
 	 
 	 @FXML
 	    void goToCalendar(ActionEvent event) throws IOException {
@@ -262,10 +356,8 @@ public class EducationController {
 	   		Scene scene = new Scene(mainPane);// pane you are GOING TO show
 	   		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 	   		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-	   		System.out.println("5");
 	   		window.setScene(scene);
-	   		System.out.println("6");
-		    window.show();
+	   		window.show();
 		}
 	 
 	 //could move stuff from lambda expression hear for cleaner flow

@@ -11,9 +11,12 @@ public class User {
 	private static URL lastHub;
 	private static String userName;
 	private static int userID;
-	private static String currentHub;
+	private static LifeHub currentHub;
 	private static ArrayList<LifeHub> userHubs;
 	private static String currentClass;
+	private static ArrayList<Contact> userContacts;
+	private static ArrayList<HubEvent> userEvents;
+	private static ArrayList<SchoolClass> classes;
 		
 	public static Boolean validate(String userName, String password)
 	{
@@ -46,7 +49,7 @@ public class User {
 	/**
 	 * @return the currentHub
 	 */
-	public static String getCurrentHub() {
+	public static LifeHub getCurrentHub() {
 		return currentHub;
 	}
 
@@ -64,6 +67,26 @@ public class User {
 		return currentClass;
 	}
 
+	/**
+	 * @return the userContacts
+	 */
+	public static ArrayList<Contact> getUserContacts() {
+		return userContacts;
+	}
+
+	/**
+	 * @return the userEvents
+	 */
+	public static ArrayList<HubEvent> getUserEvents() {
+		return userEvents;
+	}
+
+	/**
+	 * @return the classes
+	 */
+	public static ArrayList<SchoolClass> getClasses() {
+		return classes;
+	}
 
 	/**
 	 * @param lastHub the lastHub to set
@@ -89,7 +112,7 @@ public class User {
 	/**
 	 * @param currentHub the currentHub to set
 	 */
-	public static void setCurrentHub(String currentHub) {
+	public static void setCurrentHub(LifeHub currentHub) {
 		User.currentHub = currentHub;
 	}
 
@@ -107,5 +130,26 @@ public class User {
 		User.currentClass = currentClass;
 	}
 
+	/**
+	 * @param userContacts the userContacts to set
+	 */
+	public static void setUserContacts(ArrayList<Contact> userContacts) {
+		User.userContacts = userContacts;
+	}
 
+	/**
+	 * @param userEvents the userEvents to set
+	 */
+	public static void setUserEvents(ArrayList<HubEvent> userEvents) {
+		User.userEvents = userEvents;
+	}
+
+	/**
+	 * @param classes the classes to set
+	 */
+	public static void setClasses(ArrayList<SchoolClass> classes) {
+		User.classes = classes;
+	}
+
+	
 }

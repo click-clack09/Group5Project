@@ -1,20 +1,17 @@
 package application.model;
 
-public class Task extends CalendarItem_KILL implements Comparable<Task> {
-	//remove due date
-	private Date dueDate;
-	private CheckList<Task> subtasks;//this is unnecessary
+public class Task implements Comparable<Task> {
+	
+	//Add Class or extend to SchoolTask so I can add a class? How to deal with that?
+	private String text;//this is unnecessary
 	//all details to instantiate object
 	//Name, description, all database metadata
 	/*
 	 * CONSTRUCTORS
 	 */
 	
-	public Task(String name) {
-		super(name);
-		
-		dueDate = new Date();
-		subtasks = new CheckList<Task>();
+	public Task(String text) {
+		this.text =  text;
 	}
 	
 	
@@ -38,25 +35,7 @@ public class Task extends CalendarItem_KILL implements Comparable<Task> {
 	 * GETTERS
 	 */
 	
-	public Date getDueDate() {
-		return dueDate;
-	}
 	
-	public CheckList<Task> getSubtasks() {
-		return subtasks;
-	}
-	
-	/*
-	 * SETTERS
-	 */
-	
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-	
-	public void setSubtasks(CheckList<Task> subtasks) {
-		this.subtasks = subtasks;
-	}
 	
 	/*
 	 * OVERRIDES
@@ -64,11 +43,24 @@ public class Task extends CalendarItem_KILL implements Comparable<Task> {
 	
 	@Override
 	public int compareTo(Task task) {
-		return this.dueDate.compareTo(task.getDueDate());
+		return 0;
+	}
+
+
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
+	}
+
+
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(String text) {
+		this.text = text;
 	}
 	
-	@Override
-	public String toString() {
-		return name + " " + dueDate + "\nSubtasks: " + subtasks.size() + "\n" + description;
-	}
+	
 }

@@ -3,7 +3,11 @@ package application.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
+import application.model.Contact;
+import application.model.HubEvent;
+import application.model.LifeHub;
 import application.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +30,21 @@ public class MainController {
     @FXML
     private PasswordField password;
 
+    @FXML
+    void initialize()
+    {
+    	//clear user data
+    	User.setLastHub(null);
+    	User.setUserName(null);
+    	User.setUserID(0);
+    	User.setCurrentHub(null);
+    	User.setUserHubs(null);
+    	User.setCurrentClass(null);
+    	User.setUserContacts(null);
+    	User.setUserEvents(null);
+    	User.setClasses(null);
+    }
+    
     @FXML
     void about(ActionEvent event) {
     	System.out.println("testAbout");

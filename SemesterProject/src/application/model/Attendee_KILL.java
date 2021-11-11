@@ -3,7 +3,7 @@ package application.model;
 public class Attendee_KILL {
 	//replace with arrayLIst of contacts, delete
 	protected int id;
-	protected Owner_KILL owner_KILL;
+	protected UserNameRecord userNameRecord;
 	private Contact contact;
 	//trim if need be
 	private boolean RSVP;
