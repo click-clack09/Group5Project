@@ -13,7 +13,10 @@ public class User {
 	private static int userID;
 	private static LifeHub currentHub;
 	private static ArrayList<LifeHub> userHubs;
+	
+	//This is not SOLID compliant. Use index in ed class instead?
 	private static String currentClass;
+	
 	private static ArrayList<Contact> userContacts;
 	private static ArrayList<HubEvent> userEvents;
 	private static ArrayList<SchoolClass> classes;

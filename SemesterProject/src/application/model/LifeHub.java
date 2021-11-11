@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 //kill
-public class LifeHub {
+public class LifeHub implements Comparable {
 	private String hubName;
 	private int eventType;
 	private ArrayList<HubEvent> events;
@@ -111,6 +111,22 @@ public class LifeHub {
 	 */
 	public void setNotes(ArrayList<Note> notes) {
 		this.notes = notes;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		
+		if (this.equals(o))
+			return 1;// TODO Auto-generated method stub
+		return -1;
+	}
+	
+	public int equals(LifeHub hub)
+	{
+		System.out.println("Equals for lifehub");
+		if (hub.getHubName().equals(this.getHubName()))
+			return 1;
+		return -1;
 	}
 	
 	
