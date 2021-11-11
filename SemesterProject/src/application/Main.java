@@ -2,7 +2,10 @@ package application;
 	
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 
+import application.model.LifeHub;
+import application.model.User;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -14,6 +17,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
 			URL url = new File("src/application/view/Login.fxml").toURI().toURL();
 	    	AnchorPane root = FXMLLoader.load(url);
 			//AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Login.fxml"));

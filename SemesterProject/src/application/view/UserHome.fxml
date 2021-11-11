@@ -44,7 +44,7 @@
          <children>
             <VBox alignment="CENTER">
                <children>
-                  <Label text="Welcome User!" textAlignment="CENTER">
+                  <Label fx:id="welcomeLabel" text="Welcome User!" textAlignment="CENTER">
                      <font>
                         <Font name="Arial Narrow Italic" size="21.0" />
                      </font>

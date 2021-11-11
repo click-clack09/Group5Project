@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-
 import application.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -22,6 +22,9 @@ public class UserController {
 	
 	@FXML
     private ChoiceBox<String> selection;
+
+    @FXML
+    private Label welcomeLabel;
 	
 	ArrayList<UserNameRecord> userHubRecords;
 	ArrayList<HubEvent> events;
@@ -30,8 +33,13 @@ public class UserController {
 	@FXML
 		void initialize()
 	{
-		
-		userHubRecords = new ArrayList<UserNameRecord>();
+		User.setLastHub(null);
+    	User.setCurrentHub(null);
+    	User.setCurrentClass(null);
+    	
+    	welcomeLabel.setText("Welcome "+User.getUserName());
+    	
+    	userHubRecords = new ArrayList<UserNameRecord>();
 		
 		//How will data come back from query? Each record read should be added to userHubNames
 		
@@ -47,10 +55,17 @@ public class UserController {
 		/*constructor for HubEvent(int eventID, int userID, int eventType, Date startDate, String hubName, String location,
 		ArrayList<Contact> attendees, String eventName, Date endDate)*/
 		
+		//This is added so we can test the hub creating buttons. Should be reading from DB
+		if (User.getUserHubs()==null)
+			User.setUserHubs(new ArrayList<LifeHub>());
+		
 		//Dummy event
 		events.add(new HubEvent(-1, 1, 1, new Date(),"Fall2021", "Fall2021Event1Location",
 				new ArrayList<Contact>(), "Fall2021Event1Name", new Date()));
 		
+		//Dynamically Added Hubs
+		for (LifeHub hub: User.getUserHubs())
+			userHubRecords.add(new UserNameRecord(hub.getHubName(),hub.getEventType()));
 		//Hard coded hubs for testing
 		userHubRecords.add(new UserNameRecord("Fall 2021",1));
 		userHubRecords.add(new UserNameRecord("My Business Hub",2));
@@ -106,7 +121,10 @@ public class UserController {
     @FXML
     void goTo(ActionEvent event) {
     	String userChoice = selection.getSelectionModel().getSelectedItem().toString();
-		
+    	//Make sure this makes sense. 
+    	LifeHub currentHub = new LifeHub(userChoice);
+    	
+		User.setCurrentHub(currentHub);
 		//Logic below will determine the FXML doc to call
     	//Initialize hubType to sentinel value
     	int hubType = -1;
@@ -143,8 +161,17 @@ public class UserController {
 				//get classes from DB
 				/*Constructor for SchoolClass(String className, String professor, String location, ArrayList<Task> assignments,
 					HubEvent meetingTime)*/
-				classes.add(new SchoolClass("Application Programming","Rathore","NPB",new ArrayList<Task>(), new HubEvent()));
-				classes.add(new SchoolClass("Systems Programming","Sylvestro","SEB",new ArrayList<Task>(), new HubEvent()));
+				//for testing, should just be the else part
+				if (User.getClasses() ==null)
+				{
+					classes.add(new SchoolClass("Application Programming","Rathore","NPB",new ArrayList<Task>(), new HubEvent()));
+					classes.add(new SchoolClass("Systems Programming","Sylvestro","SEB",new ArrayList<Task>(), new HubEvent()));
+				}
+				else
+				{
+					for (SchoolClass sc: User.getClasses())
+						classes.add(sc);
+				}
 				User.setClasses(classes);
 				//tasks and notes belong to classes for Education
 				break;
@@ -153,27 +180,29 @@ public class UserController {
 				//perform a DB query to based on userChoice (Hub name). Return tasks and notes.
 				
 				//Add hub tasks
-				User.getCurrentHub().setTasks(tasks);
+				//User.getCurrentHub().setTasks(tasks);
 				
 				//Add hub notes
-				User.getCurrentHub().setNotes(notes);
+				//User.getCurrentHub().setNotes(notes);
+				
+				
 				break;
 			case 3:
 				hubView="PersonalHome";
 				//perform a DB query to based on userChoice (Hub name). Return tasks and notes.
 				
 				//Add hub tasks
-				User.getCurrentHub().setTasks(tasks);
+				//User.getCurrentHub().setTasks(tasks);
 				
 				//Add hub notes
-				User.getCurrentHub().setNotes(notes);
+				//User.getCurrentHub().setNotes(notes);
 				break;
 			default:
 				break;
 		}
-		
+//////////FIX THIS WHEN WE CAN PULL FROM DB//////////////////////////////////////////////////////////////////////		
 		//Create current Hub with data from on DB query
-		User.setCurrentHub(new LifeHub("Fall 2021",1, events, tasks,notes));
+		User.setCurrentHub(new LifeHub(userChoice,hubType, events, tasks,notes));
 	
     	try
     	{
@@ -182,10 +211,7 @@ public class UserController {
     		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());
     		//this will instantiate the LifeHub object based on the DB query
         	//pull all tasks, events and notes associated with the User.getCurrentHub() String
-    		//Make sure this makes sense. 
-        	LifeHub currentHub = new LifeHub(userChoice);
-        	
-    		User.setCurrentHub(currentHub);
+    		
         	mainPane = FXMLLoader.load(url);
         	Scene scene = new Scene(mainPane);// pane you are GOING TO show
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
@@ -210,10 +236,23 @@ public class UserController {
             textDialog.setContentText("Hub name:");
             textDialog.showAndWait();
             hubName = textDialog.getResult();
-            //pull next index from database
+            //make new hub
+           //pull next index from database
             //index will be used to populate all events, lists, etc on the page
             //any calendar visible on the hub page will only be from this hub
             //when switching to calendar view, ALL of the users events be added to the calendar
+    		
+    		
+    		//make new hub
+            LifeHub currentHub = new LifeHub(hubName,2, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
+            
+            //Add to DB
+            
+            //Add to UserHubs
+            User.getUserHubs().add(currentHub);
+            
+        		User.setClasses(new ArrayList<SchoolClass>());
+            User.setCurrentHub(currentHub);
             try
         	{
         		URL url = new File("src/application/view/BusinessHome.fxml").toURI().toURL();
@@ -252,6 +291,16 @@ public class UserController {
            textDialog.setContentText("Hub name:");
            textDialog.showAndWait();
            hubName = textDialog.getResult();
+         //make new hub
+           LifeHub currentHub = new LifeHub(hubName,1, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
+           
+           //Add to DB
+           
+           //Add to UserHubs
+           User.getUserHubs().add(currentHub);
+           
+       		User.setClasses(new ArrayList<SchoolClass>());
+           User.setCurrentHub(currentHub);
            try
        	{
        		URL url = new File("src/application/view/EducationHome.fxml").toURI().toURL();
@@ -269,6 +318,14 @@ public class UserController {
        	{
        		//popup error window
        	} 
+           
+           
+           
+           
+           
+           
+           
+           
            //validInput = textInputChecker(tempUser,0);
        //}
     }
@@ -290,6 +347,17 @@ public class UserController {
            textDialog.setContentText("Hub name:");
            textDialog.showAndWait();
            hubName = textDialog.getResult();
+         //make new hub
+           LifeHub currentHub = new LifeHub(hubName,3, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
+           
+           //Add to DB
+           
+           //Add to UserHubs
+           User.getUserHubs().add(currentHub);
+           
+       		User.setClasses(new ArrayList<SchoolClass>());
+           User.setCurrentHub(currentHub);
+
            try
        	{
        		URL url = new File("src/application/view/PersonalHome.fxml").toURI().toURL();

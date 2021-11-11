@@ -51,6 +51,7 @@ public class EducationController {
     {
 		 //make String ArrayList of classes
 		 classes = new ArrayList<String>();
+		 
 		 for (SchoolClass schoolClass : User.getClasses())
 			 classes.add(schoolClass.getClassName());
 		 
