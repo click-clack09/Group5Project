@@ -189,6 +189,9 @@ public class UserController {
 				//perform a DB query to based on userChoice (Hub name). Return tasks and notes.
 				
 				//Add hub tasks
+				
+				
+				
 				//User.getCurrentHub().setTasks(tasks);
 				
 				//Add hub notes

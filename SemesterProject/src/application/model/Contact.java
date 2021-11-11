@@ -8,9 +8,13 @@ public class Contact
 	private ArrayList<PhoneNumber> phoneList;
 	private ArrayList<EmailAddress> emailsList;
 	
-	public Contact(String name)
+	public Contact(String name, String phoneNumber, String pType, String email, String eType)
 	{
 		this.name = name;
+		phoneList=new ArrayList<PhoneNumber>();
+		emailsList=new ArrayList<EmailAddress>();
+		this.phoneList.add(new PhoneNumber(phoneNumber,pType));
+		this.emailsList.add(new EmailAddress(email,eType));
 	}
 	
 	public Contact(String name, ArrayList<PhoneNumber> phoneList, ArrayList<EmailAddress> emailsList)
@@ -61,4 +65,12 @@ public class Contact
 	public void setEmailsList(ArrayList<EmailAddress> emailsList) {
 		this.emailsList = emailsList;
 	}
+
+	@Override
+	public String toString() {
+		System.out.println(name + "," + phoneList.toString() + ", " + emailsList.toString());
+		return name + "," + phoneList.toString() + ", " + emailsList.toString();
+	}
+	
+	
 }

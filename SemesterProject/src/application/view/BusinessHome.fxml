@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -107,12 +106,6 @@
                               <ScrollPane prefHeight="200.0" prefWidth="200.0">
                                  <content>
                                     <VBox fx:id="toDoList" spacing="3.0">
-                                       <children>
-                                          <CheckBox mnemonicParsing="false" text="Semester Project Template" />
-                                          <CheckBox mnemonicParsing="false" text="Lab 3" />
-                                          <CheckBox mnemonicParsing="false" text="Quiz 3" />
-                                          <CheckBox mnemonicParsing="false" text="Read for Class" />
-                                       </children>
                                        <padding>
                                           <Insets left="3.0" />
                                        </padding>

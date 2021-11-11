@@ -4,16 +4,20 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import application.model.LifeHub;
-import application.model.User;
+import application.model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -38,11 +42,49 @@ public class BusinessController {
     @FXML
     private ListView<String> archivedNotes;
     
+    private ObservableList<CheckBox> toDoVBoxList = FXCollections.observableArrayList();
+    private ObservableList<String> archivedNoteList = FXCollections.observableArrayList();
+    private ObservableList<String> userContactList = FXCollections.observableArrayList();
+    int index;
+    
     @FXML
     void initialize()
     {
-    	
+    	//Add Hub tasks
     	businessHomeLabel.setText(User.getUserName()+", "+User.getCurrentHub().getHubName());
+    	
+    	
+    	
+    	if(User.getCurrentHub().getTasks()!=null)
+    	{
+    		
+    		for (int i = 0; i < User.getCurrentHub().getTasks().size(); i++)
+    		{	
+	    		//Make a CheckBox for each task
+	        	CheckBox cb = new CheckBox(User.getCurrentHub().getTasks().get(i).getText());
+	        	cb.setPadding(new Insets(10, 10, 0, 0));
+	        	toDoVBoxList.add(cb);
+    		}//cb.setStyle("-fx-text-fill:white");
+            
+            toDoList.getChildren().addAll(toDoVBoxList);
+            
+          //Deal with Archived notes
+        	if(User.getCurrentHub().getNotes() !=null)
+        	{
+        		
+        		for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
+        		{	
+        			archivedNoteList.add(User.getCurrentHub().getNotes().get(i).getText());
+        		}
+        		//Add the date to this as well. Wishlist make this a hyperlink with a popup
+        		archivedNotes.getItems().addAll(archivedNoteList);
+
+        		    
+                //probably should consider how to delete notes
+        	}
+    	}
+    	
+    	
     }
 
     
@@ -83,12 +125,96 @@ public class BusinessController {
 
     @FXML
     void addContact(ActionEvent event) {
-
+    	TextInputDialog textDialog = new TextInputDialog();
+    	String contactName = "";
+    	String email = "";
+    	String phone = "";
+    	String etype = "";
+    	String ptype = "";
+      	//while(!validInput)
+          //{
+      	 
+    	  //this will need input validation, particularly for "New Class"
+          textDialog.getEditor().clear();
+          textDialog.setTitle("New Contact");
+          textDialog.setHeaderText("Please enter the new contact name");
+          textDialog.setContentText("Name:");
+          textDialog.showAndWait();
+          contactName = textDialog.getResult();
+          
+          //either add logic to loop this or make a multifield popup
+          textDialog.getEditor().clear();
+          textDialog.setTitle("New Contact");
+          textDialog.setHeaderText("Please enter a phone number");
+          textDialog.setContentText("Number:");
+          textDialog.showAndWait();
+          phone = textDialog.getResult();
+          
+          //change this to dropdown selection
+          textDialog.getEditor().clear();
+          textDialog.setTitle("New Contact");
+          textDialog.setHeaderText("Please enter a phone type");
+          textDialog.setContentText("Type:");
+          textDialog.showAndWait();
+          ptype = textDialog.getResult();
+          
+        //either add logic to loop this or make a multifield popup
+          textDialog.getEditor().clear();
+          textDialog.setTitle("New Contact");
+          textDialog.setHeaderText("Please enter an email address");
+          textDialog.setContentText("Email:");
+          textDialog.showAndWait();
+          email = textDialog.getResult();
+        
+          //change this to dropdown selection
+          textDialog.getEditor().clear();
+          textDialog.setTitle("New Contact");
+          textDialog.setHeaderText("Please enter an email type");
+          textDialog.setContentText("Type:");
+          textDialog.showAndWait();
+          etype = textDialog.getResult();
+          
+          Contact temp = new Contact(contactName, phone, ptype, email, etype);
+          User.getUserContacts().add(temp);
+          userContactList.add(temp.toString());
+          //Add the date to this as well. Wishlist make this a hyperlink with a popup
+          //deal with the output
+          contactList.getItems().add(temp.toString());
+          //Push to DB
+          
     }
 
     @FXML
     void addItem(ActionEvent event) {
-
+    	TextInputDialog textDialog = new TextInputDialog();
+	 	String className = User.getCurrentClass();
+		String taskString = "";
+		
+		/////////
+		textDialog.getEditor().clear();
+      	textDialog.setTitle("New Task");
+      	textDialog.setHeaderText("Please enter the To-Do item");
+      	textDialog.setContentText("Task:");
+      	textDialog.showAndWait();
+      	taskString = textDialog.getResult();
+      	
+      	//Add task to class. Need to pass class index
+      	User.getCurrentHub().getTasks().add(new Task(taskString));
+      	//This might need to be passed to the User Hub ArrayList instead
+      	
+      	//deal with css
+		//add this here, or is this part of parent ObservableList?
+        CheckBox cb = new CheckBox(taskString);
+        //cb.setStyle("-fx-text-fill:white");
+        cb.setPadding(new Insets(10, 10, 0, 0));
+        
+        //This adds it to the appropriate observable VBox
+       
+        toDoVBoxList.add(cb);
+        //toDoVBoxList.add(cb);
+	 	//classToDo.getChildren().addAll(toDoVBoxList);
+        toDoList.getChildren().clear();
+        toDoList.getChildren().addAll(toDoVBoxList);
     }
     
      @FXML
@@ -111,7 +237,13 @@ public class BusinessController {
 
     @FXML
     void saveNote(ActionEvent event) {
-
+    	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
+    	//Add a note to the class notes
+    	User.getCurrentHub().getNotes().add(new Note(notes.getText()));
+    	//Add the date to this as well. Wishlist make this a hyperlink with a popup
+    	archivedNotes.getItems().add(notes.getText());
+    	//Push to DB
+    	notes.clear();
     }
 
     

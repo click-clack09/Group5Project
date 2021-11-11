@@ -10,14 +10,26 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class PersonalController {
 
 	@FXML
 	 private AnchorPane mainPane;
+	
+	@FXML
+    private VBox userLists;
+
+    @FXML
+    private TextArea note;
+
+    @FXML
+    private ListView<?> archivedNotes;
 	
     @FXML
     void about(ActionEvent event) {
