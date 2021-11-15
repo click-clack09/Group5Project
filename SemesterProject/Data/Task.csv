@@ -1,0 +1,11 @@
+task_id,user_id,event_id,event_type,event_hub,event_name,img_path,text
+1,1,1,2,CODE CAMP,Meeting with boss,null,Bring Pencils
+2,1,2,2,CODE CAMP,Prsentation,null,Don’t Be late
+3,4,4,3,HOME,Brother's wedding,null,Throw rice!
+4,4,4,3,HOME,Brother's wedding,null,Funny toast
+5,1,1,2,CODE CAMP,Meeting with boss,null,bring coffee
+6,4,4,3,HOME,Brother's wedding,null,Get tuxedo from cleaners
+7,2,3,1,FALL 2021,Calc II test,null,Bring calculator
+8,2,3,1,FALL 2021,Calc II test,null,Bring scratch paper
+9,2,6,1,FALL 2021,App Programming test,null,Bring scratch paper
+10,2,6,1,FALL 2021,App Programming test,null,Bring notes - open book test

@@ -1,0 +1,11 @@
+email_id,user_id,email_contact,email_detail,email_type
+1,1,Joe Smith,joes@gmail.com,BUSINESS
+2,1,Jimmy Roland,jimmyr@gmail.com,PESONAL
+3,2,Bill Murray,billm@yahoo.com,BUSINESS
+4,4,Tommy Smith,tommyt@yahoo.com,PESONAL
+5,4,Sam Walker,samw@aol.com,BUSINESS
+6,2,Chauncey Billups,chaunceyb@yahoo.com,PESONAL
+7,2,Ken Norton,kenn@gmail.com,PESONAL
+8,2,Lewis Day,lewisd@gmail.com,BUSINESS
+9,1,Terry Buck,terryb@yahoo.com,PERSONAL
+10,1,Lester Freeman,lesterf@aol.com,PERSONAL

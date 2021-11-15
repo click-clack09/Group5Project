@@ -1,0 +1,5 @@
+school_class_id,user_id,hub_name,school_class_name,school_class_location,school_class_professor
+1,1,FALL 2021,App Programming,NPB room 100,Professor S
+2,2,FALL 2021,Calc II,BB room 300,Professor M
+3,2,FALL 2021,Data Structures,NPB room 102,Professor A
+4,4,COMP SCI 2021,Systems Programming,NPB room 103,ProfessorH

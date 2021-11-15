@@ -1,0 +1,11 @@
+phone_num_id,user_id,contact_name,contact_phone,contact_phone_type
+1,1,Joe Smith,555-345-4456,HOME
+2,1,Jimmy Roland,555-567-9876,BUSINESS
+3,2,Bill Murray,555-677-0987,CELL
+4,4,Tommy Smith,555-87607623,HOME
+5,4,Sam Walker,555-234-7665,BUSINESS
+6,2,Chauncey Billups,555-908-1112,CELL
+7,2,Ken Norton,555-578-9090,FAX
+8,2,Lewis Day,555-989-4567,CELL
+9,1,Terry Buck,555-876-8765,HOME
+10,1,Lester Freeman,555-334-5677,BUSINESS

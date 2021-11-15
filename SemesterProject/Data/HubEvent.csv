@@ -1,0 +1,8 @@
+event_id,user_id,event_type,event_recurring,event_hub,event_name,event_location,event_start_mm,event_start_dd,evnt_start_yr,event_start_hr,event_start_min,event_end_mm,event_end_dd,event_end_yr,event_end_hr,event_end_min
+1,1,2,TRUE,CODE CAMP,Meetig with boss,Corporate HQ,11,08,2021,07,30,11,08,2021,08,30
+2,1,2,FALSE,CODE CAMP,Presentation,Conference room,11,15,2021,12,15,11,15,2021,13,15
+3,2,1,FALSE,FALL 2021,Calc II test,BB room 300,11,18,2021,09,15,11,18,2021,10,15
+4,4,3,FALSE,HOME,Brother's wedding,Church on Main Street,11,22,2021,12,45,11,22,2021,13,45
+5,1,1,TRUE,FALL 2021,App Programming test,NPB room 100,11,22,2021,12,45,11,22,2021,13,45
+6,2,1,FALSE,FALL 2021,Data Structures test,NPB room 102,11,23,2021,13,00,11,23,2021,14,00
+7,4,1,TRUE,COMP SCI 2021,Systems Programming,NPB room 103,08,23,2021,09,00,08,23,2021,10,00
