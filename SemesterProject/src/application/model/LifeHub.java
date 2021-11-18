@@ -3,13 +3,14 @@ package application.model;
 import java.net.URL;
 import java.util.ArrayList;
 
-//kill
+
 public class LifeHub implements Comparable {
 	private String hubName;
 	private int eventType;
-	private ArrayList<HubEvent> events;
+	private ArrayList<HubEvent> events; 
 	private ArrayList<Task> tasks;
 	private ArrayList<Note> notes;
+	private ArrayList<SchoolClass> classes;
 	
 	
 	//user class has the following:
@@ -31,6 +32,9 @@ public class LifeHub implements Comparable {
 	public LifeHub(String listName)
 	{
 		this.hubName = listName;
+		tasks= new ArrayList<Task>();
+		notes= new ArrayList<Note>();
+		classes= new ArrayList<SchoolClass>();
 	}
 
 	public LifeHub(String hubName, int eventType, ArrayList<HubEvent> events, ArrayList<Task> tasks,
@@ -41,6 +45,8 @@ public class LifeHub implements Comparable {
 		this.events = events;
 		this.tasks = tasks;
 		this.notes = notes;
+		this.classes = new ArrayList<SchoolClass>();
+		
 	}
 
 	/**
@@ -121,6 +127,27 @@ public class LifeHub implements Comparable {
 		return -1;
 	}
 	
+	public int compareTo(String str) {
+		
+		if (this.hubName.equals(str))
+			return 1;// TODO Auto-generated method stub
+		return -1;
+	}
+	
+	/**
+	 * @return the classes
+	 */
+	public ArrayList<SchoolClass> getClasses() {
+		return classes;
+	}
+
+	/**
+	 * @param classes the classes to set
+	 */
+	public void setClasses(ArrayList<SchoolClass> classes) {
+		this.classes = classes;
+	}
+
 	public int equals(LifeHub hub)
 	{
 		System.out.println("Equals for lifehub");

@@ -12,8 +12,8 @@ public class UserHubRecord implements Comparable{
 	private int hubType;
 	
 	
-	public UserHubRecord(String userName, int hubType) {
-		this.hubName = userName;
+	public UserHubRecord(String hubName, int hubType) {
+		this.hubName = hubName;
 		this.hubType = hubType;
 	}
 

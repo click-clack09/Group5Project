@@ -13,12 +13,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -41,9 +44,9 @@ public class EdClassController {
     private TextArea classNotes;
 
     @FXML
-    private ListView<String> archivedClassNotes;
+    private ListView<Hyperlink> archivedClassNotes;
     
-    private ObservableList<String> archivedNoteList = FXCollections.observableArrayList();
+    private ObservableList<Hyperlink> archivedNoteList = FXCollections.observableArrayList();
     private ObservableList<CheckBox> toDoVBoxList = FXCollections.observableArrayList();
     private int index;
 	
@@ -95,15 +98,21 @@ public class EdClassController {
     		
     		for (int i = 0; i < User.getClasses().get(index).getNotes().size(); i++)
     		{	
-    			archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
+    			Hyperlink tempLink = new Hyperlink(User.getClasses().get(index).getNotes().get(i).getText());
+    			Alert alert = getAlert("Display Note","Note",User.getClasses().get(index).getNotes().get(i).getText());
+              	
+                tempLink.setOnAction(event2 ->{
+              	  alert.showAndWait();
+              	  
+                });
+                archivedNoteList.add(tempLink);
     		}
     		//Add the date to this as well. Wishlist make this a hyperlink with a popup
     		archivedClassNotes.getItems().addAll(archivedNoteList);
 
-    		    
-            //probably should consider how to delete notes
+    	    //probably should consider how to delete notes
     	}
-    } 
+   } 
     
 	@FXML
     void addHub(ActionEvent event) {
@@ -196,18 +205,43 @@ public class EdClassController {
 
     @FXML
     void saveNote(ActionEvent event) {
-    	
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
     	User.getClasses().get(index).getNotes().add(new Note(classNotes.getText()));
     	//Add the date to this as well. Wishlist make this a hyperlink with a popup
-    	archivedClassNotes.getItems().add(classNotes.getText());
-    	//archivedClassNotes.getItems().addAll(archivedNoteList);
+    	Alert alert = getAlert("Display Note","Note",classNotes.getText());
+    	Hyperlink tempLink = new Hyperlink(classNotes.getText());
+    	tempLink.setOnAction(event2 ->{
+        	  alert.showAndWait();
+        	  
+          });
+        archivedClassNotes.getItems().add(tempLink);
+    	//Push to DB
     	classNotes.clear();
-
     }
-
     
+    
+//    void saveNote(ActionEvent event) {
+//    	
+//    	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
+//    	//Add a note to the class notes
+//    	User.getClasses().get(index).getNotes().add(new Note(classNotes.getText()));
+//    	//Add the date to this as well. Wishlist make this a hyperlink with a popup
+//    	archivedClassNotes.getItems().add(classNotes.getText());
+//    	//archivedClassNotes.getItems().addAll(archivedNoteList);
+//    	classNotes.clear();
+//
+//    }
+
+    public Alert getAlert(String title, String header, String content)
+    {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle(title);
+    	alert.setHeaderText(header);
+    	alert.setContentText(content);
+    	
+    	return alert;
+    }
 
     @FXML
     void userHome(ActionEvent event) throws IOException {

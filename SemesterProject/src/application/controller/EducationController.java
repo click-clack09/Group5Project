@@ -171,6 +171,7 @@ public class EducationController {
 	    	System.out.println("testDelete");
 	    }
 	    
+	    ///CLASS VALUES NEED TO NOT BE NULL
 	    @FXML
 	    void addClass(ActionEvent event) {
 	    	TextInputDialog textDialog = new TextInputDialog();
