@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import application.model.DatabaseConnection;
 
 
 public class UserController {
@@ -42,7 +43,7 @@ public class UserController {
 	
 public ArrayList<UserHubRecord> getUserLifeHubs(ArrayList<UserHubRecord> userHubRecords) {
 	
-	String user_lifehub_query = "SELECT * FROM lifeHub.LifeHub WHERE user_id = ?";
+	String user_lifehub_query = "SELECT * FROM lifehub.lifehub WHERE user_id = ?";
 		    	    
 		try {
 		    Connection conn = DatabaseConnection.getConnection();
@@ -81,7 +82,7 @@ public ArrayList<PhoneNumber> getUserContactNumbers(String contact){//ArrayList<
 	ArrayList<PhoneNumber> phoneArrayListOfContact = new ArrayList<PhoneNumber>();
 	PhoneNumber phoneObject;
 	
-	String user_phone_contacts_query = "SELECT * FROM lifeHub.PhoneNumber WHERE user_id = ? and contact_name = ?";//and CONTACT_NAME == contact
+	String user_phone_contacts_query = "SELECT * FROM lifehub.phonenumber WHERE user_id = ? and contact_name = ?";//and CONTACT_NAME == contact
     	    
 	try {
 	    Connection conn = DatabaseConnection.getConnection();
@@ -130,7 +131,7 @@ public ArrayList<EmailAddress> getUserEmailAddresses(String contact){//ArrayList
 	ArrayList<EmailAddress> emailAddressArrayList = new ArrayList<EmailAddress>();
 	EmailAddress emailAddress;
 	
-	String user_email_contacts_query = "SELECT * FROM lifeHub.EmailAddress WHERE user_id = ? and email_contact = ?";//and CONTACT_NAME == contact
+	String user_email_contacts_query = "SELECT * FROM lifehub.emailaddress WHERE user_id = ? and email_contact = ?";//and CONTACT_NAME == contact
     	    
 	try {
 	    Connection conn = DatabaseConnection.getConnection();
@@ -176,7 +177,7 @@ public ArrayList<EmailAddress> getUserEmailAddresses(String contact){//ArrayList
 
 public ArrayList<HubEvent> getUserHubEvents(ArrayList<HubEvent> userHubEvents) {
 	ArrayList <Contact> attendees = new ArrayList<Contact>();
-	String user_hub_events_query = "SELECT * FROM lifeHub.HubEvent2 WHERE user_id = ?";
+	String user_hub_events_query = "SELECT * FROM lifehub.hubevent2 WHERE user_id = ?";
 	    	    
 	try {
 	    Connection conn = DatabaseConnection.getConnection();
@@ -249,7 +250,7 @@ public ArrayList<HubEvent> getUserHubEvents(ArrayList<HubEvent> userHubEvents) {
 
 public ArrayList<Contact> getUserContacts(ArrayList<Contact> contacts) {
 	
-		String user_contacts_query = "SELECT * FROM lifeHub.Contact WHERE user_id = ?";
+		String user_contacts_query = "SELECT * FROM lifehub.contact WHERE user_id = ?";
 		    	    
 		try {
 		    Connection conn = DatabaseConnection.getConnection();
@@ -311,7 +312,7 @@ public ArrayList<Contact> getUserContacts(ArrayList<Contact> contacts) {
 //void this
 public void getUserTasksSchool(ArrayList<Task> tasks) {
 	
-	String user_tasks_query = "SELECT * FROM lifeHub.Task WHERE user_id = ? AND event_hub = ? AND event_name = ?";    	    
+	String user_tasks_query = "SELECT * FROM lifehub.task WHERE user_id = ? AND event_hub = ? AND event_name = ?";    	    
 	try {
 	    Connection conn = DatabaseConnection.getConnection();    
 	
@@ -327,14 +328,21 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 					PreparedStatement ps = conn.prepareStatement(user_tasks_query);
 					ps.setInt(1, User.getUserID());
 					ps.setString(2, hub.getHubName());
-					ps.setString(3, sClass.getClassName());
+					if (hub.getEventType()==2)
+						ps.setString(3, hub.getHubName());
+					else
+						ps.setString(3, sClass.getClassName());
 					ResultSet rs = ps.executeQuery();
 					//false means an empty result set
 					if(rs.next() != false) {
 						//gets only user contact names
 						do{
 							//
-							hub.getTasks().add(new Task(rs.getString("text")));
+							if (hub.getEventType()==2)
+								hub.getTasks().add(new Task(rs.getString("text")));
+							else
+								sClass.getAssignments().add(new Task(rs.getString("text")));
+							System.out.println(rs.getString("text"));
 							
 						}while(rs.next());
 						
@@ -363,7 +371,7 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 
 public void setUserSchools()
 {
-	String user_school_classes_query = "SELECT * FROM lifeHub.SchoolClass WHERE user_id = ?";  
+	String user_school_classes_query = "SELECT * FROM lifehub.schoolclass WHERE user_id = ?";  
 	//for (LifeHub hub : User.getUserHubs()) {
 	//	Look at school_class table, pull all classes that mathc this user and hub
 	//Do your DB magic here
@@ -614,6 +622,7 @@ public void setUserSchools()
 			{
 				//descending search for hubEntry 
 				hubType=User.getUserHubs().get(--count).compareTo(userChoice);
+				System.out.println(userChoice+"<<<<<<<UserChoice\n"+User.getUserHubs().get(count).getHubName()+"<<<HubName");
 				//if valid hubType is returned, search is complete
 				if (hubType > 0)
 					find = false;
@@ -641,6 +650,7 @@ public void setUserSchools()
 //				System.out.println(thisTask.getText()+"FROM 636");
 //		}
 		//this switch will get select the appropriate FXML doc (1 school, 3 personal, or 2 business)
+		System.out.println(hubType+"<-------Hub Type");
 		switch (hubType)
 		{
 			case 1:
@@ -703,7 +713,7 @@ public void setUserSchools()
 		}
 //////////FIX THIS WHEN WE CAN PULL FROM DB//////////////////////////////////////////////////////////////////////		
 		//Create current Hub with data from on DB query
-		User.setCurrentHub(new LifeHub(userChoice,hubType, events, tasks,notes));
+		//User.setCurrentHub(new LifeHub(userChoice,hubType, events, tasks,notes));
 	
     	try
     	{
@@ -721,7 +731,7 @@ public void setUserSchools()
     	}
     	catch (IOException e)
     	{
-    		//popup error window
+    		System.out.println("Error at 725");
     	}
     }
 

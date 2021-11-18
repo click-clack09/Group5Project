@@ -49,7 +49,7 @@
                <children>
                   <VBox alignment="BOTTOM_LEFT">
                      <children>
-                        <Label text=" Username Personal Page">
+                        <Label fx:id="personalLabel" text=" Username Personal Page">
                            <font>
                               <Font name="Arial Narrow Italic" size="21.0" />
                            </font>

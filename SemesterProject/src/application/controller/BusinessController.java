@@ -3,17 +3,22 @@ package application.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import application.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -34,17 +39,17 @@ public class BusinessController {
     private VBox toDoList;
 
     @FXML
-    private ListView<String> contactList;
+    private ListView<Hyperlink> contactList;
 
     @FXML
     private TextArea notes;
 
     @FXML
-    private ListView<String> archivedNotes;
+    private ListView<Hyperlink> archivedNotes;
     
     private ObservableList<CheckBox> toDoVBoxList = FXCollections.observableArrayList();
-    private ObservableList<String> archivedNoteList = FXCollections.observableArrayList();
-    private ObservableList<String> userContactList = FXCollections.observableArrayList();
+    private ObservableList<Hyperlink> archivedNoteList = FXCollections.observableArrayList();
+    private ObservableList<Hyperlink> userContactList = FXCollections.observableArrayList();
     int index;
     
     @FXML
@@ -74,17 +79,71 @@ public class BusinessController {
         		
         		for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
         		{	
-        			archivedNoteList.add(User.getCurrentHub().getNotes().get(i).getText());
+        			Hyperlink tempLink = new Hyperlink(User.getCurrentHub().getNotes().get(i).getText());
+        			
+        			 
+        			Alert alert = getAlert("Display Note","Note",User.getCurrentHub().getNotes().get(i).getText());
+                  	
+                    tempLink.setOnAction(event2 ->{
+                  	  alert.showAndWait();
+                  	  
+                    });
+                    archivedNoteList.add(tempLink);
         		}
         		//Add the date to this as well. Wishlist make this a hyperlink with a popup
         		archivedNotes.getItems().addAll(archivedNoteList);
 
+        		///////////
+        		
+                
+                
+        		
         		    
                 //probably should consider how to delete notes
         	}
     	}
+    	if (User.getUserContacts()!=null)
+    	{
+    	TextInputDialog textDialog = new TextInputDialog();
     	
+
+    	  //Add contact hyperlink
+//        String contactHeader = "";
+//        String contactContent = "";
+//        String contactHeader = "";
+    	//ArrayList<Alert> popups = new ArrayList<Alert>();
+		for (int i = 0; i < User.getUserContacts().size(); i++)
+          {
+          //User.getUserContacts().add(User.getUserContacts().get(i));
+          System.out.println("");
+          
+          Hyperlink tempLink = new Hyperlink(User.getUserContacts().get(i).getName());
+          userContactList.add(tempLink);
+          
+        
+          
+          Alert alert = getAlert("Display Contact",User.getUserContacts().get(i).getName(),User.getUserContacts().get(i).toString());
+        	
+          tempLink.setOnAction(event2 ->{
+        	  alert.showAndWait();
+        	  
+          });
+          
+          //contactList.getItems().add(tempLink); 
+          }
+		contactList.getItems().addAll(userContactList);
+    	}
     	
+    }
+    
+    public Alert getAlert(String title, String header, String content)
+    {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle(title);
+    	alert.setHeaderText(header);
+    	alert.setContentText(content);
+    	
+    	return alert;
     }
 
     
@@ -126,6 +185,11 @@ public class BusinessController {
     @FXML
     void addContact(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Display Contact");
+    	alert.setHeaderText("Contact Name");
+    	alert.setContentText("Contact toString");
+
     	String contactName = "";
     	String email = "";
     	String phone = "";
@@ -175,11 +239,24 @@ public class BusinessController {
           etype = textDialog.getResult();
           
           Contact temp = new Contact(contactName, phone, ptype, email, etype);
+          //Add contact hyperlink
+          
           User.getUserContacts().add(temp);
-          userContactList.add(temp.toString());
+          
+          
+          Hyperlink tempLink = new Hyperlink(temp.getName());
+          userContactList.add(tempLink);
+          tempLink.setOnAction(event2 ->{
+        	  alert.setHeaderText(temp.getName());
+        	  alert.setContentText(temp.toString());
+        	  alert.showAndWait();
+        	  
+          });
+          
           //Add the date to this as well. Wishlist make this a hyperlink with a popup
           //deal with the output
-          contactList.getItems().add(temp.toString());
+          contactList.getItems().clear();
+          contactList.getItems().addAll(userContactList);
           //Push to DB
           
     }
@@ -241,7 +318,13 @@ public class BusinessController {
     	//Add a note to the class notes
     	User.getCurrentHub().getNotes().add(new Note(notes.getText()));
     	//Add the date to this as well. Wishlist make this a hyperlink with a popup
-    	archivedNotes.getItems().add(notes.getText());
+    	Alert alert = getAlert("Display Note","Note",notes.getText());
+    	Hyperlink tempLink = new Hyperlink(notes.getText());
+    	tempLink.setOnAction(event2 ->{
+        	  alert.showAndWait();
+        	  
+          });
+        archivedNotes.getItems().add(tempLink);
     	//Push to DB
     	notes.clear();
     }

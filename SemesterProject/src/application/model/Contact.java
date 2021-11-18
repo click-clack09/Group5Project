@@ -68,8 +68,13 @@ public class Contact
 
 	@Override
 	public String toString() {
-		System.out.println(name + "," + phoneList.toString() + ", " + emailsList.toString());
-		return name + "," + phoneList.toString() + ", " + emailsList.toString();
+		String phoneString = "";
+		String emailString = "";
+		for (int i = 0; i < phoneList.size(); i++)
+			phoneString += phoneList.get(i).getNumber()+" : "+phoneList.get(i).getType()+"\n";
+		for (int i = 0; i < emailsList.size(); i++)
+			emailString += emailsList.get(i).getAddress()+" : "+emailsList.get(i).getType()+"\n";
+		return phoneString +"\n"+ emailString;
 	}
 	
 	
