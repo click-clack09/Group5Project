@@ -609,6 +609,45 @@ public class User {
 			User.executeInsertIntoLifeHubTable(userID,eventType,lifeHubName);	
 		}
 
+		public static void executeInsertIntoArchivedNoteTable(int userID, int eventType, String noteLifeHubName,
+			String noteSchoolClassName, String noteImagePath, String noteText) {
+			System.out.println("Inserting into Archived Note Table: "+userID+" "+eventType+" "+noteText);
+			String insert_into_task_table = "INSERT INTO lifeHub.ArchivedNote (archived_notes_id,user_id,event_type,life_hub_name,school_class,img_path,text) "+"VALUES(?,?,?,?,?,?,?)";
+			try {
+			    Connection conn = DatabaseConnection.getConnection();	    
+				PreparedStatement ps = conn.prepareStatement(insert_into_task_table);
+				ps.setInt(1, 0);
+				ps.setInt(2, userID);
+				ps.setInt(3, eventType);
+				ps.setString(4, noteLifeHubName);
+				ps.setString(5, noteSchoolClassName);
+				ps.setString(6, noteImagePath);
+				ps.setString(7, noteText);
+		
+				int result = ps.executeUpdate();					
+				if(result > 0){
+					System.out.println("Successful insert into Archived Note Table!!!");
+				}
+				else {
+					System.out.println("Failed insert into Archived Note Table!");
+				}
+		
+					//close connection
+					try {
+						conn.close();
+					}catch (SQLException se){
+						System.out.println("Error closing SQL connection.");
+					}	
+					
+			    }catch(SQLSyntaxErrorException see) {
+			       System.out.println("Error: DB syntax is incorrect while inserting into Archived Note Table");
+			          	//see.printStackTrace();
+			    }catch(Exception e) {
+			       System.out.println("Error: DB connection failed inserting into Archived Note Table");
+			          	e.printStackTrace();
+			    }
+			
+		}
 
 		//QC WITH RICHARD!!    /////HOLD******************************************************* 
 		public static void addArchivedNote(Note note) {
@@ -628,12 +667,11 @@ public class User {
 			//String
 			
 		
-			//User.executeInsertIntoArchivedNoteTable();
+			User.executeInsertIntoArchivedNoteTable(userID,eventType,noteLifeHubName,
+					noteSchoolClassName,noteImagePath,noteText);
 		}
 		//QC WITH RICHARD!!/////HOLD*******************************************************
-		public static void addHubEvent(HubEvent hubEvent) {
-
-		
+		public static void addHubEvent(HubEvent hubEvent) {	
 			String lifeHubName = hubEvent.getHubName();
 			int event_id = hubEvent.getEventID();
 			int user_id = User.getUserID();
