@@ -61,6 +61,7 @@ public ArrayList<UserHubRecord> getUserLifeHubs(ArrayList<UserHubRecord> userHub
 					}while(rs.next());
 					
 					//close connection
+					//closeConnection(conn);
 					try {
 						conn.close();
 					}catch (SQLException se){
@@ -109,6 +110,7 @@ public ArrayList<PhoneNumber> getUserContactNumbers(String contact){//ArrayList<
 				}while(rs.next());				
 
 				//close connection
+				//closeConnection(conn);
 				try {
 					conn.close();
 				}catch (SQLException se){
@@ -158,6 +160,7 @@ public ArrayList<EmailAddress> getUserEmailAddresses(String contact){//ArrayList
 				}while(rs.next());				
 
 				//close connection
+				//closeConnection(conn);
 				try {
 					conn.close();
 				}catch (SQLException se){
@@ -230,7 +233,7 @@ public ArrayList<HubEvent> getUserHubEvents(ArrayList<HubEvent> userHubEvents) {
 					userHubEvents.add(hubEventObject);
 				}while(rs.next());
 				
-
+				//closeConnection(conn);
 				try {
 					conn.close();
 				}catch (SQLException se){
@@ -290,9 +293,9 @@ public ArrayList<Contact> getUserContacts(ArrayList<Contact> contacts) {
 						User.getUserContacts().get(i).setEmailsList(emailAddresses);
 					}
 					
-					
 					//System.out.println("Test printing size of contactNumbers: "+contactNumbers.size());
 					//close connection
+					//closeConnection(conn);
 					try {
 						conn.close();
 					}catch (SQLException se){
@@ -320,38 +323,62 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 		{
 			//loop thru logged-in user's hubs
 			for (LifeHub hub: User.getUserHubs())
-			{			
-				if(hub.getClasses()!=null) {	
+			{	
+
+				/////Move type logic here
+				if (hub.getEventType()!=2) {
+				if(hub.getClasses()!=null) 
+				{
+					
 				for (SchoolClass sClass: hub.getClasses()) {
 					//Address duplicate class names
 					System.out.println("School or personal category-1 or 3 EventHub of user");
 					PreparedStatement ps = conn.prepareStatement(user_tasks_query);
 					ps.setInt(1, User.getUserID());
 					ps.setString(2, hub.getHubName());
-					if (hub.getEventType()==2)
-						ps.setString(3, hub.getHubName());
-					else
-						ps.setString(3, sClass.getClassName());
+					ps.setString(3, sClass.getClassName());
+					
 					ResultSet rs = ps.executeQuery();
 					//false means an empty result set
 					if(rs.next() != false) {
 						//gets only user contact names
 						do{
-							//
-							if (hub.getEventType()==2)
-								hub.getTasks().add(new Task(rs.getString("text")));
-							else
-								sClass.getAssignments().add(new Task(rs.getString("text")));
-							System.out.println(rs.getString("text"));
+							sClass.getAssignments().add(new Task(rs.getString("text")));
 							
 						}while(rs.next());
-						
 			        }
 				}
 				}
-			}
+				}
+				else{//loop through hubs
+//				if (hub.getEventType()==2)
+//					ps.setString(3, hub.getHubName());
+//				else
+//					if (hub.getEventType()==2)
+//						hub.getTasks().add(new Task(rs.getString("text")));
+//					else
+					//////	//Address duplicate class names
+						System.out.println("School or personal category-1 or 3 EventHub of user");
+						PreparedStatement ps = conn.prepareStatement(user_tasks_query);
+						ps.setInt(1, User.getUserID());
+						ps.setString(2, hub.getHubName());
+						ps.setString(3, hub.getHubName());
+						
+						ResultSet rs = ps.executeQuery();
+						//false means an empty result set
+						if(rs.next() != false) {
+							//gets only user contact names
+							do{
+								hub.getTasks().add(new Task(rs.getString("text")));
+								
+							}while(rs.next());
+				        }
+					}		
+				
+		}
 			
 			//close connection
+			//closeConnection(conn);
 			try {
 				conn.close();
 			}catch (SQLException se){
@@ -366,7 +393,6 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 	       System.out.println("Error: DB connection failed in controller while getting user's tasks.");
 	          	e.printStackTrace();
 	    }
-
 }
 
 public void setUserSchools()
@@ -408,7 +434,6 @@ public void setUserSchools()
 								
 						}while(rs.next());	
 					}
-		
 			     }
 			}
 			
@@ -428,8 +453,6 @@ public void setUserSchools()
 	          	e.printStackTrace();
 	    }
 }
-
-
 
 	@FXML
 		void initialize()
@@ -487,9 +510,6 @@ public void setUserSchools()
 		//step 2!! - set schools, adds all classes to each hub
     	setUserSchools();
     	
-		
-				
-		
 		/*CREATE ALL USER HUBS. THIS CREATES A COMPLETE LISTING TO PULL FROM LATER.
 		 * Pull from Tasks, look at all for user and HubName. Add all, for each class, and hub, in a ArrayList associated with that hub and class
 		 * Need Classes all records from SchoolClass*/
@@ -622,12 +642,9 @@ public void setUserSchools()
 			{
 				//descending search for hubEntry 
 				hubType=User.getUserHubs().get(--count).compareTo(userChoice);
-				System.out.println(userChoice+"<<<<<<<UserChoice\n"+User.getUserHubs().get(count).getHubName()+"<<<HubName");
 				//if valid hubType is returned, search is complete
 				if (hubType > 0)
 					find = false;
-				
-				System.out.println(User.getUserHubs().get(count).getHubName()+" "+hubType+"GOT IT FROM HERE");
 			}
 			//Ends search when all values have been checked
 			else
@@ -650,7 +667,6 @@ public void setUserSchools()
 //				System.out.println(thisTask.getText()+"FROM 636");
 //		}
 		//this switch will get select the appropriate FXML doc (1 school, 3 personal, or 2 business)
-		System.out.println(hubType+"<-------Hub Type");
 		switch (hubType)
 		{
 			case 1:
@@ -758,7 +774,7 @@ public void setUserSchools()
             LifeHub currentHub = new LifeHub(hubName,2, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
             
             //Add to DB
-            
+            User.addHub(currentHub);
             //Add to UserHubs
             User.getUserHubs().add(currentHub);
             
@@ -806,7 +822,7 @@ public void setUserSchools()
            LifeHub currentHub = new LifeHub(hubName,1, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
            
            //Add to DB
-           
+           User.addHub(currentHub);
            //Add to UserHubs
            User.getUserHubs().add(currentHub);
            
@@ -860,7 +876,7 @@ public void setUserSchools()
            hubName = textDialog.getResult();
          //make new hub
            LifeHub currentHub = new LifeHub(hubName,3, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
-           
+           User.addHub(currentHub);
            //Add to DB
            
            //Add to UserHubs

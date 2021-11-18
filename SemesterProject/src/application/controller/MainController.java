@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -29,6 +30,9 @@ public class MainController {
 
     @FXML
     private PasswordField password;
+
+    @FXML
+    private Label loginError;
 
     @FXML
     void initialize()
@@ -62,13 +66,17 @@ public class MainController {
     }
 
     @FXML
-    void forgot(ActionEvent event) {
-    	//System.out.println("testForgot");
-    	/*Need to verify that user is valid.
-    	 * -Pass username to forgot method which will make a call to the DB
-    	 * -if valid:
-    	 * 		instantiate user
-    	 * 		proceed to next scene*/
+    void create(ActionEvent event) {
+    	loginError.setText("");
+    	boolean wentThrough;
+    	User newUser = new User(userName.getText(),password.getText());
+    	wentThrough = newUser.addUser();
+    	if (!wentThrough)
+    	{
+    		loginError.setText("Create failed. Please try again");
+    	}
+    	else
+			login(event);
     }
 
     @FXML

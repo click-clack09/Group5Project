@@ -48,13 +48,13 @@
          </font>
       </Label>
       <Label layoutX="288.0" layoutY="228.0" text="Login or create and account to get started" textAlignment="CENTER" />
-      <VBox alignment="TOP_CENTER" layoutX="13.0" layoutY="265.0" prefHeight="254.0" prefWidth="770.0">
+      <VBox alignment="TOP_CENTER" layoutX="13.0" layoutY="265.0" prefHeight="272.0" prefWidth="770.0">
          <children>
             <Separator prefHeight="0.0" prefWidth="622.0">
                <padding>
                   <Insets top="15.0" />
                </padding></Separator>
-            <VBox alignment="CENTER_LEFT" maxWidth="250.0">
+            <VBox alignment="CENTER_LEFT" maxWidth="250.0" prefWidth="250.0">
                <children>
                   <Label text="User Name:" />
                   <TextField fx:id="userName" />
@@ -69,12 +69,20 @@
                      </VBox.margin></PasswordField>
                   <VBox alignment="CENTER" prefHeight="151.0" prefWidth="250.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#login" prefWidth="200.0" text="Login/Create">
+                        <Button mnemonicParsing="false" onAction="#login" prefWidth="200.0" text="Login">
                            <VBox.margin>
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#forgot" prefWidth="200.0" text="Forgot My Password" />
+                        <Button mnemonicParsing="false" onAction="#create" prefWidth="200.0" text="Create Account" />
+                        <Label fx:id="loginError" textFill="RED">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                   </VBox>
                </children>

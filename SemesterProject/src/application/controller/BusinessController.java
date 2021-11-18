@@ -62,14 +62,18 @@ public class BusinessController {
     	
     	if(User.getCurrentHub().getTasks()!=null)
     	{
-    		
+    		System.out.println(User.getCurrentHub().getTasks().size());
     		for (int i = 0; i < User.getCurrentHub().getTasks().size(); i++)
     		{	
-	    		//Make a CheckBox for each task
+	    		//Make a CheckBox for each task\
+    			System.out.println(User.getCurrentHub().getTasks().get(i).getText());
 	        	CheckBox cb = new CheckBox(User.getCurrentHub().getTasks().get(i).getText());
 	        	cb.setPadding(new Insets(10, 10, 0, 0));
 	        	toDoVBoxList.add(cb);
-    		}//cb.setStyle("-fx-text-fill:white");
+    		}
+    		
+    		
+    		//cb.setStyle("-fx-text-fill:white");
             
             toDoList.getChildren().addAll(toDoVBoxList);
             
@@ -243,7 +247,8 @@ public class BusinessController {
           
           User.getUserContacts().add(temp);
           
-          
+          if (User.addContact(temp))
+          {
           Hyperlink tempLink = new Hyperlink(temp.getName());
           userContactList.add(tempLink);
           tempLink.setOnAction(event2 ->{
@@ -252,7 +257,7 @@ public class BusinessController {
         	  alert.showAndWait();
         	  
           });
-          
+          }
           //Add the date to this as well. Wishlist make this a hyperlink with a popup
           //deal with the output
           contactList.getItems().clear();
@@ -274,9 +279,9 @@ public class BusinessController {
       	textDialog.setContentText("Task:");
       	textDialog.showAndWait();
       	taskString = textDialog.getResult();
-      	
+      	Task tempTask = new Task(taskString);
       	//Add task to class. Need to pass class index
-      	User.getCurrentHub().getTasks().add(new Task(taskString));
+      	User.getCurrentHub().getTasks().add(tempTask);
       	//This might need to be passed to the User Hub ArrayList instead
       	
       	//deal with css
@@ -292,6 +297,7 @@ public class BusinessController {
 	 	//classToDo.getChildren().addAll(toDoVBoxList);
         toDoList.getChildren().clear();
         toDoList.getChildren().addAll(toDoVBoxList);
+        User.addTask(tempTask,"");
     }
     
      @FXML

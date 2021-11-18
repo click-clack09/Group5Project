@@ -237,6 +237,7 @@ public class EducationController {
               //use this class to set DB entry
               SchoolClass newClass = new SchoolClass(className, professor, location, new ArrayList<Task>(), meetingTime, new ArrayList<Note>());
             //SCHOOL_CLASS_ID	USER_ID	SCHOOL_CLASS_NAME	SCHOOL_CLASS_LOCATION	SCHOOL_CLASS_PROFESSOR
+              User.addClass(newClass);
               
             //add the class to the User classes ArrayList
               //SchoolClass tempClass =new SchoolClass(className,professor,location, new ArrayList<Task>(),new HubEvent(), new ArrayList<Task>());
@@ -267,6 +268,37 @@ public class EducationController {
       		classButtonBox.getChildren().addAll(classButtonList);
 //              System.out.println(newClass.getProfessor()+" "+newClass.getLocation()+" "+newClass.getMeetingTime());
               
+	    }
+	    
+	    @FXML
+	    void removeClass(ActionEvent event) {
+	    	//ask for class from drop-down popup
+	    	ArrayList<String> classNameStrings = new ArrayList<String>();
+	    	for (int i = 0; i < User.getClasses().size(); i++)
+	    		classNameStrings.add(User.getClasses().get(i).getClassName());
+	    	ChoiceDialog choicePopup = new ChoiceDialog("Please select:", classNameStrings);
+            
+            String input = "";
+            //choicePopup = new ChoiceDialog("Please select", classNameStrings);
+
+            choicePopup.setTitle("Delete Class");
+            choicePopup.setHeaderText("Please select class to remove");
+            choicePopup.setContentText("Use Dropdown menu:\n");
+            choicePopup.showAndWait();
+            input = choicePopup.getResult().toString();
+            
+	    	//match class to correct class object
+            for (int i = 0; i < User.getClasses().size(); i++)
+            {
+            	if (User.getClasses().get(i).compareTo(input) > 0)
+            	{
+            		User.deleteClass(User.getClasses().get(i));
+            		break;
+            	}
+            }
+            
+            //remove button, remove 
+            	
 	    }
 	    
 	    //Used to determine the source of the event and set the Current class when changing to class view
@@ -309,8 +341,9 @@ public class EducationController {
 	      	//add HashMap Entry for task text and className (String)
 	      	taskHash.put(taskString, className);
 	      	
+	      	Task tempTask = new Task(taskString);
 	      	//Add task to class
-	      	User.getClasses().get((int) classHash.get(className)).getAssignments().add(new Task(taskString));
+	      	User.getClasses().get((int) classHash.get(className)).getAssignments().add(tempTask);
 	      	
 	      	//deal with css
 			//add this here, or is this part of parent ObservableList?
@@ -321,6 +354,8 @@ public class EducationController {
             //This adds it to the appropriate observable VBox
             int VBoxIndex = (int) classHash.get(className);
             classesVBoxList.get(VBoxIndex).getChildren().add(cb);
+            
+            User.addTask(tempTask, className);
 	      	
 	    }
 	    @FXML

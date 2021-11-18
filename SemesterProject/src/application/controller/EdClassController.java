@@ -54,7 +54,9 @@ public class EdClassController {
     void initialize()
     {
     	
-    	
+    	System.out.println("---------------------------My current hub is: "+User.getCurrentHub().getHubName());
+    	System.out.println("---------------------------My last hub is: "+User.getLastHub());
+    	System.out.println("---------------------------My current class is: "+User.getCurrentClass());
     	toDoClassName.setText(User.getCurrentClass());
     	
     	//Get the current class notes, add to ToDoList
@@ -146,8 +148,9 @@ public class EdClassController {
       	textDialog.showAndWait();
       	taskString = textDialog.getResult();
       	
+      	Task tempTask = new Task(taskString);
       	//Add task to class. Need to pass class index
-      	User.getClasses().get(index).getAssignments().add(new Task(taskString));
+      	User.getClasses().get(index).getAssignments().add(tempTask);
       	
       	//deal with css
 		//add this here, or is this part of parent ObservableList?
@@ -162,7 +165,7 @@ public class EdClassController {
 	 	//classToDo.getChildren().addAll(toDoVBoxList);
         classToDo.getChildren().clear();
         classToDo.getChildren().addAll(toDoVBoxList);
-		
+        User.addTask(tempTask, User.getCurrentClass());
 	    }
 	 
 	 

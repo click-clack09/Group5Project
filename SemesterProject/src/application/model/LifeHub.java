@@ -130,7 +130,7 @@ public class LifeHub implements Comparable {
 	public int compareTo(String str) {
 		
 		if (this.hubName.equals(str))
-			return 1;// TODO Auto-generated method stub
+			return this.eventType;// TODO Auto-generated method stub
 		return -1;
 	}
 	

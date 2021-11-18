@@ -143,6 +143,7 @@
                         <VBox alignment="CENTER" spacing="3.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#addClass" prefWidth="150.0" text="Add class" />
+                              <Button layoutX="24.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeClass" prefWidth="150.0" text="Remove class" />
                            </children>
                         </VBox>
                      </children>

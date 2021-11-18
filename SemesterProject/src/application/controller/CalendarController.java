@@ -8,6 +8,8 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 
 import application.model.User;
+import application.model.Contact;
+import application.model.Date;
 import application.model.HubEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -347,7 +349,27 @@ public class CalendarController {
 
     @FXML
     void addEvent(ActionEvent event) {
-
+    	/*
+    	 * private int eventID = 0;
+	private int userID; User.....
+	private int eventType; 
+	private Date startDate;
+	//this will need to be referenced with a LifeHub name, but should that come from the sending method?
+	private String hubName;
+	private String location;
+	private ArrayList<Contact> attendees;
+	private String eventName;
+	private Date endDate;//ki
+    	 * */
+    	//Date picker start date
+    	//Hub Name (From dropDown)What hub is this event for? Dropdown, hubs This will also give us type
+    	//get location
+    	//get attendees from contact list (dropdown) loop 
+    	//Date picker end date
+    	//Get event name
+    	//
+    	HubEvent tempEvent = new HubEvent();
+    	User.addHubEvent(tempEvent);
     }
 
     @FXML

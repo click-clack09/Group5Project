@@ -49,6 +49,7 @@ public class Date implements Comparable<Date> {
 			this.hour = hour;
 			this.minute = minute;
 		}
+		//validate date, if valid set
 	}
 	
 	/*
