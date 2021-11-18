@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import application.model.Contact;
 import application.model.HubEvent;
 import application.model.LifeHub;
+import application.model.SchoolClass;
 import application.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +48,8 @@ public class MainController {
     	User.setUserContacts(null);
     	User.setUserEvents(null);
     	User.setClasses(null);
+    	
+    	
     }
     
     @FXML

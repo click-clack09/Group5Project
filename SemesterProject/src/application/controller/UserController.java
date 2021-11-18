@@ -22,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import application.model.DatabaseConnection;
 
 
 public class UserController {
@@ -906,6 +905,27 @@ public void setUserSchools()
        	} 
            //validInput = textInputChecker(tempUser,0);
        //}
+    }
+    
+    @FXML
+    void logOutButton(ActionEvent event) {
+    	try
+       	{
+    		URL url = new File("src/application/view/Login.fxml").toURI().toURL();
+       		User.setLastHub(new File("src/application/view/Login.fxml").toURI().toURL());
+       	 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////      		
+       		//User.setCurrentHub(hubName);
+       		//use FXMLloader to pass all user data to next controller
+           	mainPane = FXMLLoader.load(url);
+           	   Scene scene = new Scene(mainPane);// pane you are GOING TO show
+               Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+               window.setScene(scene);
+               window.show();
+       	}
+       	catch (IOException e)
+       	{
+       		//popup error window
+       	} 
     }
 
     
