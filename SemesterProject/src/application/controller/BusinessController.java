@@ -322,7 +322,8 @@ public class BusinessController {
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
-    	User.getCurrentHub().getNotes().add(new Note(notes.getText()));
+    	Note tempNote = new Note(notes.getText());
+    	User.getCurrentHub().getNotes().add(tempNote);
     	//Add the date to this as well. Wishlist make this a hyperlink with a popup
     	Alert alert = getAlert("Display Note","Note",notes.getText());
     	Hyperlink tempLink = new Hyperlink(notes.getText());
@@ -332,6 +333,7 @@ public class BusinessController {
           });
         archivedNotes.getItems().add(tempLink);
     	//Push to DB
+        User.addArchivedNote(tempNote);
     	notes.clear();
     }
 
