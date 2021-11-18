@@ -86,7 +86,7 @@
                      <children>
                         <HBox alignment="CENTER" style="-fx-border-color: black; -fx-background-color: #324c5e;">
                            <children>
-                              <Label prefHeight="35.0" prefWidth="80.0" text="Month" textFill="WHITE">
+                              <Label fx:id="calendarLabel" alignment="CENTER" prefHeight="30.0" prefWidth="342.0" text="Month" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets top="6.0" />
                                  </HBox.margin>
@@ -112,7 +112,185 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
+                           <children>
+                              <Label fx:id="Sunday1" alignment="TOP_LEFT" prefHeight="102.0" prefWidth="88.0" text="Label">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Monday1" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Tuesday1" alignment="TOP_LEFT" layoutX="95.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Wednesday1" alignment="TOP_LEFT" layoutX="181.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Thursday1" alignment="TOP_LEFT" layoutX="267.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Friday1" alignment="TOP_LEFT" layoutX="353.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Saturday1" alignment="TOP_LEFT" layoutX="439.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="6">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Sunday2" alignment="TOP_LEFT" layoutX="525.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Monday2" alignment="TOP_LEFT" layoutX="10.0" layoutY="105.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Tuesday2" alignment="TOP_LEFT" layoutX="95.0" layoutY="105.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Wednesday2" alignment="TOP_LEFT" layoutX="181.0" layoutY="105.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Thursday2" alignment="TOP_LEFT" layoutX="267.0" layoutY="105.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Friday2" alignment="TOP_LEFT" layoutX="353.0" layoutY="105.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Saturday2" alignment="TOP_LEFT" layoutX="439.0" layoutY="105.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Sunday3" alignment="TOP_LEFT" layoutX="525.0" layoutY="105.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Monday3" alignment="TOP_LEFT" layoutX="10.0" layoutY="200.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Tuesday3" alignment="TOP_LEFT" layoutX="95.0" layoutY="200.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Wednesday3" alignment="TOP_LEFT" layoutX="181.0" layoutY="200.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Thursday3" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Friday3" alignment="TOP_LEFT" layoutX="353.0" layoutY="200.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Saturday3" alignment="TOP_LEFT" layoutX="439.0" layoutY="200.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Sunday4" alignment="TOP_LEFT" layoutX="525.0" layoutY="200.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Monday4" alignment="TOP_LEFT" layoutX="10.0" layoutY="295.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Tuesday4" alignment="TOP_LEFT" layoutX="95.0" layoutY="295.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Wednesday4" alignment="TOP_LEFT" layoutX="181.0" layoutY="295.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Thursday4" alignment="TOP_LEFT" layoutX="267.0" layoutY="295.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Friday4" alignment="TOP_LEFT" layoutX="353.0" layoutY="295.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Saturday4" alignment="TOP_LEFT" layoutX="439.0" layoutY="295.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Sunday5" alignment="TOP_LEFT" layoutX="525.0" layoutY="295.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Monday5" alignment="TOP_LEFT" layoutX="10.0" layoutY="389.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Tuesday5" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Wednesday5" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Thursday5" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Friday5" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Saturday5" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font></Label>
+                              <Label fx:id="Sunday6" alignment="TOP_LEFT" layoutX="10.0" layoutY="326.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Monday6" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Tuesday6" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Wednesday6" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Thursday6" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Friday6" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="Saturday6" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="102.0" prefWidth="88.0" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="Serif Regular" size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
                         </GridPane>
                      </children>
                   </VBox>
@@ -192,7 +370,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <DatePicker />
+                              <DatePicker fx:id="dateMenu" onAction="#chooseDate" />
                            </children>
                            <VBox.margin>
                               <Insets left="3.0" right="3.0" />
