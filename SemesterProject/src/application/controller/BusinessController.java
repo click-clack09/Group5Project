@@ -69,6 +69,13 @@ public class BusinessController {
     			System.out.println(User.getCurrentHub().getTasks().get(i).getText());
 	        	CheckBox cb = new CheckBox(User.getCurrentHub().getTasks().get(i).getText());
 	        	cb.setPadding(new Insets(10, 10, 0, 0));
+	        	cb.setOnAction(event3 -> {
+                    if (cb.isSelected()) 
+                    {
+                    	System.out.println("CHECKBOX ACTIVATED");
+                    	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+                    }
+                  });
 	        	toDoVBoxList.add(cb);
     		}
     		
@@ -287,8 +294,16 @@ public class BusinessController {
       	//deal with css
 		//add this here, or is this part of parent ObservableList?
         CheckBox cb = new CheckBox(taskString);
+        
         //cb.setStyle("-fx-text-fill:white");
         cb.setPadding(new Insets(10, 10, 0, 0));
+        cb.setOnAction(event3 -> {
+            if (cb.isSelected()) 
+            {
+            	System.out.println("CHECKBOX ACTIVATED");
+            	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+            }
+          });
         
         //This adds it to the appropriate observable VBox
        

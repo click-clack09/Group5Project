@@ -55,7 +55,6 @@ public ArrayList<UserHubRecord> getUserLifeHubs(ArrayList<UserHubRecord> userHub
 				if(rs.next() != false) {
 
 					do{
-						System.out.println("LifeHub names for user: "+rs.getInt("user_id")+" "+rs.getString("life_hub_name"));
 						userHubRecords.add(new UserHubRecord(rs.getString("life_hub_name"),rs.getInt("event_type")));
 					}while(rs.next());
 					
@@ -192,14 +191,6 @@ public ArrayList<HubEvent> getUserHubEvents(ArrayList<HubEvent> userHubEvents) {
 			if(rs.next() != false) {
 					
 				do{
-					System.out.println("----->Hub Events on HubEvent table for user: "+rs.getInt("user_id")+" "+rs.getString("event_name"));
-					/*
-					 * 	there are setters and getters for below hub event fields
-						HubEvent(int eventID, int userID, int eventType, Date startDate, String hubName, String location,
-						ArrayList<Contact> attendees, String eventName, Date endDate)
-					 * 
-					 * 
-					 */
 					
 					int event_id = rs.getInt("event_id");
 					int user_id = rs.getInt("user_id");
@@ -323,7 +314,6 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 			//loop thru logged-in user's hubs
 			for (LifeHub hub: User.getUserHubs())
 			{	
-
 				/////Move type logic here
 				if (hub.getEventType()!=2) {
 				if(hub.getClasses()!=null) 
@@ -336,7 +326,6 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 					ps.setInt(1, User.getUserID());
 					ps.setString(2, hub.getHubName());
 					ps.setString(3, sClass.getClassName());
-					
 					ResultSet rs = ps.executeQuery();
 					//false means an empty result set
 					if(rs.next() != false) {
@@ -357,7 +346,7 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 //						hub.getTasks().add(new Task(rs.getString("text")));
 //					else
 					//////	//Address duplicate class names
-						System.out.println("School or personal category-1 or 3 EventHub of user");
+						System.out.println("Business category-2 EventHub of user");
 						PreparedStatement ps = conn.prepareStatement(user_tasks_query);
 						ps.setInt(1, User.getUserID());
 						ps.setString(2, hub.getHubName());
@@ -415,7 +404,7 @@ public void setUserSchools()
 			System.out.println("reached schools");
 			//loop thru logged-in user's hubs
 			for (LifeHub hub: User.getUserHubs())
-			{					
+			{	
 				//Address duplicate class names
 				PreparedStatement ps = conn.prepareStatement(user_school_classes_query);
 				ps.setInt(1, User.getUserID());
@@ -423,18 +412,16 @@ public void setUserSchools()
 				//false means an empty result set
 				if(rs.next() != false) {
 						//gets only user contact names
-					System.out.println("Printing the user's school classes: "+rs.getString("school_class_name"));
-					String school_hub_name = rs.getString("hub_name");
-					if(hub.getHubName().equals(school_hub_name)) {
-						do{
-							hub.getClasses().add(new SchoolClass(rs.getString("school_class_name"), rs.getString("school_class_professor"), 
-									rs.getString("school_class_location"), new ArrayList<Task>(),
-										new HubEvent(), new ArrayList<Note>()));
-								
+					do {
+						String school_hub_name = rs.getString("hub_name");
+						if(hub.getHubName().equals(school_hub_name)) {
+								hub.getClasses().add(new SchoolClass(rs.getString("school_class_name"), rs.getString("school_class_professor"), 
+								rs.getString("school_class_location"), new ArrayList<Task>(), new HubEvent(), new ArrayList<Note>()));
+							}
 						}while(rs.next());	
 					}
 			     }
-			}
+			
 			
 			//close connection
 			try {
@@ -452,6 +439,10 @@ public void setUserSchools()
 	          	e.printStackTrace();
 	    }
 }
+	public void setUserNotes()
+	{
+		
+	}
 
 	@FXML
 		void initialize()
@@ -526,18 +517,18 @@ public void setUserSchools()
 		//now void - see 2) - setSchools
 		getUserTasksSchool(arrayListOfTasks);
 		
-		if(User.getUserHubs()!=null)	
-		{
-			for (LifeHub hub: User.getUserHubs())
-			{	
-				for (SchoolClass ThisClass: hub.getClasses())
-				{
-					System.out.println("This class name is : "+ThisClass.getClassName());
-					for(Task ThisTask: ThisClass.getAssignments())
-						System.out.println("This task is : "+ThisTask.getText());
-				}//DB call to events and add tasks, add them to arrayLists, pass to current object;
-			}
-		}
+//		if(User.getUserHubs()!=null)	
+//		{
+//			for (LifeHub hub: User.getUserHubs())
+//			{	
+//				for (SchoolClass ThisClass: hub.getClasses())
+//				{
+//					System.out.println("This class name is : "+ThisClass.getClassName());
+//					for(Task ThisTask: ThisClass.getAssignments())
+//						System.out.println("This task is : "+ThisTask.getText());
+//				}//DB call to events and add tasks, add them to arrayLists, pass to current object;
+//			}
+//		}
 
 		//set user's business tasks
 		//for the user, Create each unique hubs - each name (life, tasks, events , and notes during creating
@@ -565,14 +556,7 @@ public void setUserSchools()
 		 * }*/
 		if (User.getUserHubs()==null)
 			User.setUserHubs(new ArrayList<LifeHub>());
-		//Dummy event/****IGNORE*******/
 		
-		/****IGNORE*******/
-		//Hard coded hubs for testing
-//		userHubRecords.add(new UserHubRecord("Fall 2021",1));
-//		userHubRecords.add(new UserHubRecord("My Business Hub",2));
-//		userHubRecords.add(new UserHubRecord("Personal Hub",3));
-		/*******IGNORE THIS********/
 		//make a list of the names
 		ArrayList<String> hubNames = new ArrayList<String>();
 		for (UserHubRecord record:userHubRecords)
@@ -648,8 +632,7 @@ public void setUserSchools()
 			//Ends search when all values have been checked
 			else
 				find = false;
-//			for (Task thisTask : User.getUserHubs().get(count).getTasks())
-//				System.out.println(thisTask.getText());
+
 		}
 		User.setCurrentHub(User.getUserHubs().get(count));
 		
@@ -659,74 +642,21 @@ public void setUserSchools()
 		ArrayList<Note> notes = new ArrayList<Note>();
 		if(User.getCurrentHub().getClasses()!=null)
 		User.setClasses(User.getCurrentHub().getClasses());
-//		for (SchoolClass thisClass: User.getClasses())
-//		{
-//			System.out.println(thisClass.getClassName()+"FROM 634");
-//			for (Task thisTask: thisClass.getAssignments())
-//				System.out.println(thisTask.getText()+"FROM 636");
-//		}
 		//this switch will get select the appropriate FXML doc (1 school, 3 personal, or 2 business)
 		switch (hubType)
 		{
 			case 1:
 				hubView="EducationHome";
-				//ArrayList<SchoolClass> classes = new ArrayList<SchoolClass>();
-				//event_name for 1, social
-				//get classes from DB
-				/*Constructor for SchoolClass(String className, String professor, String location, ArrayList<Task> assignments,
-					HubEvent meetingTime)*/
-				//for testing, should just be the else part
-//				if (User.getClasses() == null)
-//				{
-//				ArrayList<Note> appNotes = new ArrayList<Note>();
-//					appNotes.add(new Note("This is my first note"));
-//					appNotes.add(new Note("Second note"));
-//					classes.add(new SchoolClass("Application Programming","Rathore","NPB",new ArrayList<Task>(), new HubEvent(),appNotes));
-//					classes.add(new SchoolClass("Systems Programming","Sylvestro","SEB",new ArrayList<Task>(), new HubEvent(),new ArrayList<Note>()));
-//				}
-//				else
-//				{
-////					User.getClasses().clear();
-////					User.getUserHubs().get
-//
-//				
-//	////////////////////Need to deal with only pulling in the right classes for the hub. Also, need to decide if we should extend hub to SchoolHub
-//				//to be SOLID compliant
-//					for (SchoolClass sc: User.getClasses())
-//						classes.add(sc);
-//				}
-				//User.setClasses(classes);
-				//tasks and notes belong to classes for Education
 				break;
 			case 2:
 				hubView="BusinessHome";
-				//perform a DB query to based on userChoice (Hub name). Return tasks and notes.
-				
-				//Add hub tasks
-				
-				
-				
-				//User.getCurrentHub().setTasks(tasks);
-				
-				//Add hub notes
-				//User.getCurrentHub().setNotes(notes);
-				
-				
 				break;
 			case 3:
 				hubView="PersonalHome";
-				//perform a DB query to based on userChoice (Hub name). Return tasks and notes.
-				//event_name for 1, social
-				//Add hub tasks
-				//User.getCurrentHub().setTasks(tasks);
-				
-				//Add hub notes
-				//User.getCurrentHub().setNotes(notes);
 				break;
 			default:
 				break;
-		}
-//////////FIX THIS WHEN WE CAN PULL FROM DB//////////////////////////////////////////////////////////////////////		
+		}		
 		//Create current Hub with data from on DB query
 		//User.setCurrentHub(new LifeHub(userChoice,hubType, events, tasks,notes));
 	
@@ -746,7 +676,7 @@ public void setUserSchools()
     	}
     	catch (IOException e)
     	{
-    		System.out.println("Error at 725");
+    		//System.out.println("Error at 725");
     	}
     }
 
@@ -913,12 +843,9 @@ public void setUserSchools()
        	{
     		URL url = new File("src/application/view/Login.fxml").toURI().toURL();
        		User.setLastHub(new File("src/application/view/Login.fxml").toURI().toURL());
-       	 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////      		
-       		//User.setCurrentHub(hubName);
-       		//use FXMLloader to pass all user data to next controller
            	mainPane = FXMLLoader.load(url);
-           	   Scene scene = new Scene(mainPane);// pane you are GOING TO show
-               Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+           	   Scene scene = new Scene(mainPane);
+               Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
                window.setScene(scene);
                window.show();
        	}
