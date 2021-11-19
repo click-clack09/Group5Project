@@ -1,17 +1,16 @@
 package application.controller;
-//cb.setSelected(true);
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import application.model.*;
 
 import application.model.User;
-import application.model.Contact;
 import application.model.Date;
 import application.model.HubEvent;
+import application.model.LifeHub;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,16 +19,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class CalendarController {
 	
+	ObservableList<CheckBox> eventCheckBoxes = FXCollections.observableArrayList();
+	
+	@FXML
+	private VBox checkboxDisplay;
+    
 	@FXML
 	private AnchorPane mainPane;
 
@@ -38,6 +45,9 @@ public class CalendarController {
     
     @FXML
     private DatePicker dateMenu;
+    
+    @FXML
+    private VBox checkBoxContainer;
     
     @FXML
     private Label Sunday1;
@@ -165,105 +175,94 @@ public class CalendarController {
     @FXML
     private Label Saturday6;
     
-    @FXML
-    private VBox hubSelection;
-    
     private int displayYear;
     
     private int displayMonth;
     
     private int displayDay;
     
-    private ObservableList<CheckBox> hubs = FXCollections.observableArrayList();
+    private ArrayList<Label> labels;
     
     @FXML
     void initialize()
     {
     	LocalDate currentdate = LocalDate.now();
     	
-    	updateCalendar(currentdate.getYear(), currentdate.getMonth().getValue());
     	
+    	displayYear = currentdate.getYear();
+    	displayMonth = currentdate.getMonth().getValue();
+    	displayDay = currentdate.getDayOfMonth();
     	
+    	labels = new ArrayList<Label>();
+    	initializeLabels();
     	
-    	for (int i = 0; i < User.getUserHubs().size(); i++)
-		{	
-    		//Make a CheckBox for each task\
-			System.out.println(User.getUserHubs().get(i).getHubName());
-        	CheckBox cb = new CheckBox(User.getUserHubs().get(i).getHubName());
-        	cb.setPadding(new Insets(10, 10, 0, 0));
-        	cb.setStyle("-fx-text-fill: #ffffff");
-        	cb.setSelected(true);
-        	cb.setOnAction(event3 -> {
-                if (!cb.isSelected()) 
-                {
-                	System.out.println("CHECKBOX Unchecked");
-                	System.out.println(event3.getSource());//parse this, use to get source, make the labels appear or not
-                	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
-                }
-              });
-        	hubs.add(cb);
-		}
-    	hubSelection.getChildren().addAll(hubs);
+    	updateCalendar();
     	
-    	//this will instantiate the LifeHub object based on the DB query
-    	//pull all tasks, events and notes associated with the User.getUserID() int
-    	//calendarLabel.setText(User.getUserName()+", Monthly Calendar");
+    	displayHubCheckboxes();
+    }
+    
+    void initializeLabels() {
+    	labels.add(Sunday1);
+    	labels.add(Monday1);
+    	labels.add(Tuesday1);
+    	labels.add(Wednesday1);
+    	labels.add(Thursday1);
+    	labels.add(Friday1);
+    	labels.add(Saturday1);
+    	
+    	labels.add(Sunday2);
+    	labels.add(Monday2);
+    	labels.add(Tuesday2);
+    	labels.add(Wednesday2);
+    	labels.add(Thursday2);
+    	labels.add(Friday2);
+    	labels.add(Saturday2);
+    	
+    	labels.add(Sunday3);
+    	labels.add(Monday3);
+    	labels.add(Tuesday3);
+    	labels.add(Wednesday3);
+    	labels.add(Thursday3);
+    	labels.add(Friday3);
+    	labels.add(Saturday3);
+    	
+    	labels.add(Sunday4);
+    	labels.add(Monday4);
+    	labels.add(Tuesday4);
+    	labels.add(Wednesday4);
+    	labels.add(Thursday4);
+    	labels.add(Friday4);
+    	labels.add(Saturday4);
+    	
+    	labels.add(Sunday5);
+    	labels.add(Monday5);
+    	labels.add(Tuesday5);
+    	labels.add(Wednesday5);
+    	labels.add(Thursday5);
+    	labels.add(Friday5);
+    	labels.add(Saturday5);
+    	
+    	labels.add(Sunday6);
+    	labels.add(Monday6);
+    	labels.add(Tuesday6);
+    	labels.add(Wednesday6);
+    	labels.add(Thursday6);
+    	labels.add(Friday6);
+    	labels.add(Saturday6);
     }
     
     void clearCalendar() {
-    	Sunday1.setText(""); 
-    	Monday1.setText(""); 
-    	Tuesday1.setText(""); 
-    	Wednesday1.setText(""); 
-    	Thursday1.setText(""); 
-    	Friday1.setText(""); 
-    	Saturday1.setText(""); 
-
-    	Sunday2.setText(""); 
-    	Monday2.setText(""); 
-    	Tuesday2.setText(""); 
-    	Wednesday2.setText(""); 
-    	Thursday2.setText(""); 
-    	Friday2.setText(""); 
-    	Saturday2.setText(""); 
-
-    	Sunday3.setText(""); 
-    	Monday3.setText(""); 
-    	Tuesday3.setText(""); 
-    	Wednesday3.setText(""); 
-    	Thursday3.setText(""); 
-    	Friday3.setText(""); 
-    	Saturday3.setText(""); 
-
-    	Sunday4.setText(""); 
-    	Monday4.setText(""); 
-    	Tuesday4.setText(""); 
-    	Wednesday4.setText(""); 
-    	Thursday4.setText(""); 
-    	Friday4.setText(""); 
-    	Saturday4.setText(""); 
-
-    	Sunday5.setText(""); 
-    	Monday5.setText(""); 
-    	Tuesday5.setText(""); 
-    	Wednesday5.setText(""); 
-    	Thursday5.setText(""); 
-    	Friday5.setText(""); 
-    	Saturday5.setText(""); 
-    	
-    	Sunday6.setText(""); 
-    	Monday6.setText(""); 
-    	Tuesday6.setText(""); 
-    	Wednesday6.setText(""); 
-    	Thursday6.setText(""); 
-    	Friday6.setText(""); 
-    	Saturday6.setText(""); 
+    	for(Label label : labels) {
+    		label.setText("");
+        	label.setTextFill(Color.web("#000000"));
+        	label.setStyle("-fx-background-color: #909090");
+    	}
     }
     
-    void updateCalendar(int year, int month) {
+    void updateCalendar() {
     	clearCalendar();
     	
-    	YearMonth ym = YearMonth.of(year, month);
+    	YearMonth ym = YearMonth.of(displayYear, displayMonth);
     	
     	calendarLabel.setText(ym.getMonth().name());
 
@@ -274,71 +273,48 @@ public class CalendarController {
     	int i = 1;    	
     			
     	switch(firstDay) {
-    		case 0: Sunday1.setText(getEvent(year, month, i)); i++;
-    		case 1: Monday1.setText(getEvent(year, month, i)); i++;
-    		case 2: Tuesday1.setText(getEvent(year, month, i)); i++;
-    		case 3:	Wednesday1.setText(getEvent(year, month, i)); i++;
-    		case 4:	Thursday1.setText(getEvent(year, month, i)); i++;
-    		case 5:	Friday1.setText(getEvent(year, month, i)); i++;
-    		case 6:	Saturday1.setText(getEvent(year, month, i)); i++;
+			case 0: fillDay(Sunday1, i); i++;
+			case 1: fillDay(Monday1, i); i++;
+			case 2: fillDay(Tuesday1, i); i++;
+			case 3:	fillDay(Wednesday1, i); i++;
+			case 4:	fillDay(Thursday1, i); i++;
+			case 5:	fillDay(Friday1, i); i++;
+			case 6:	fillDay(Saturday1, i); i++;
     	}
-    	
-    	int lastDay = ym.atEndOfMonth().getDayOfMonth();
-    	
-    	if(i <= lastDay) Sunday2.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Monday2.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Tuesday2.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Wednesday2.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Thursday2.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Friday2.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Saturday2.setText(getEvent(year, month, i)); i++;
+	
+    	for(int x = 7; x < labels.size(); x++) {
+    		fillDay(labels.get(x), i); i++;
+    	}
+	}
 
-    	if(i <= lastDay) Sunday3.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Monday3.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Tuesday3.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Wednesday3.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Thursday3.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Friday3.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Saturday3.setText(getEvent(year, month, i)); i++;
 
-    	if(i <= lastDay) Sunday4.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Monday4.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Tuesday4.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Wednesday4.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Thursday4.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Friday4.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Saturday4.setText(getEvent(year, month, i)); i++;
+    void fillDay(Label label, int i) {
+    	YearMonth ym = YearMonth.of(displayYear, displayMonth);
     	
-    	if(i <= lastDay) Sunday5.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Monday5.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Tuesday5.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Wednesday5.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Thursday5.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Friday5.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Saturday5.setText(getEvent(year, month, i)); i++;
+		int lastDay = ym.atEndOfMonth().getDayOfMonth();
 
-    	if(i <= lastDay) Sunday6.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Monday6.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Tuesday6.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Wednesday6.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Thursday6.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Friday6.setText(getEvent(year, month, i)); i++;
-    	if(i <= lastDay) Saturday6.setText(getEvent(year, month, i)); i++;
+		if(i <= lastDay) {
+			label.setText(getEvent(displayYear, displayMonth, i));
+	    	
+			if(i == displayDay) {
+				label.setTextFill(Color.web("#ff0000")); 
+			} 
+			
+			label.setStyle("-fx-background-color: #FFFFFF");
+		}
     }
     
     String getEvent(int year, int month, int day) {
     	String display = " " + day + "\n";
     	
-    	ArrayList<HubEvent> events = new ArrayList<HubEvent>();
+    	ArrayList<HubEvent> events = User.getUserEvents();
     	
-    	//populate events based on day
-    	
-    	events.add(new HubEvent("Event " + day));
-    	
-    	
-    	for(int i = 0; i < events.size(); i++) {
-    		if(true/*events are in selected hubs*/) {
-    			display += events.get(i).toString() + "\n";
+    	for(HubEvent e : events) {
+    		Date d = e.getStartDate();
+    		if(d.getYear() == year && d.getMonth() == month && d.getDay() == day) {
+    			if(true/*events are in selected hubs*/) {
+        			display += e.getEventName() + "\n ";
+        		}
     		}
     	}
     	
@@ -382,27 +358,7 @@ public class CalendarController {
 
     @FXML
     void addEvent(ActionEvent event) {
-    	/*
-    	 * private int eventID = 0;
-	private int userID; User.....
-	private int eventType; 
-	private Date startDate;
-	//this will need to be referenced with a LifeHub name, but should that come from the sending method?
-	private String hubName;
-	private String location;
-	private ArrayList<Contact> attendees;
-	private String eventName;
-	private Date endDate;//ki
-    	 * */
-    	//Date picker start date
-    	//Hub Name (From dropDown)What hub is this event for? Dropdown, hubs This will also give us type
-    	//get location
-    	//get attendees from contact list (dropdown) loop 
-    	//Date picker end date
-    	//Get event name
-    	//
-    	HubEvent tempEvent = new HubEvent();
-    	User.addHubEvent(tempEvent);
+
     }
 
     @FXML
@@ -413,7 +369,12 @@ public class CalendarController {
     @FXML
     void chooseDate(ActionEvent event) {
         LocalDate date = dateMenu.getValue();
-        updateCalendar(date.getYear(), date.getMonth().getValue());
+        
+        displayYear = date.getYear();
+        displayMonth = date.getMonth().getValue();
+        displayDay = date.getDayOfMonth();
+        
+        updateCalendar();
     }
 
     @FXML
@@ -440,5 +401,44 @@ public class CalendarController {
 	    window.setScene(scene);
 	    window.show();
 	}
+    
+    void displayHubCheckboxes()
+    {
+    	//for (int i = 0; i < User.getUserHubs().size(); i++)
+		//{
+			//For every class, add an observable checkList
+            
+            //make a separator and a VBox 
+            
+    		//THIS ONE
+    		//Separator separator = new Separator();
+            VBox temp = new VBox();
+            //temp.setPadding(new Insets(10, 10, 10, 10));
+            
+            //this will get all hubs in ArrayList for user
+            for (int j = 0; j < User.getUserHubs().size(); j++)
+            {
+            	//System.out.println("HELLO");
+            	//Make a CheckBox for each task
+            	LifeHub hub = (LifeHub)User.getUserHubs().get(j);
+            	CheckBox cb = new CheckBox("HELLO");//hub.getHubName());
+                //cb.setStyle("-fx-text-fill:white");
+                cb.setPadding(new Insets(10, 10, 0, 0));
+                eventCheckBoxes.add(cb);
+
+            }
+            
+            System.out.println(eventCheckBoxes.toString());
+            for(CheckBox c: eventCheckBoxes)
+            	System.out.println(c.getText());
+            
+    		//THIS ONE
+            checkboxDisplay.getChildren().clear();
+            checkboxDisplay.getChildren().addAll(eventCheckBoxes);
+            
+
+            
+		//}
+    }
 
 }
