@@ -323,7 +323,7 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 			//loop thru logged-in user's hubs
 			for (LifeHub hub: User.getUserHubs())
 			{	
-
+				System.out.println(hub.getHubName()+"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& "+hub.getEventType());
 				/////Move type logic here
 				if (hub.getEventType()!=2) {
 				if(hub.getClasses()!=null) 
@@ -336,7 +336,7 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 					ps.setInt(1, User.getUserID());
 					ps.setString(2, hub.getHubName());
 					ps.setString(3, sClass.getClassName());
-					
+					System.out.println("Class "+sClass.getClassName()+" at line 339 looking for "+User.getUserID()+" "+hub.getHubName()+" "+sClass.getClassName());
 					ResultSet rs = ps.executeQuery();
 					//false means an empty result set
 					if(rs.next() != false) {
@@ -357,7 +357,7 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 //						hub.getTasks().add(new Task(rs.getString("text")));
 //					else
 					//////	//Address duplicate class names
-						System.out.println("School or personal category-1 or 3 EventHub of user");
+						System.out.println("Business category-2 EventHub of user");
 						PreparedStatement ps = conn.prepareStatement(user_tasks_query);
 						ps.setInt(1, User.getUserID());
 						ps.setString(2, hub.getHubName());
@@ -415,7 +415,7 @@ public void setUserSchools()
 			System.out.println("reached schools");
 			//loop thru logged-in user's hubs
 			for (LifeHub hub: User.getUserHubs())
-			{					
+			{	
 				//Address duplicate class names
 				PreparedStatement ps = conn.prepareStatement(user_school_classes_query);
 				ps.setInt(1, User.getUserID());
@@ -423,18 +423,18 @@ public void setUserSchools()
 				//false means an empty result set
 				if(rs.next() != false) {
 						//gets only user contact names
-					System.out.println("Printing the user's school classes: "+rs.getString("school_class_name"));
-					String school_hub_name = rs.getString("hub_name");
-					if(hub.getHubName().equals(school_hub_name)) {
-						do{
-							hub.getClasses().add(new SchoolClass(rs.getString("school_class_name"), rs.getString("school_class_professor"), 
-									rs.getString("school_class_location"), new ArrayList<Task>(),
-										new HubEvent(), new ArrayList<Note>()));
-								
+					do {
+						System.out.println("Printing the user's school classes: "+rs.getString("school_class_name"));
+						String school_hub_name = rs.getString("hub_name");
+						System.out.println("This is the school_hub name ="+school_hub_name);
+						if(hub.getHubName().equals(school_hub_name)) {
+								hub.getClasses().add(new SchoolClass(rs.getString("school_class_name"), rs.getString("school_class_professor"), 
+								rs.getString("school_class_location"), new ArrayList<Task>(), new HubEvent(), new ArrayList<Note>()));
+							}
 						}while(rs.next());	
 					}
 			     }
-			}
+			
 			
 			//close connection
 			try {
@@ -530,6 +530,7 @@ public void setUserSchools()
 		{
 			for (LifeHub hub: User.getUserHubs())
 			{	
+				System.out.println("Outer for loop iterated. Hub is: "+hub.getHubName());
 				for (SchoolClass ThisClass: hub.getClasses())
 				{
 					System.out.println("This class name is : "+ThisClass.getClassName());
@@ -659,6 +660,13 @@ public void setUserSchools()
 		ArrayList<Note> notes = new ArrayList<Note>();
 		if(User.getCurrentHub().getClasses()!=null)
 		User.setClasses(User.getCurrentHub().getClasses());
+		for (SchoolClass ThisClass: User.getCurrentHub().getClasses())
+			{
+				System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$This class name is : "+ThisClass.getClassName());
+				for(Task ThisTask: ThisClass.getAssignments())
+					System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$This task is : "+ThisTask.getText());
+			}//DB call to events and add tasks, add them to arrayLists, pass to current object;
+		
 //		for (SchoolClass thisClass: User.getClasses())
 //		{
 //			System.out.println(thisClass.getClassName()+"FROM 634");

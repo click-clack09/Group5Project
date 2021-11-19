@@ -52,8 +52,12 @@ public class EducationController {
 		 //make String ArrayList of classes
 		 classes = new ArrayList<String>();
 		 
+		 System.out.println(User.getClasses().size()+"----------------------------------------");
 		 for (SchoolClass schoolClass : User.getClasses())
+		 {
+			 System.out.println(schoolClass.getClassName());
 			 classes.add(schoolClass.getClassName());
+		 }
 		 
 		 classHash = new HashMap<String, Integer>();
 		 taskHash = new HashMap<String, String>();
