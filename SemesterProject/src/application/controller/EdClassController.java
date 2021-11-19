@@ -210,7 +210,8 @@ public class EdClassController {
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
-    	User.getClasses().get(index).getNotes().add(new Note(classNotes.getText()));
+    	Note tempNote = new Note(classNotes.getText());
+    	User.getClasses().get(index).getNotes().add(tempNote);
     	//Add the date to this as well. Wishlist make this a hyperlink with a popup
     	Alert alert = getAlert("Display Note","Note",classNotes.getText());
     	Hyperlink tempLink = new Hyperlink(classNotes.getText());
@@ -220,6 +221,7 @@ public class EdClassController {
           });
         archivedClassNotes.getItems().add(tempLink);
     	//Push to DB
+        User.addArchivedNote(tempNote);
     	classNotes.clear();
     }
     
