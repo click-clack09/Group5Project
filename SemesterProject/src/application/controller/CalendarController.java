@@ -188,6 +188,25 @@ public class CalendarController {
     {
     	LocalDate currentdate = LocalDate.now();
     	
+    	for (int i = 0; i < User.getUserHubs().size(); i++)
+		{	
+    		//Make a CheckBox for each task\
+			System.out.println(User.getUserHubs().get(i).getHubName());
+        	CheckBox cb = new CheckBox(User.getUserHubs().get(i).getHubName());
+        	cb.setPadding(new Insets(10, 10, 0, 0));
+        	cb.setStyle("-fx-text-fill: #ffffff");
+        	cb.setSelected(true);
+        	cb.setOnAction(event3 -> {
+                if (!cb.isSelected()) 
+                {
+                	System.out.println("CHECKBOX Unchecked");
+                	System.out.println(event3.getSource());//parse this, use to get source, make the labels appear or not
+                	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+                }
+              });
+        	eventCheckBoxes.add(cb);
+		}
+    	checkBoxContainer.getChildren().addAll(eventCheckBoxes);
     	
     	displayYear = currentdate.getYear();
     	displayMonth = currentdate.getMonth().getValue();
@@ -198,7 +217,7 @@ public class CalendarController {
     	
     	updateCalendar();
     	
-    	displayHubCheckboxes();
+    	//displayHubCheckboxes();
     }
     
     void initializeLabels() {
@@ -402,43 +421,43 @@ public class CalendarController {
 	    window.show();
 	}
     
-    void displayHubCheckboxes()
-    {
-    	//for (int i = 0; i < User.getUserHubs().size(); i++)
-		//{
-			//For every class, add an observable checkList
-            
-            //make a separator and a VBox 
-            
-    		//THIS ONE
-    		//Separator separator = new Separator();
-            VBox temp = new VBox();
-            //temp.setPadding(new Insets(10, 10, 10, 10));
-            
-            //this will get all hubs in ArrayList for user
-            for (int j = 0; j < User.getUserHubs().size(); j++)
-            {
-            	//System.out.println("HELLO");
-            	//Make a CheckBox for each task
-            	LifeHub hub = (LifeHub)User.getUserHubs().get(j);
-            	CheckBox cb = new CheckBox("HELLO");//hub.getHubName());
-                //cb.setStyle("-fx-text-fill:white");
-                cb.setPadding(new Insets(10, 10, 0, 0));
-                eventCheckBoxes.add(cb);
-
-            }
-            
-            System.out.println(eventCheckBoxes.toString());
-            for(CheckBox c: eventCheckBoxes)
-            	System.out.println(c.getText());
-            
-    		//THIS ONE
-            checkboxDisplay.getChildren().clear();
-            checkboxDisplay.getChildren().addAll(eventCheckBoxes);
-            
-
-            
-		//}
-    }
+//    void displayHubCheckboxes()
+//    {
+//    	//for (int i = 0; i < User.getUserHubs().size(); i++)
+//		//{
+//			//For every class, add an observable checkList
+//            
+//            //make a separator and a VBox 
+//            
+//    		//THIS ONE
+//    		//Separator separator = new Separator();
+//            VBox temp = new VBox();
+//            //temp.setPadding(new Insets(10, 10, 10, 10));
+//            
+//            //this will get all hubs in ArrayList for user
+//            for (int j = 0; j < User.getUserHubs().size(); j++)
+//            {
+//            	//System.out.println("HELLO");
+//            	//Make a CheckBox for each task
+//            	LifeHub hub = (LifeHub)User.getUserHubs().get(j);
+//            	CheckBox cb = new CheckBox("HELLO");//hub.getHubName());
+//                //cb.setStyle("-fx-text-fill:white");
+//                cb.setPadding(new Insets(10, 10, 0, 0));
+//                eventCheckBoxes.add(cb);
+//
+//            }
+//            
+//            System.out.println(eventCheckBoxes.toString());
+//            for(CheckBox c: eventCheckBoxes)
+//            	System.out.println(c.getText());
+//            
+//    		//THIS ONE
+//            checkboxDisplay.getChildren().clear();
+//            checkboxDisplay.getChildren().addAll(eventCheckBoxes);
+//            
+//
+//            
+//		//}
+//    }
 
 }

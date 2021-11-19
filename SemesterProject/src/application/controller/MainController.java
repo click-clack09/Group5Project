@@ -72,18 +72,26 @@ public class MainController {
     void create(ActionEvent event) {
     	loginError.setText("");
     	boolean wentThrough;
-    	User newUser = new User(userName.getText(),password.getText());
-    	wentThrough = newUser.addUser();
+    	String uName =userName.getText();
+    	String pw = password.getText();
+    	if (!uName.equals("") && !pw.equals(""))
+    	{
+    		User newUser = new User(uName,pw);
+    		wentThrough = newUser.addUser();
     	if (!wentThrough)
     	{
     		loginError.setText("Create failed. Please try again");
     	}
     	else
 			login(event);
+    	}
+    	else
+    		loginError.setText("Username cannot be empty. Please try again");
     }
 
     @FXML
     void login(ActionEvent event) {
+    	loginError.setText("");
     	try
     	{
     		if (User.validate(userName.getText(),password.getText()))
@@ -99,6 +107,8 @@ public class MainController {
 	            window.setScene(scene);
 	            window.show();
 	    	}
+    		else
+    			loginError.setText("Login failed. Please try again");
     	}
     	catch (IOException e)
     	{

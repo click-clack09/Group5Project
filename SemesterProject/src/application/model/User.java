@@ -618,6 +618,8 @@ public class User {
 				ps.setInt(2, userID);
 				ps.setInt(3, eventType);
 				ps.setString(4, noteLifeHubName);
+				if (noteSchoolClassName==null)
+					noteSchoolClassName="N/A";
 				ps.setString(5, noteSchoolClassName);
 				ps.setString(6, noteImagePath);
 				ps.setString(7, noteText);

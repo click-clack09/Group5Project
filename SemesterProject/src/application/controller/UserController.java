@@ -439,9 +439,86 @@ public void setUserSchools()
 	          	e.printStackTrace();
 	    }
 }
-	public void setUserNotes()
+	public void setUserNotes()//**************************************************************************DEAL WITH THIS*********************************
 	{
+		//////////////////////////////////////Borrowed from tasks
+		String user_tasks_query = "SELECT * FROM lifehub.archivednotes WHERE user_id = ? AND life_hub_name = ? AND school_class = ?";    	    
+		try {
+		    Connection conn = DatabaseConnection.getConnection();    
 		
+			if(User.getUserHubs()!=null)	
+			{
+				//loop thru logged-in user's hubs
+				for (LifeHub hub: User.getUserHubs())
+				{	
+					/////Move type logic here
+					if (hub.getEventType()!=2) {
+					if(hub.getClasses()!=null) 
+					{
+						
+					for (SchoolClass sClass: hub.getClasses()) {
+						//Address duplicate class names
+						System.out.println("School or personal category-1 or 3 EventHub of user");
+						PreparedStatement ps = conn.prepareStatement(user_tasks_query);
+						ps.setInt(1, User.getUserID());
+						ps.setString(2, hub.getHubName());
+						ps.setString(3, sClass.getClassName());
+						ResultSet rs = ps.executeQuery();
+						//false means an empty result set
+						if(rs.next() != false) {
+							//gets only user contact names
+							do{
+								sClass.getAssignments().add(new Task(rs.getString("text")));
+								
+							}while(rs.next());
+				        }
+					}
+					}
+					}
+					else{//loop through hubs
+//					if (hub.getEventType()==2)
+//						ps.setString(3, hub.getHubName());
+//					else
+//						if (hub.getEventType()==2)
+//							hub.getTasks().add(new Task(rs.getString("text")));
+//						else
+						//////	//Address duplicate class names
+							System.out.println("Business category-2 EventHub of user");
+							PreparedStatement ps = conn.prepareStatement(user_tasks_query);
+							ps.setInt(1, User.getUserID());
+							ps.setString(2, hub.getHubName());
+							ps.setString(3, hub.getHubName());
+							
+							ResultSet rs = ps.executeQuery();
+							//false means an empty result set
+							if(rs.next() != false) {
+								//gets only user contact names
+								do{
+									hub.getTasks().add(new Task(rs.getString("text")));
+									
+								}while(rs.next());
+					        }
+						}		
+					
+			}
+				
+				//close connection
+				//closeConnection(conn);
+				try {
+					conn.close();
+				}catch (SQLException se){
+					System.out.println("Error closing SQL connection.");
+				}	
+			}	
+
+		    }catch(SQLSyntaxErrorException see) {
+		       System.out.println("Error: DB syntax is incorrect while getting user's tasks.");
+		          	//see.printStackTrace();
+		    }catch(Exception e) {
+		       System.out.println("Error: DB connection failed in controller while getting user's tasks.");
+		          	e.printStackTrace();
+		    }
+		//////////////////////////////////////////////////////////
 	}
 
 	@FXML
