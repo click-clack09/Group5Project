@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -314,7 +315,48 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <VBox fx:id="hubSelection" alignment="CENTER_LEFT" />
+                              <VBox fx:id="checkBoxContainer">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <VBox fx:id="checkboxDisplay" alignment="CENTER_LEFT" spacing="3.0">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="Home" textFill="WHITE">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </CheckBox>
+                                                <CheckBox mnemonicParsing="false" text="Work" textFill="WHITE">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </CheckBox>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox alignment="CENTER_LEFT" spacing="3.0">
+                                             <children>
+                                                <CheckBox mnemonicParsing="false" text="Class1" textFill="WHITE">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </CheckBox>
+                                                <CheckBox mnemonicParsing="false" text="Class2" textFill="WHITE">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </CheckBox>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                         <Separator prefWidth="200.0">
