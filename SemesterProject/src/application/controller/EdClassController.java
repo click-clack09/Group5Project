@@ -54,9 +54,6 @@ public class EdClassController {
     void initialize()
     {
     	
-    	System.out.println("---------------------------My current hub is: "+User.getCurrentHub().getHubName());
-    	System.out.println("---------------------------My last hub is: "+User.getLastHub());
-    	System.out.println("---------------------------My current class is: "+User.getCurrentClass());
     	toDoClassName.setText(User.getCurrentClass());
     	
     	//Get the current class notes, add to ToDoList
@@ -87,6 +84,13 @@ public class EdClassController {
     		//Make a CheckBox for each task
         	CheckBox cb = new CheckBox(User.getClasses().get(index).getAssignments().get(i).getText());
         	cb.setPadding(new Insets(10, 10, 0, 0));
+        	cb.setOnAction(event3 -> {
+                if (cb.isSelected()) 
+                {
+                	System.out.println("CHECKBOX ACTIVATED");
+                	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+                }
+              });
         	toDoVBoxList.add(cb);
     		}//cb.setStyle("-fx-text-fill:white");
             
@@ -157,7 +161,13 @@ public class EdClassController {
         CheckBox cb = new CheckBox(taskString);
         //cb.setStyle("-fx-text-fill:white");
         cb.setPadding(new Insets(10, 10, 0, 0));
-        
+        cb.setOnAction(event3 -> {
+            if (cb.isSelected()) 
+            {
+            	System.out.println("CHECKBOX ACTIVATED");
+            	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+            }
+          });
         //This adds it to the appropriate observable VBox
        
         toDoVBoxList.add(cb);

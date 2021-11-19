@@ -1,25 +1,31 @@
 package application.controller;
-
+//cb.setSelected(true);
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import application.model.*;
 
 import application.model.User;
 import application.model.Contact;
 import application.model.Date;
 import application.model.HubEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CalendarController {
@@ -159,11 +165,16 @@ public class CalendarController {
     @FXML
     private Label Saturday6;
     
+    @FXML
+    private VBox hubSelection;
+    
     private int displayYear;
     
     private int displayMonth;
     
     private int displayDay;
+    
+    private ObservableList<CheckBox> hubs = FXCollections.observableArrayList();
     
     @FXML
     void initialize()
@@ -171,6 +182,28 @@ public class CalendarController {
     	LocalDate currentdate = LocalDate.now();
     	
     	updateCalendar(currentdate.getYear(), currentdate.getMonth().getValue());
+    	
+    	
+    	
+    	for (int i = 0; i < User.getUserHubs().size(); i++)
+		{	
+    		//Make a CheckBox for each task\
+			System.out.println(User.getUserHubs().get(i).getHubName());
+        	CheckBox cb = new CheckBox(User.getUserHubs().get(i).getHubName());
+        	cb.setPadding(new Insets(10, 10, 0, 0));
+        	cb.setStyle("-fx-text-fill: #ffffff");
+        	cb.setSelected(true);
+        	cb.setOnAction(event3 -> {
+                if (!cb.isSelected()) 
+                {
+                	System.out.println("CHECKBOX Unchecked");
+                	System.out.println(event3.getSource());//parse this, use to get source, make the labels appear or not
+                	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+                }
+              });
+        	hubs.add(cb);
+		}
+    	hubSelection.getChildren().addAll(hubs);
     	
     	//this will instantiate the LifeHub object based on the DB query
     	//pull all tasks, events and notes associated with the User.getUserID() int

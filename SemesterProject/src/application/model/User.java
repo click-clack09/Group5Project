@@ -458,14 +458,12 @@ public class User {
 			if (User.getCurrentHub().getEventType()==2)//this means it's a Business tasks link to Hub
 			{
 				eventName=hubName;
-				System.out.println("Event Name "+ eventName+". hubName "+hubName);
 				//send to hub copy ot class String imgPath = null, String text task.getText()		
 			}
 			else
 			{
 				//send to hub and class
 				eventName = className;
-				System.out.println("Event Name "+ eventName+". Class Name "+className);
 			}
 			//do insert here
 			User.executeInsertIntoTaskTable(eventID,eventType,hubName,eventName,imgPath,text);
@@ -612,7 +610,7 @@ public class User {
 		public static void executeInsertIntoArchivedNoteTable(int userID, int eventType, String noteLifeHubName,
 			String noteSchoolClassName, String noteImagePath, String noteText) {
 			System.out.println("Inserting into Archived Note Table: "+userID+" "+eventType+" "+noteText);
-			String insert_into_task_table = "INSERT INTO lifeHub.ArchivedNote (archived_notes_id,user_id,event_type,life_hub_name,school_class,img_path,text) "+"VALUES(?,?,?,?,?,?,?)";
+			String insert_into_task_table = "INSERT INTO lifeHub.archivednotes (archived_notes_id,user_id,event_type,life_hub_name,school_class,img_path,text) "+"VALUES(?,?,?,?,?,?,?)";
 			try {
 			    Connection conn = DatabaseConnection.getConnection();	    
 				PreparedStatement ps = conn.prepareStatement(insert_into_task_table);
@@ -660,13 +658,13 @@ public class User {
 			String noteLifeHubName = User.getCurrentHub().getHubName();
 			String noteSchoolClassName;
 			if (User.getCurrentHub().getEventType()==2)
-				noteSchoolClassName = User.getCurrentClass();
-			else
 				noteSchoolClassName = User.getCurrentHub().getHubName();
+			else
+				noteSchoolClassName = User.getCurrentClass();
 			
 			//String
 			
-		
+			System.out.println(userID+" "+eventType+" "+noteLifeHubName+" "+noteSchoolClassName+" "+noteImagePath+" "+noteText);
 			User.executeInsertIntoArchivedNoteTable(userID,eventType,noteLifeHubName,
 					noteSchoolClassName,noteImagePath,noteText);
 		}

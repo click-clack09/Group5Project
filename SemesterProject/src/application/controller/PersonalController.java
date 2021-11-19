@@ -121,6 +121,13 @@ public class PersonalController {
     	                //cb.setStyle("-fx-text-fill:white");
     	                cb.setPadding(new Insets(10, 10, 0, 0));
     	                checkList.add(cb);
+    	                cb.setOnAction(event3 -> {
+    	                    if (cb.isSelected()) 
+    	                    {
+    	                    	System.out.println("CHECKBOX ACTIVATED");
+    	                    	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+    	                    }
+    	                  });
     	                //add HashMap Entry for task text and className (String)
     	                taskHash.put(cb.getText(), toDoLists.get(i));
     	            }
@@ -178,7 +185,13 @@ public class PersonalController {
         CheckBox cb = new CheckBox(taskString);
         //cb.setStyle("-fx-text-fill:white");
         cb.setPadding(new Insets(10, 10, 0, 0));
-        
+        cb.setOnAction(event3 -> {
+            if (cb.isSelected()) 
+            {
+            	System.out.println("CHECKBOX ACTIVATED");
+            	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+            }
+          });
         //This adds it to the appropriate observable VBox
         int VBoxIndex = (int) toDoHash.get(listName);
         listsVBoxList.get(VBoxIndex).getChildren().add(cb);
@@ -276,7 +289,8 @@ public class PersonalController {
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
-    	User.getCurrentHub().getNotes().add(new Note(note.getText()));
+    	Note tempNote = new Note(note.getText());
+    	User.getCurrentHub().getNotes().add(tempNote);
     	//Add the date to this as well. Wishlist make this a hyperlink with a popup
     	Alert alert = getAlert("Display Note","Note",note.getText());
     	Hyperlink tempLink = new Hyperlink(note.getText());
@@ -286,6 +300,7 @@ public class PersonalController {
           });
         archivedNotes.getItems().add(tempLink);
     	//Push to DB
+        User.addArchivedNote(tempNote);
     	note.clear();
     }
 

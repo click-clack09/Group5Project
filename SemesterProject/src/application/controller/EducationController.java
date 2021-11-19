@@ -52,10 +52,8 @@ public class EducationController {
 		 //make String ArrayList of classes
 		 classes = new ArrayList<String>();
 		 
-		 System.out.println(User.getClasses().size()+"----------------------------------------");
 		 for (SchoolClass schoolClass : User.getClasses())
 		 {
-			 System.out.println(schoolClass.getClassName());
 			 classes.add(schoolClass.getClassName());
 		 }
 		 
@@ -103,6 +101,13 @@ public class EducationController {
             	CheckBox cb = new CheckBox(User.getClasses().get(i).getAssignments().get(j).getText());
                 //cb.setStyle("-fx-text-fill:white");
                 cb.setPadding(new Insets(10, 10, 0, 0));
+                cb.setOnAction(event3 -> {
+                    if (cb.isSelected()) 
+                    {
+                    	System.out.println("CHECKBOX ACTIVATED");
+                    	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+                    }
+                  });
                 checkList.add(cb);
                 //add HashMap Entry for task text and className (String)
                 taskHash.put(cb.getText(), classes.get(i));
@@ -354,7 +359,13 @@ public class EducationController {
             CheckBox cb = new CheckBox(taskString);
             //cb.setStyle("-fx-text-fill:white");
             cb.setPadding(new Insets(10, 10, 0, 0));
-            
+            cb.setOnAction(event3 -> {
+                if (cb.isSelected()) 
+                {
+                	System.out.println("CHECKBOX ACTIVATED");
+                	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+                }
+              });
             //This adds it to the appropriate observable VBox
             int VBoxIndex = (int) classHash.get(className);
             classesVBoxList.get(VBoxIndex).getChildren().add(cb);
