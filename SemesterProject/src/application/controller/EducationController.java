@@ -74,6 +74,8 @@ public class EducationController {
 		{
 			//make a class button
 			button = new Button();
+			button.setMinWidth(190);
+			button.setMaxWidth(190);
 			button.setText(classes.get(i));
 			classButtonList.add(button);
 			
@@ -116,7 +118,7 @@ public class EducationController {
             //only add tempInner when adding new class, otherwise reference it
             VBox tempInner = new VBox();
             tempInner.getChildren().addAll(checkList);
-            temp.getChildren().addAll(classLabel,tempInner,separator);
+            temp.getChildren().addAll(classLabel,separator,tempInner);
             toDoList.getChildren().add(temp);
             classesVBoxList.add(temp);
 		}
@@ -187,19 +189,27 @@ public class EducationController {
 	    	String className = "";
 	    	String location = "";
 	    	String professor = "";
+	    	boolean validInput;
 	      	//while(!validInput)
 	          //{
 	      	 
 	    	  //this will need input validation, particularly for "New Class"
-              textDialog.getEditor().clear();
-              textDialog.setTitle("New Class");
-              textDialog.setHeaderText("Please enter the new class name");
-              textDialog.setContentText("Class name:");
-              textDialog.showAndWait();
-              
+            do  
+            {
+            	textDialog.getEditor().clear();
+	    		textDialog.setTitle("New Class");
+	    		textDialog.setHeaderText("Please enter the new class name");
+	    		textDialog.setContentText("Class name:");
+	    		textDialog.showAndWait();
+	    		className = textDialog.getResult();
+	    		validInput = validateInput(className);
+            }while(!validInput);
+	    		
               //make a new button
-              className = textDialog.getResult();
+              
               Button button = new Button();
+              button.setMinWidth(190);
+              button.setMaxWidth(190);
               button.setText(className);
               classButtonList.add(button);
               
@@ -226,21 +236,31 @@ public class EducationController {
               toDoList.getChildren().add(temp);
               classesVBoxList.add(temp);
               
-              textDialog.getEditor().clear();
-              textDialog.setTitle("New Class");
-              textDialog.setHeaderText("Please enter the new class location");
-              textDialog.setContentText("Location:");
-              textDialog.showAndWait();
-              location = textDialog.getResult();
+              do
+              {
+	              textDialog.getEditor().clear();
+	              textDialog.setTitle("New Class");
+	              textDialog.setHeaderText("Please enter the new class location");
+	              textDialog.setContentText("Location:");
+	              textDialog.showAndWait();
+	              location = textDialog.getResult();
+	              validInput = validateInput(location);
+              }while(!validInput);
               
-              textDialog.getEditor().clear();
-              textDialog.setTitle("New Class");
-              textDialog.setHeaderText("Please enter the new class instructor");
-              textDialog.setContentText("Instructor:");
-              textDialog.showAndWait();
+              do
+              {
+	              textDialog.getEditor().clear();
+	              textDialog.setTitle("New Class");
+	              textDialog.setHeaderText("Please enter the new class instructor");
+	              textDialog.setContentText("Instructor:");
+	              textDialog.showAndWait();
+	              professor = textDialog.getResult();
+	              validInput = validateInput(professor);
+              }while(!validInput);
               
+              ///////////////////////////DEAL WITH THIS??????????///////////////////////////////
               HubEvent meetingTime = new HubEvent(); 
-              professor = textDialog.getResult();
+              
               System.out.println(className+" "+location+" "+professor);
               
               //use this class to set DB entry
@@ -283,19 +303,24 @@ public class EducationController {
 	    void removeClass(ActionEvent event) {
 	    	//ask for class from drop-down popup
 	    	ArrayList<String> classNameStrings = new ArrayList<String>();
+	    	boolean validInput;
+	    	
 	    	for (int i = 0; i < User.getClasses().size(); i++)
 	    		classNameStrings.add(User.getClasses().get(i).getClassName());
-	    	ChoiceDialog choicePopup = new ChoiceDialog("Please select:", classNameStrings);
+	    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", classNameStrings);
             
             String input = "";
             //choicePopup = new ChoiceDialog("Please select", classNameStrings);
 
-            choicePopup.setTitle("Delete Class");
-            choicePopup.setHeaderText("Please select class to remove");
-            choicePopup.setContentText("Use Dropdown menu:\n");
-            choicePopup.showAndWait();
-            input = choicePopup.getResult().toString();
-            
+            do
+            {
+	            choicePopup.setTitle("Delete Class");
+	            choicePopup.setHeaderText("Please select class to remove");
+	            choicePopup.setContentText("Use Dropdown menu:\n");
+	            choicePopup.showAndWait();
+	            input = choicePopup.getResult().toString();
+	            validInput = validateInput(input);
+            }while(!validInput);
 	    	//match class to correct class object
             for (int i = 0; i < User.getClasses().size(); i++)
             {
@@ -330,23 +355,31 @@ public class EducationController {
 	    	TextInputDialog textDialog = new TextInputDialog();
 	    	String className = "";
 	    	String taskString = "";
+	    	boolean validInput;
 	    	
-	    	selection.setTitle("New Task");
-	    	selection.setHeaderText("Which class is the task for?");
-	    	selection.setContentText("Class:");
-	      	selection.showAndWait();
-            className = selection.getResult();
+	    	do
+	    	{
+		    	selection.setTitle("New Task");
+		    	selection.setHeaderText("Which class is the task for?");
+		    	selection.setContentText("Class:");
+		      	selection.showAndWait();
+	            className = selection.getResult();
+	            validInput = validateInput(className);
+	    	}while(!validInput);
             //remove it here though to not disrupt indexing
 	      	//classes.remove("New Class");
 	      	//if className.equals("New Class"); <------------deal with this
             
-	      	textDialog.getEditor().clear();
-	      	textDialog.setTitle("New Task");
-	      	textDialog.setHeaderText("Please enter the To-Do item");
-	      	textDialog.setContentText("Task:");
-	      	textDialog.showAndWait();
-	      	taskString = textDialog.getResult();
-	      	
+	    	do
+	    	{
+		      	textDialog.getEditor().clear();
+		      	textDialog.setTitle("New Task");
+		      	textDialog.setHeaderText("Please enter the To-Do item");
+		      	textDialog.setContentText("Task:");
+		      	textDialog.showAndWait();
+		      	taskString = textDialog.getResult();
+		      	validInput = validateInput(taskString);
+	    	}while(!validInput);
 	      	//add HashMap Entry for task text and className (String)
 	      	taskHash.put(taskString, className);
 	      	
@@ -419,7 +452,15 @@ public class EducationController {
 	   		window.setScene(scene);
 	   		window.show();
 		}
-	 
+	 public boolean validateInput(String input)
+	    {
+	    	if(input != null)
+	    	{
+	    		if (!input.equals(""))
+	    			return true;
+	    	}
+	    	return false;
+	    }
 	 //could move stuff from lambda expression hear for cleaner flow
 //	 void goToClass(ActionEvent event)
 //	 {

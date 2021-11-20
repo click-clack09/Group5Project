@@ -98,8 +98,8 @@ public class Date implements Comparable<Date> {
 	}
 	
 	public boolean validateTime(int hour, int minute) {
-		if(hour < 1 || hour > 24) return false;
-		if(minute < 1 || minute > 59) return false;
+		if(hour < 0 || hour > 24) return false;
+		if(minute < 0 || minute > 59) return false;
 		
 		return true;
 	}

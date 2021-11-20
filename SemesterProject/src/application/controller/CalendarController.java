@@ -2,30 +2,34 @@ package application.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
-import application.model.User;
-import application.model.Date;
-import application.model.HubEvent;
-import application.model.LifeHub;
+import application.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -377,7 +381,191 @@ public class CalendarController {
 
     @FXML
     void addEvent(ActionEvent event) {
-
+    	//eventID=0,userID get, eventType get,
+    	//Popup 1 get date. Add to Alert? craft? do multiple asks? Is there a date picker popup?
+    	//Popup 2 hubName ask
+    	//popup 3 location
+    	//
+    	//do all popups, create event
+    	//addHubEvent(hubEvent);
+    	Dialog<Object> dialog = new Dialog<Object>();
+    	DatePicker startDate = new DatePicker();
+    	DatePicker endDate = new DatePicker();
+    	GridPane dialogGridPane= new GridPane();
+    	dialogGridPane.setAlignment(Pos.CENTER);
+    	HBox startHBox = new HBox();
+    	HBox endHBox = new HBox();
+    	String eventName = "";
+    	String location = "";
+    	String hubName ="";
+    	int hubType = 0;
+    	Date start;
+    	Date end;
+    	ButtonType buttonTypeOk = new ButtonType("OK");
+        
+        ChoiceBox hubPicker = new ChoiceBox();
+        Label hubLabel = new Label("Event Hub:");
+    	Label eventLabel = new Label("Event Name:");
+        TextField eventText = new TextField();
+        Label locationLabel = new Label("Location:");
+        Label startLabel = new Label("Start Date:");
+        Label endLabel = new Label("End Date:");
+        Label startTime = new Label("Start Time:");
+        TextField startHr = new TextField();
+        TextField startMin = new TextField();
+        Label endTime = new Label("End Time:");
+        Label colon1 = new Label(" : ");
+        Label colon2 = new Label(" : ");
+        TextField endHr = new TextField();
+        TextField endMin = new TextField();
+        TextField locationText = new TextField();
+        eventText.setMinWidth(200);
+        locationText.setMinWidth(200);
+        startDate.setMinWidth(200);
+        endDate.setMinWidth(200);
+        dialogGridPane.setMinWidth(240);
+        hubPicker.setMinWidth(200);
+        startHr.setMinWidth(20);
+        startMin.setMinWidth(20);
+        endHr.setMinWidth(20);
+        endMin.setMinWidth(20);
+        startHr.setMaxWidth(40);
+        startMin.setMaxWidth(40);
+        endHr.setMaxWidth(40);
+        endMin.setMaxWidth(40);
+        startHBox.getChildren().addAll(startHr,colon1,startMin);
+        endHBox.getChildren().addAll(endHr,colon2,endMin);
+        ArrayList<UserHubRecord> hubRecords = new ArrayList<UserHubRecord>();
+        ObservableList<String> hubChoices = FXCollections.observableArrayList();
+        for (LifeHub hub : User.getUserHubs())
+        {
+        	hubChoices.add(hub.getHubName());
+        	hubRecords.add(new UserHubRecord(hub.getHubName(),hub.getEventType()));
+        }
+        hubPicker.setItems(hubChoices);
+        //dialogVBox.setAlignment(Pos.BOTTOM_CENTER);
+        dialogGridPane.setHgap(10);
+        dialogGridPane.setVgap(12);
+        dialogGridPane.setPadding(new Insets(20, 15, 15, 20));
+        dialogGridPane.add(hubLabel,1,1);
+        dialogGridPane.add(hubPicker,1,2);
+        dialogGridPane.add(eventLabel,1,3);
+        dialogGridPane.add(eventText,1,4);
+        dialogGridPane.add(startLabel,1,5);
+        dialogGridPane.add(startDate,1,6);
+        dialogGridPane.add(startTime,1,7);
+        dialogGridPane.add(startHBox,1,8);
+        dialogGridPane.add(locationLabel,1,9);
+        dialogGridPane.add(locationText,1,10);
+        dialogGridPane.add(endLabel,1,11);
+        dialogGridPane.add(endDate,1,12);
+        dialogGridPane.add(endTime,1,13);
+        dialogGridPane.add(endHBox,1,14);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        int index;
+        int sentinal;
+        int startHourInt = -1;
+        int startMinInt = -1; 
+        int endHourInt = -1;
+        int endMinInt = -1;
+        LocalDate date1;
+        LocalDate date2;
+        boolean validInput;
+        do
+        {
+        	validInput = true;
+        	eventText.clear();
+            locationText.clear();
+            startHr.clear();
+            startMin.clear();
+            endHr.clear();
+            endMin.clear();
+            dialog.getDialogPane().setContent(dialogGridPane);
+        	dialog.showAndWait();
+        	eventName = eventText.getText();
+        	if(!validateInput(eventName))
+        	{
+        		validInput = false;
+        		continue;
+        	}
+        	location = locationText.getText();
+        	if(!validateInput(location))
+        	{
+        		validInput = false;
+        		continue;
+        	}
+        	try
+        	{
+        		hubName=hubPicker.getSelectionModel().getSelectedItem().toString();
+        	}
+        	catch (Exception e)
+        	{
+        		validInput = false;
+        		continue;
+        	}
+        	if(!validateInput(hubName))
+        	{
+        		validInput = false;
+        		continue;
+        	}
+        	try
+        	{
+        		if(!validateInput(startHr.getText()))
+            	{
+            		validInput = false;
+            		continue;
+            	}
+        		startHourInt = Integer.parseInt(startHr.getText());
+        		
+        		if(!validateInput(startMin.getText()))
+            	{
+            		validInput = false;
+            		continue;
+            	}
+        		startMinInt = Integer.parseInt(startMin.getText());
+        		
+        		if(!validateInput(endHr.getText()))
+            	{
+            		validInput = false;
+            		continue;
+            	}
+        		endHourInt = Integer.parseInt(endHr.getText());
+        		
+        		if(!validateInput(endMin.getText()))
+            	{
+            		validInput = false;
+            		continue;
+            	}
+        		endMinInt = Integer.parseInt(endMin.getText());
+        	}
+        	catch(NumberFormatException e)
+        	{
+        		validInput = false;
+        	}
+        	catch(Exception e)
+        	{
+        		validInput = false;
+        	}
+        	
+        }while(!validInput);
+        date1 = startDate.getValue();
+    	date2 = endDate.getValue();
+        index = 0;
+    	sentinal = -1;
+    	do {
+    			sentinal = hubRecords.get(index++).compareTo(hubName);
+    		}while(index <hubRecords.size() && sentinal < 0);
+    	if (sentinal > 0)
+    		hubType = sentinal;
+    	
+    	start = new Date(date1.getYear(), date1.getMonth().getValue(), date1.getDayOfMonth(), startHourInt,startMinInt);
+    	end = new Date(date2.getYear(), date2.getMonth().getValue(), date2.getDayOfMonth(), endHourInt,endMinInt);
+    	
+    	//System.out.println("Event Name:"+eventName+"\nlocation:"+location+"\n"+start.toString()+"\n"+end.toString()+"\nHubName"+hubName+"\nHubType "+sentinal);
+    	HubEvent temp = new HubEvent(0, User.getUserID(), sentinal, start, hubName, location, new ArrayList<Contact>(), eventName, end);
+    	User.getUserEvents().add(temp);
+    	User.addHubEvent(temp);
+    	updateCalendar();
     }
 
     @FXML
@@ -459,5 +647,14 @@ public class CalendarController {
 //            
 //		//}
 //    }
+    public boolean validateInput(String input)
+    {
+    	if(input != null)
+    	{
+    		if (!input.equals(""))
+    			return true;
+    	}
+    	return false;
+    }
 
 }

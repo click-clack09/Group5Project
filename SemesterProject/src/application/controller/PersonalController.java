@@ -135,7 +135,7 @@ public class PersonalController {
     	            //only add tempInner when adding new class, otherwise reference it
     	            VBox tempInner = new VBox();
     	            tempInner.getChildren().addAll(checkList);
-    	            temp.getChildren().addAll(toDoListLabel,tempInner,separator);
+    	            temp.getChildren().addAll(toDoListLabel,separator,tempInner);
     	            userLists.getChildren().add(temp);
     	            listsVBoxList.add(temp);
     			}
@@ -156,23 +156,31 @@ public class PersonalController {
     	TextInputDialog textDialog = new TextInputDialog();
     	String listName = "";
     	String taskString = "";
+    	boolean validInput;
     	
-    	selection.setTitle("New Task");
-    	selection.setHeaderText("Which list is the task for?");
-    	selection.setContentText("List:");
-      	selection.showAndWait();
-        listName = selection.getResult();
-        //remove it here though to not disrupt indexing
+    	do
+    	{
+	    	selection.setTitle("New Task");
+	    	selection.setHeaderText("Which list is the task for?");
+	    	selection.setContentText("List:");
+	      	selection.showAndWait();
+	        listName = selection.getResult();
+	        validInput = validateInput(listName);
+    	}while(!validInput);
+	        //remove it here though to not disrupt indexing
       	//classes.remove("New Class");
       	//if className.equals("New Class"); <------------deal with this
         
-      	textDialog.getEditor().clear();
-      	textDialog.setTitle("New Task");
-      	textDialog.setHeaderText("Please enter the To-Do item");
-      	textDialog.setContentText("Task:");
-      	textDialog.showAndWait();
-      	taskString = textDialog.getResult();
-      	
+    	do
+    	{
+	      	textDialog.getEditor().clear();
+	      	textDialog.setTitle("New Task");
+	      	textDialog.setHeaderText("Please enter the To-Do item");
+	      	textDialog.setContentText("Task:");
+	      	textDialog.showAndWait();
+	      	taskString = textDialog.getResult();
+	      	validInput = validateInput(taskString);
+    	}while(!validInput);
       	//add HashMap Entry for task text and className (String)
       	taskHash.put(taskString, listName);
       	
@@ -210,18 +218,22 @@ public class PersonalController {
 //////////////////
     	TextInputDialog textDialog = new TextInputDialog();
     	String listName = "";
-    	//while(!validInput)
+    	boolean validInput;
           //{
       	 
     	  //this will need input validation, particularly for "New Class"
-          textDialog.getEditor().clear();
-          textDialog.setTitle("New List");
-          textDialog.setHeaderText("Please enter the new list name");
-          textDialog.setContentText("List name:");
-          textDialog.showAndWait();
-          
+        do
+        {
+        	textDialog.getEditor().clear();
+        	textDialog.setTitle("New List");
+        	textDialog.setHeaderText("Please enter the new list name");
+        	textDialog.setContentText("List name:");
+        	textDialog.showAndWait();
+        	listName = textDialog.getResult();
+        	validInput = validateInput(listName);
+    	}while(!validInput);
           //make a new button
-          listName = textDialog.getResult();
+          
           //add the String className to the classes ArrayList and to the classhash with the index
           toDoLists.add(listName);
           toDoHash.put(toDoLists.get(toDoLists.size()-1), toDoLists.size()-1);
@@ -284,23 +296,36 @@ public class PersonalController {
     void logout(ActionEvent event) {
 
     }
+    
+    @FXML
+    void deleteList(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void deleteNote(ActionEvent event) {
+
+    }
 
     @FXML
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
-    	Note tempNote = new Note(note.getText());
-    	User.getCurrentHub().getNotes().add(tempNote);
-    	//Add the date to this as well. Wishlist make this a hyperlink with a popup
-    	Alert alert = getAlert("Display Note","Note",note.getText());
-    	Hyperlink tempLink = new Hyperlink(note.getText());
-    	tempLink.setOnAction(event2 ->{
-        	  alert.showAndWait();
-        	  
-          });
-        archivedNotes.getItems().add(tempLink);
-    	//Push to DB
-        User.addArchivedNote(tempNote);
+    	if (!note.getText().equals(""))
+    	{
+    		Note tempNote = new Note(note.getText());
+	    	User.getCurrentHub().getNotes().add(tempNote);
+	    	//Add the date to this as well. Wishlist make this a hyperlink with a popup
+	    	Alert alert = getAlert("Display Note","Note",note.getText());
+	    	Hyperlink tempLink = new Hyperlink(note.getText());
+	    	tempLink.setOnAction(event2 ->{
+	        	  alert.showAndWait();
+	        	  
+	          });
+	        archivedNotes.getItems().add(tempLink);
+	    	//Push to DB
+	        User.addArchivedNote(tempNote);
+    	}
     	note.clear();
     }
 
@@ -322,10 +347,8 @@ public class PersonalController {
    		Scene scene = new Scene(mainPane);// pane you are GOING TO show
    		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
    		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-   		System.out.println("5");
    		window.setScene(scene);
-   		System.out.println("6");
-	    window.show();
+   		window.show();
 	}
     
     @FXML
@@ -349,6 +372,16 @@ public class PersonalController {
     	alert.setContentText(content);
     	
     	return alert;
+    }
+    
+    public boolean validateInput(String input)
+    {
+    	if(input != null)
+    	{
+    		if (!input.equals(""))
+    			return true;
+    	}
+    	return false;
     }
 
 }

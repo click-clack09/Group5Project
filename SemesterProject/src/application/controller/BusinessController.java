@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -87,11 +88,11 @@ public class BusinessController {
           //Deal with Archived notes
         	if(User.getCurrentHub().getNotes() !=null)
         	{
-        		
+        		System.out.println(User.getCurrentHub().getNotes().size());
         		for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
         		{	
         			Hyperlink tempLink = new Hyperlink(User.getCurrentHub().getNotes().get(i).getText());
-        			
+        			System.out.println(User.getCurrentHub().getNotes().get(i).getText()+"<______________________________");
         			 
         			Alert alert = getAlert("Display Note","Note",User.getCurrentHub().getNotes().get(i).getText());
                   	
@@ -103,15 +104,9 @@ public class BusinessController {
         		}
         		//Add the date to this as well. Wishlist make this a hyperlink with a popup
         		archivedNotes.getItems().addAll(archivedNoteList);
-
-        		///////////
-        		
-                
-                
-        		
-        		    
-                //probably should consider how to delete notes
+        		//probably should consider how to delete notes
         	}
+        	
     	}
     	if (User.getUserContacts()!=null)
     	{
@@ -196,81 +191,111 @@ public class BusinessController {
     @FXML
     void addContact(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
+    	ChoiceDialog choice = new ChoiceDialog();
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setTitle("Display Contact");
     	alert.setHeaderText("Contact Name");
     	alert.setContentText("Contact toString");
+    	boolean validInput;
+    	ArrayList<String> phoneTypes = new ArrayList<String>();
+    	ArrayList<String> emailTypes = new ArrayList<String>();
+    	phoneTypes.add("Home");
+    	phoneTypes.add("Cell");
+    	phoneTypes.add("Work");
+    	phoneTypes.add("Fax");
+    	phoneTypes.add("Other");
+    	
+    	emailTypes.add("Personal");
+    	emailTypes.add("Business");
+    	emailTypes.add("School");
+    	emailTypes.add("Other");
 
     	String contactName = "";
     	String email = "";
     	String phone = "";
     	String etype = "";
     	String ptype = "";
-      	//while(!validInput)
-          //{
-      	 
-    	  //this will need input validation, particularly for "New Class"
-          textDialog.getEditor().clear();
-          textDialog.setTitle("New Contact");
-          textDialog.setHeaderText("Please enter the new contact name");
-          textDialog.setContentText("Name:");
-          textDialog.showAndWait();
-          contactName = textDialog.getResult();
-          
-          //either add logic to loop this or make a multifield popup
-          textDialog.getEditor().clear();
-          textDialog.setTitle("New Contact");
-          textDialog.setHeaderText("Please enter a phone number");
-          textDialog.setContentText("Number:");
-          textDialog.showAndWait();
-          phone = textDialog.getResult();
-          
-          //change this to dropdown selection
-          textDialog.getEditor().clear();
-          textDialog.setTitle("New Contact");
-          textDialog.setHeaderText("Please enter a phone type");
-          textDialog.setContentText("Type:");
-          textDialog.showAndWait();
-          ptype = textDialog.getResult();
-          
-        //either add logic to loop this or make a multifield popup
-          textDialog.getEditor().clear();
-          textDialog.setTitle("New Contact");
-          textDialog.setHeaderText("Please enter an email address");
-          textDialog.setContentText("Email:");
-          textDialog.showAndWait();
-          email = textDialog.getResult();
-        
-          //change this to dropdown selection
-          textDialog.getEditor().clear();
-          textDialog.setTitle("New Contact");
-          textDialog.setHeaderText("Please enter an email type");
-          textDialog.setContentText("Type:");
-          textDialog.showAndWait();
-          etype = textDialog.getResult();
-          
-          Contact temp = new Contact(contactName, phone, ptype, email, etype);
-          //Add contact hyperlink
-          
-          User.getUserContacts().add(temp);
-          
-          if (User.addContact(temp))
-          {
-          Hyperlink tempLink = new Hyperlink(temp.getName());
-          userContactList.add(tempLink);
-          tempLink.setOnAction(event2 ->{
-        	  alert.setHeaderText(temp.getName());
-        	  alert.setContentText(temp.toString());
-        	  alert.showAndWait();
-        	  
-          });
-          }
-          //Add the date to this as well. Wishlist make this a hyperlink with a popup
-          //deal with the output
-          contactList.getItems().clear();
-          contactList.getItems().addAll(userContactList);
-          //Push to DB
-          
+      	
+    	do
+        {
+    		textDialog.getEditor().clear();
+    		textDialog.setTitle("New Contact");
+	     	textDialog.setHeaderText("Please enter the new contact name");
+	     	textDialog.setContentText("Name:");
+	     	textDialog.showAndWait();
+	     	contactName = textDialog.getResult();
+	     	validInput = validateInput(contactName);
+        }while(!validInput);
+    	
+    	do
+        {
+    		textDialog.getEditor().clear();
+    		textDialog.setTitle("New Contact");
+    		textDialog.setHeaderText("Please enter a phone number");
+    		textDialog.setContentText("Number:");
+    		textDialog.showAndWait();
+    		phone = textDialog.getResult();
+    		validInput = validateInput(phone);
+        }while(!validInput);
+		
+    	do
+    	{
+	    	choice = new ChoiceDialog("Please select", phoneTypes);
+	    	choice.setTitle("New Contact");
+	    	choice.setHeaderText("Please enter a phone type");
+	    	choice.setContentText("Type:");
+			choice.showAndWait();
+			ptype = choice.getSelectedItem().toString();
+			validInput = validateInput(ptype);
+	    }while(!validInput);
+    	
+		//either add logic to loop this or make a multifield popup
+    	
+    	do
+        {
+	    	textDialog.getEditor().clear();
+			textDialog.setTitle("New Contact");
+			textDialog.setHeaderText("Please enter an email address");
+			textDialog.setContentText("Email:");
+			textDialog.showAndWait();
+			email = textDialog.getResult();
+			validInput = validateInput(email);
+	    }while(!validInput);
+    	
+    	//change this to dropdown selection
+    	do
+        {
+    		choice = new ChoiceDialog("Please select", phoneTypes);
+		choice.setTitle("New Contact");
+		choice.setHeaderText("Please enter an email type");
+		choice.setContentText("Type:");
+		choice.showAndWait();
+		etype = choice.getSelectedItem().toString();
+		validInput = validateInput(etype);
+	    }while(!validInput);
+    	
+		Contact temp = new Contact(contactName, phone, ptype, email, etype);
+		//Add contact hyperlink
+		  
+		User.getUserContacts().add(temp);
+		
+		//Push to DB
+		if (User.addContact(temp))
+		{
+			Hyperlink tempLink = new Hyperlink(temp.getName());
+			userContactList.add(tempLink);
+			tempLink.setOnAction(event2 ->{
+			alert.setHeaderText(temp.getName());
+			alert.setContentText(temp.toString());
+			alert.showAndWait();
+			});
+		}
+		//Add the date to this as well. Wishlist make this a hyperlink with a popup
+		//deal with the output
+		contactList.getItems().clear();
+		contactList.getItems().addAll(userContactList);
+		
+		          
     }
 
     @FXML
@@ -278,14 +303,19 @@ public class BusinessController {
     	TextInputDialog textDialog = new TextInputDialog();
 	 	String className = User.getCurrentClass();
 		String taskString = "";
+		Boolean validInput;
 		
-		/////////
-		textDialog.getEditor().clear();
-      	textDialog.setTitle("New Task");
-      	textDialog.setHeaderText("Please enter the To-Do item");
-      	textDialog.setContentText("Task:");
-      	textDialog.showAndWait();
-      	taskString = textDialog.getResult();
+		do
+        {
+			textDialog.getEditor().clear();
+	      	textDialog.setTitle("New Task");
+	      	textDialog.setHeaderText("Please enter the To-Do item");
+	      	textDialog.setContentText("Task:");
+	      	textDialog.showAndWait();
+	      	taskString = textDialog.getResult();
+	      	validInput = validateInput(taskString);
+        }while(!validInput);
+      	
       	Task tempTask = new Task(taskString);
       	//Add task to class. Need to pass class index
       	User.getCurrentHub().getTasks().add(tempTask);
@@ -337,18 +367,21 @@ public class BusinessController {
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
-    	Note tempNote = new Note(notes.getText());
-    	User.getCurrentHub().getNotes().add(tempNote);
-    	//Add the date to this as well. Wishlist make this a hyperlink with a popup
-    	Alert alert = getAlert("Display Note","Note",notes.getText());
-    	Hyperlink tempLink = new Hyperlink(notes.getText());
-    	tempLink.setOnAction(event2 ->{
-        	  alert.showAndWait();
-        	  
-          });
-        archivedNotes.getItems().add(tempLink);
-    	//Push to DB
-        User.addArchivedNote(tempNote);
+    	if (!notes.getText().equals(""))
+    	{
+    		Note tempNote = new Note(notes.getText());
+    		User.getCurrentHub().getNotes().add(tempNote);
+    		//Add the date to this as well. Wishlist make this a hyperlink with a popup
+    		Alert alert = getAlert("Display Note","Note",notes.getText());
+    		Hyperlink tempLink = new Hyperlink(notes.getText());
+    		tempLink.setOnAction(event2 ->{
+    			alert.showAndWait();
+			});
+    	
+    		archivedNotes.getItems().add(tempLink);
+    		//Push to DB
+    		User.addArchivedNote(tempNote);
+    	}
     	notes.clear();
     }
 
@@ -366,5 +399,20 @@ public class BusinessController {
 	    window.setScene(scene);
 	    window.show();
 	}
+    
+    @FXML
+    void deleteNote(ActionEvent event) {
+
+    }
+    
+    public boolean validateInput(String input)
+    {
+    	if(input != null)
+    	{
+    		if (!input.equals(""))
+    			return true;
+    	}
+    	return false;
+    }
 
 }

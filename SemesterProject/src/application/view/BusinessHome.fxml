@@ -90,7 +90,7 @@
             </HBox>
             <HBox prefHeight="530.0" prefWidth="800.0">
                <children>
-                  <VBox alignment="TOP_CENTER" style="-fx-background-color: #324c5e; -fx-border-color: #000000;">
+                  <VBox alignment="TOP_CENTER" prefHeight="507.0" prefWidth="228.0" style="-fx-background-color: #324c5e; -fx-border-color: #000000;">
                      <children>
                         <Label text="To Do List" textFill="WHITE">
                            <VBox.margin>
@@ -129,7 +129,7 @@
                               <Insets bottom="3.0" top="3.0" />
                            </VBox.margin>
                         </Separator>
-                        <VBox alignment="TOP_CENTER" prefHeight="239.0" prefWidth="193.0">
+                        <VBox alignment="TOP_CENTER" prefHeight="239.0" prefWidth="190.0">
                            <children>
                               <Label text="Contacts" textFill="WHITE">
                                  <font>
@@ -144,7 +144,7 @@
                               <HBox alignment="CENTER" spacing="5.0">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#addContact" prefWidth="60.0" text="Add" />
-                                    <Button mnemonicParsing="false" onAction="#removeContact" prefWidth="60.0" text="Remove" />
+                                    <Button mnemonicParsing="false" onAction="#removeContact" text="Remove" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="3.0" top="3.0" />
@@ -177,11 +177,15 @@
                                        </VBox.margin>
                                     </Separator>
                                     <TextArea fx:id="notes" prefHeight="200.0" prefWidth="396.0" />
-                                    <Button mnemonicParsing="false" onAction="#saveNote" text="Save Note">
+                                    <HBox alignment="CENTER" spacing="3.0">
                                        <VBox.margin>
                                           <Insets bottom="3.0" top="3.0" />
                                        </VBox.margin>
-                                    </Button>
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#saveNote" text="Save Note" />
+                                          <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete Note" />
+                                       </children>
+                                    </HBox>
                                  </children>
                                  <HBox.margin>
                                     <Insets right="5.0" />

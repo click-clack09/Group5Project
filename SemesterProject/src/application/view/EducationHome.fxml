@@ -47,7 +47,7 @@
          <children>
             <HBox alignment="CENTER" spacing="50.0">
                <children>
-                  <VBox alignment="CENTER" prefWidth="200.0">
+                  <VBox alignment="CENTER" prefWidth="240.0">
                      <HBox.margin>
                         <Insets top="60.0" />
                      </HBox.margin>
@@ -71,7 +71,7 @@
                         </ImageView>
                      </children>
                   </VBox>
-                  <VBox alignment="BOTTOM_LEFT" prefWidth="200.0" spacing="5.0">
+                  <VBox alignment="BOTTOM_LEFT" prefHeight="103.0" prefWidth="240.0" spacing="5.0">
                      <children>
                         <HBox alignment="BOTTOM_CENTER" spacing="5.0">
                            <children>
@@ -85,7 +85,7 @@
                      </HBox.margin></VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="514.0" prefWidth="767.0">
+            <HBox alignment="CENTER" prefHeight="514.0" prefWidth="800.0">
                <children>
                   <VBox prefHeight="514.0" prefWidth="264.0" style="-fx-background-color: #324c5e; -fx-border-color: #000000;">
                      <children>
@@ -121,7 +121,7 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="264.0" prefWidth="180.0" style="-fx-background-color: #324c5e; -fx-border-color: #000000;">
+                  <VBox alignment="TOP_CENTER" prefHeight="264.0" prefWidth="200.0" style="-fx-background-color: #324c5e; -fx-border-color: #000000;">
                      <children>
                         <Label text="User Defined Classes" textFill="WHITE">
                            <font>
@@ -142,8 +142,8 @@
                            </VBox.margin></VBox>
                         <VBox alignment="CENTER" spacing="3.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addClass" prefWidth="150.0" text="Add class" />
-                              <Button layoutX="24.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeClass" prefWidth="150.0" text="Remove class" />
+                              <Button mnemonicParsing="false" onAction="#addClass" prefWidth="190.0" text="Add class" />
+                              <Button layoutX="24.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeClass" prefWidth="190.0" text="Remove class" />
                            </children>
                         </VBox>
                      </children>

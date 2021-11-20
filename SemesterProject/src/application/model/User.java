@@ -458,12 +458,14 @@ public class User {
 			if (User.getCurrentHub().getEventType()==2)//this means it's a Business tasks link to Hub
 			{
 				eventName=hubName;
+				
 				//send to hub copy ot class String imgPath = null, String text task.getText()		
 			}
 			else
 			{
 				//send to hub and class
 				eventName = className;
+				
 			}
 			//do insert here
 			User.executeInsertIntoTaskTable(eventID,eventType,hubName,eventName,imgPath,text);
@@ -670,33 +672,95 @@ public class User {
 			User.executeInsertIntoArchivedNoteTable(userID,eventType,noteLifeHubName,
 					noteSchoolClassName,noteImagePath,noteText);
 		}
-		//QC WITH RICHARD!!/////HOLD*******************************************************
-		public static void addHubEvent(HubEvent hubEvent) {	
-			String lifeHubName = hubEvent.getHubName();
-			int event_id = hubEvent.getEventID();
-			int user_id = User.getUserID();
-			int event_type = hubEvent.getEventType();
-			String event_recurring = "FALSE";
-			String event_hub = hubEvent.getHubName();//CODE CAMP 
-			String event_name = hubEvent.getEventName();
-			String event_location = hubEvent.getLocation();
-			//start date of HubEvent
-			Date startDate = hubEvent.getStartDate();
-			Date endDate = hubEvent.getEndDate();
+		//////////////////////////////////////
+		public static void executeInsertIntoHubEventTable(int event_id, int user_id, int event_type, String event_recurring, String event_hub,
+                String event_name, String event_location, Date startDate, Date endDate) {
+
+            String event_start_mm = String.valueOf(startDate.getMonth());
+            String event_start_dd = String.valueOf(startDate.getDay());
+            String event_start_yr = String.valueOf(startDate.getYear());
+            String event_start_hr = String.valueOf(startDate.getHour());
+            String event_start_min = String.valueOf(startDate.getMinute());
+            //end date of HubEvent
+            String event_end_mm = String.valueOf(endDate.getMonth());
+            String event_end_dd = String.valueOf(endDate.getDay());
+            String event_end_yr = String.valueOf(endDate.getYear());
+            String event_end_hr = String.valueOf(endDate.getHour());
+            String event_end_min = String.valueOf(endDate.getMinute());
+
+
+            //17 total fields for inserting 1 HubEvent
+            //7 fields passed individually, 5 from Date startDate, 5 from Date endDate = 17 total
+		String insert_into_task_table = "INSERT INTO lifeHub.HubEvent2 (event_id,user_id,event_type,event_recurring,event_hub,event_name,event_location,event_start_mm,event_start_dd,event_start_yr,event_start_hr,event_start_min,event_end_mm,event_end_dd,event_end_yr,event_end_hr,event_end_min) "+
+		"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+		    Connection conn = DatabaseConnection.getConnection();	    
+			PreparedStatement ps = conn.prepareStatement(insert_into_task_table);
+			ps.setInt(1, event_id);//sent in as default, 0 for auto-increment
+			ps.setInt(2, user_id);
+			ps.setInt(3, event_type);
+			ps.setString(4, event_recurring);
+			ps.setString(5, event_hub);
+			ps.setString(6, event_name);				
+			ps.setString(7, event_location);
+			ps.setString(8, event_start_mm);
+			ps.setString(9, event_start_dd);
+			ps.setString(10, event_start_yr);
+			ps.setString(11, event_start_hr);
+			ps.setString(12, event_start_min);
+			ps.setString(13, event_end_mm);
+			ps.setString(14, event_end_dd);
+			ps.setString(15, event_end_yr);
+			ps.setString(16, event_end_hr);
+			ps.setString(17, event_end_min);
 			
-			int event_start_mm = startDate.getMonth();
-			int event_start_dd = startDate.getDay();
-			int event_start_yr = startDate.getYear();
-			int event_start_hr = startDate.getHour();
-			int event_start_min = startDate.getMinute();
-			//end date of HubEvent
-			int event_end_mm = endDate.getMonth();
-			int event_end_yr = endDate.getYear();
-			int event_end_hr = endDate.getHour();
-			int event_end_min = endDate.getMinute();
-			//User.executeInsertIntoHubEventTable();
-		}
+			//ACTUAL HUBEVENT INSERT IS COMMENTED OUT
+			int result = ps.executeUpdate();					
+			if(result > 0){
+				System.out.println("Successful insert into Archived Note Table!!!");
+			}
+			else {
+				System.out.println("Failed insert into Archived Note Table!");
+			}
+	
+				//close connection
+				try {
+					conn.close();
+				}catch (SQLException se){
+					System.out.println("Error closing SQL connection.");
+				}	
+				
+		    }catch(SQLSyntaxErrorException see) {
+		       System.out.println("Error: DB syntax is incorrect while inserting into Archived Note Table");
+		          	//see.printStackTrace();
+		    }catch(Exception e) {
+		       System.out.println("Error: DB connection failed inserting into Archived Note Table");
+		          	e.printStackTrace();
+		    }
 		
+	}
+	
+	//QC WITH RICHARD!!/////HOLD*******************************************************
+	public static void addHubEvent(HubEvent hubEvent) {	
+		System.out.println("Made it to addHubEvent");
+		//String lifeHubName = hubEvent.getHubName();
+		int event_id = hubEvent.getEventID();
+		int user_id = User.getUserID();
+		int event_type = hubEvent.getEventType();
+		String event_recurring = "FALSE";
+		String event_hub = hubEvent.getHubName();//CODE CAMP 
+		String event_name = hubEvent.getEventName();
+		String event_location = hubEvent.getLocation();
+		//start date of HubEvent
+		Date startDate = hubEvent.getStartDate();
+		Date endDate = hubEvent.getEndDate();
+		
+
+		
+		User.executeInsertIntoHubEventTable(event_id, user_id, event_type, event_recurring, event_hub,
+				event_name, event_location, startDate, endDate);
+	}
+		//////////////////////////////////////
 		public void executeInsertNewUserIntoUserTable() {
 			//check username, for dupes after create button is selected
 		

@@ -143,15 +143,19 @@ public class EdClassController {
 	 	TextInputDialog textDialog = new TextInputDialog();
 	 	String className = User.getCurrentClass();
 		String taskString = "";
+		boolean validInput;
 		
-		/////////
-		textDialog.getEditor().clear();
-      	textDialog.setTitle("New Task");
-      	textDialog.setHeaderText("Please enter the To-Do item");
-      	textDialog.setContentText("Task:");
-      	textDialog.showAndWait();
-      	taskString = textDialog.getResult();
-      	
+		do
+		{
+			textDialog.getEditor().clear();
+	      	textDialog.setTitle("New Task");
+	      	textDialog.setHeaderText("Please enter the To-Do item");
+	      	textDialog.setContentText("Task:");
+	      	textDialog.showAndWait();
+	      	taskString = textDialog.getResult();
+	      	validInput = validateInput(taskString);
+		}while(!validInput);
+		
       	Task tempTask = new Task(taskString);
       	//Add task to class. Need to pass class index
       	User.getClasses().get(index).getAssignments().add(tempTask);
@@ -171,8 +175,6 @@ public class EdClassController {
         //This adds it to the appropriate observable VBox
        
         toDoVBoxList.add(cb);
-        //toDoVBoxList.add(cb);
-	 	//classToDo.getChildren().addAll(toDoVBoxList);
         classToDo.getChildren().clear();
         classToDo.getChildren().addAll(toDoVBoxList);
         User.addTask(tempTask, User.getCurrentClass());
@@ -202,51 +204,34 @@ public class EdClassController {
     
     @FXML
     void goBack(ActionEvent event) throws IOException {
-   		//URL url = new File("src/application/view/EducationHome.fxml").toURI().toURL();
-   		//mainPane = FXMLLoader.load(url);
-    	mainPane = FXMLLoader.load(User.getLastHub());
+   		mainPane = FXMLLoader.load(User.getLastHub());
     	User.setLastHub(new File("src/application/view/EdClass.fxml").toURI().toURL());
-    	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
-   		Scene scene = new Scene(mainPane);// pane you are GOING TO show
-        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-   		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+    	Scene scene = new Scene(mainPane);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 	    window.setScene(scene);
 	    window.show();
 	}
-
-    
 
     @FXML
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
-    	Note tempNote = new Note(classNotes.getText());
-    	User.getClasses().get(index).getNotes().add(tempNote);
-    	//Add the date to this as well. Wishlist make this a hyperlink with a popup
-    	Alert alert = getAlert("Display Note","Note",classNotes.getText());
-    	Hyperlink tempLink = new Hyperlink(classNotes.getText());
-    	tempLink.setOnAction(event2 ->{
-        	  alert.showAndWait();
-        	  
-          });
-        archivedClassNotes.getItems().add(tempLink);
-    	//Push to DB
-        User.addArchivedNote(tempNote);
+    	if (!classNotes.getText().equals(""))
+    	{
+	    	Note tempNote = new Note(classNotes.getText());
+	    	User.getClasses().get(index).getNotes().add(tempNote);
+	    	//Add the date to this as well.
+	    	Alert alert = getAlert("Display Note","Note",classNotes.getText());
+	    	Hyperlink tempLink = new Hyperlink(classNotes.getText());
+	    	tempLink.setOnAction(event2 ->{
+	    		alert.showAndWait();
+	        });
+	        archivedClassNotes.getItems().add(tempLink);
+	    	//Push to DB
+	        User.addArchivedNote(tempNote);
+    	}
     	classNotes.clear();
     }
-    
-    
-//    void saveNote(ActionEvent event) {
-//    	
-//    	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
-//    	//Add a note to the class notes
-//    	User.getClasses().get(index).getNotes().add(new Note(classNotes.getText()));
-//    	//Add the date to this as well. Wishlist make this a hyperlink with a popup
-//    	archivedClassNotes.getItems().add(classNotes.getText());
-//    	//archivedClassNotes.getItems().addAll(archivedNoteList);
-//    	classNotes.clear();
-//
-//    }
 
     public Alert getAlert(String title, String header, String content)
     {
@@ -262,14 +247,27 @@ public class EdClassController {
     void userHome(ActionEvent event) throws IOException {
     	URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
    		mainPane = FXMLLoader.load(url);
-   		//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
-   		Scene scene = new Scene(mainPane);// pane you are GOING TO show
-   		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-   		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+   		Scene scene = new Scene(mainPane);
+   		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
    		System.out.println("5");
    		window.setScene(scene);
    		System.out.println("6");
 	    window.show();
 	}
+    
+    @FXML
+    void deleteNote(ActionEvent event) {
+
+    }
+    
+    public boolean validateInput(String input)
+    {
+    	if(input != null)
+    	{
+    		if (!input.equals(""))
+    			return true;
+    	}
+    	return false;
+    }
     
 }

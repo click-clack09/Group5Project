@@ -759,16 +759,20 @@ public void setUserSchools()
 
     @FXML
     void newBusiness(ActionEvent event) {
-    	 TextInputDialog textDialog = new TextInputDialog();
-    	 String hubName = "";
-    	//while(!validInput)
-        //{
+    	TextInputDialog textDialog = new TextInputDialog();
+    	String hubName = "";
+    	boolean validInput;
+    	
+    	do
+    	{
             textDialog.getEditor().clear();
             textDialog.setTitle("New Business Hub");
             textDialog.setHeaderText("Please enter the new hub name");
             textDialog.setContentText("Hub name:");
             textDialog.showAndWait();
             hubName = textDialog.getResult();
+            validInput = validateInput(hubName);
+    	}while(!validInput);
             //make new hub
            //pull next index from database
             //index will be used to populate all events, lists, etc on the page
@@ -811,19 +815,22 @@ public void setUserSchools()
     void newEducation(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
    	 String hubName = "";
-   	//while(!validInput)
+   	 boolean validInput;
        //{
 		   //pull next index from database
 	       //index will be used to populate all events, lists, etc on the page
            //any calendar visible on the hub page will only be from this hub
 	       //when switching to calendar view, ALL of the users events be added to the calendar
-		     
-           textDialog.getEditor().clear();
-           textDialog.setTitle("New Education Hub");
-           textDialog.setHeaderText("Please enter the new hub name");
-           textDialog.setContentText("Hub name:");
-           textDialog.showAndWait();
-           hubName = textDialog.getResult();
+		   do
+		   {
+	           textDialog.getEditor().clear();
+	           textDialog.setTitle("New Education Hub");
+	           textDialog.setHeaderText("Please enter the new hub name");
+	           textDialog.setContentText("Hub name:");
+	           textDialog.showAndWait();
+	           hubName = textDialog.getResult();
+	           validInput = validateInput(hubName);
+	    	}while(!validInput);
          //make new hub
            LifeHub currentHub = new LifeHub(hubName,1, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
            
@@ -867,19 +874,22 @@ public void setUserSchools()
     void newPersonal(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
    	 String hubName = "";
-   	//while(!validInput)
+   	 boolean validInput;
        //{
    	 		//pull next index from database
    	 		//index will be used to populate all events, lists, etc on the page
    	 		//any calendar visible on the hub page will only be from this hub
    	 		//when switching to calendar view, ALL of the users events be added to the calendar
-     
-           textDialog.getEditor().clear();
-           textDialog.setTitle("New Personal Hub");
-           textDialog.setHeaderText("Please enter the new hub name");
-           textDialog.setContentText("Hub name:");
-           textDialog.showAndWait();
-           hubName = textDialog.getResult();
+   	 		do
+   	 		{
+   	 			textDialog.getEditor().clear();
+ 				textDialog.setTitle("New Personal Hub");
+	           textDialog.setHeaderText("Please enter the new hub name");
+	           textDialog.setContentText("Hub name:");
+	           textDialog.showAndWait();
+	           hubName = textDialog.getResult();
+	           validInput = validateInput(hubName);
+   	    	}while(!validInput);
          //make new hub
            LifeHub currentHub = new LifeHub(hubName,3, new ArrayList<HubEvent>(), new ArrayList<Task>(), new ArrayList<Note>());
            User.addHub(currentHub);
@@ -930,6 +940,16 @@ public void setUserSchools()
        	{
        		//popup error window
        	} 
+    }
+    
+    public boolean validateInput(String input)
+    {
+    	if(input != null)
+    	{
+    		if (!input.equals(""))
+    			return true;
+    	}
+    	return false;
     }
 
     

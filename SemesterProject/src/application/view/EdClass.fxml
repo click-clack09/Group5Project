@@ -150,11 +150,15 @@
                                        </VBox.margin>
                                     </Separator>
                                     <TextArea fx:id="classNotes" prefHeight="200.0" prefWidth="396.0" />
-                                    <Button mnemonicParsing="false" onAction="#saveNote" text="Save Note">
+                                    <HBox alignment="CENTER" spacing="3.0">
                                        <VBox.margin>
                                           <Insets bottom="3.0" top="3.0" />
                                        </VBox.margin>
-                                    </Button>
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#saveNote" text="Save Note" />
+                                          <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete Note" />
+                                       </children>
+                                    </HBox>
                                  </children>
                                  <HBox.margin>
                                     <Insets right="5.0" />
