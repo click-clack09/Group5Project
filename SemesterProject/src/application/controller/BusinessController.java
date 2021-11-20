@@ -265,7 +265,7 @@ public class BusinessController {
     	//change this to dropdown selection
     	do
         {
-    		choice = new ChoiceDialog("Please select", phoneTypes);
+    		choice = new ChoiceDialog("Please select", emailTypes);
 		choice.setTitle("New Contact");
 		choice.setHeaderText("Please enter an email type");
 		choice.setContentText("Type:");

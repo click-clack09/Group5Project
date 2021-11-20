@@ -366,12 +366,12 @@
                            </children>
                         </VBox>
                         <Separator prefWidth="200.0" />
-                        <Button mnemonicParsing="false" onAction="#addEvent" prefWidth="100.0" text="Add Event">
+                        <Button mnemonicParsing="false" onAction="#addEvent" prefWidth="150.0" text="Add Event">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#deleteEvent" prefWidth="100.0" text="Delete Event">
+                        <Button mnemonicParsing="false" onAction="#deleteEvent" prefWidth="150.0" text="Delete Event">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
