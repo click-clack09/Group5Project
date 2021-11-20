@@ -49,7 +49,7 @@
                <children>
                   <VBox alignment="BOTTOM_CENTER">
                      <children>
-                        <Label fx:id="calendarLabel" text=" Username Calendar Page">
+                        <Label fx:id="calendarUserLabel">
                            <font>
                               <Font name="Arial Narrow Italic" size="21.0" />
                            </font>

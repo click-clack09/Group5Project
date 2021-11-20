@@ -2,7 +2,7 @@ package application.model;
 
 import java.util.ArrayList;
 
-public class Contact
+public class Contact implements Comparable
 {
 	private String name;
 	private ArrayList<PhoneNumber> phoneList;
@@ -75,6 +75,13 @@ public class Contact
 		for (int i = 0; i < emailsList.size(); i++)
 			emailString += emailsList.get(i).getAddress()+" : "+emailsList.get(i).getType()+"\n";
 		return phoneString +"\n"+ emailString;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (this.getName().equals(o))
+			return 1;// TODO Auto-generated method stub
+		return -1;
 	}
 	
 	

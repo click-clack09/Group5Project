@@ -46,6 +46,8 @@ public class EducationController {
 	 //The part below gets dynamically added to the parent classesList
 	 //private ObservableList<CheckBox> classToDoList = FXCollections.observableArrayList();
 	 
+	//This goes with item/task delete  deleteTask(Task task, String className)
+	 
 	 @FXML
     void initialize()
     {
@@ -103,9 +105,12 @@ public class EducationController {
             	CheckBox cb = new CheckBox(User.getClasses().get(i).getAssignments().get(j).getText());
                 //cb.setStyle("-fx-text-fill:white");
                 cb.setPadding(new Insets(10, 10, 0, 0));
+                Task tempTask = new Task(User.getClasses().get(i).getAssignments().get(j).getText());
+                String tempClass = User.getClasses().get(i).getClassName();
                 cb.setOnAction(event3 -> {
-                    if (cb.isSelected()) 
+                	if (cb.isSelected()) 
                     {
+                    	User.deleteTask(tempTask, tempClass);
                     	System.out.println("CHECKBOX ACTIVATED");
                     	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
                     }
@@ -392,9 +397,11 @@ public class EducationController {
             CheckBox cb = new CheckBox(taskString);
             //cb.setStyle("-fx-text-fill:white");
             cb.setPadding(new Insets(10, 10, 0, 0));
+            String tempClass = User.getClasses().get((int) classHash.get(className)).getClassName();
             cb.setOnAction(event3 -> {
-                if (cb.isSelected()) 
+            	if (cb.isSelected()) 
                 {
+                	User.deleteTask(tempTask, tempClass);
                 	System.out.println("CHECKBOX ACTIVATED");
                 	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
                 }

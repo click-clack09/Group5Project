@@ -90,7 +90,7 @@
             </HBox>
             <HBox prefHeight="530.0" prefWidth="800.0">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="507.0" prefWidth="228.0" style="-fx-background-color: #324c5e; -fx-border-color: #000000;">
+                  <VBox alignment="TOP_CENTER" style="-fx-background-color: #324c5e; -fx-border-color: #000000;">
                      <children>
                         <Label text="To Do List" textFill="WHITE">
                            <VBox.margin>
@@ -129,7 +129,7 @@
                               <Insets bottom="3.0" top="3.0" />
                            </VBox.margin>
                         </Separator>
-                        <VBox alignment="TOP_CENTER" prefHeight="239.0" prefWidth="190.0">
+                        <VBox alignment="TOP_CENTER" prefHeight="239.0" prefWidth="193.0">
                            <children>
                               <Label text="Contacts" textFill="WHITE">
                                  <font>
@@ -143,8 +143,8 @@
                               </ScrollPane>
                               <HBox alignment="CENTER" spacing="5.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#addContact" prefWidth="60.0" text="Add" />
-                                    <Button mnemonicParsing="false" onAction="#removeContact" text="Remove" />
+                                    <Button mnemonicParsing="false" onAction="#addContact" prefWidth="80.0" text="Add" />
+                                    <Button mnemonicParsing="false" onAction="#removeContact" prefWidth="80.0" text="Remove" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="3.0" top="3.0" />
@@ -182,8 +182,8 @@
                                           <Insets bottom="3.0" top="3.0" />
                                        </VBox.margin>
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#saveNote" text="Save Note" />
-                                          <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete Note" />
+                                          <Button mnemonicParsing="false" onAction="#saveNote" prefWidth="90.0" text="Save Note" />
+                                          <Button layoutX="152.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeNote" prefWidth="90.0" text="Remove Note" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -233,9 +233,9 @@
                                           <Insets />
                                        </VBox.margin>
                                     </Label>
-                                    <ScrollPane prefHeight="322.0" prefWidth="594.0">
+                                    <ScrollPane>
                                        <content>
-                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="478.0" prefWidth="595.0">
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="595.0">
                                              <children>
                                                 <GridPane alignment="CENTER" gridLinesVisible="true" prefHeight="588.0" prefWidth="310.0">
                                                    <columnConstraints>
@@ -421,37 +421,132 @@
                                                             <Label text="11:00" />
                                                          </children>
                                                       </VBox>
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="17" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="20" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="21" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="22" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="23" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="24" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="25" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="26" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="27" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="28" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="29" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="30" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="31" />
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Label fx:id="text800" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                         <children>
+                                                            <Label fx:id="text830" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <Label fx:id="text900" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                         <children>
+                                                            <Label fx:id="text930" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                         <children>
+                                                            <Label fx:id="text1000" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                         <children>
+                                                            <Label fx:id="text1030" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                         <children>
+                                                            <Label fx:id="text1100" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                                         <children>
+                                                            <Label fx:id="text1130" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                                         <children>
+                                                            <Label fx:id="text1200" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                                         <children>
+                                                            <Label fx:id="text1230" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                                         <children>
+                                                            <Label fx:id="text1300" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                                                         <children>
+                                                            <Label fx:id="text1330" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                                         <children>
+                                                            <Label fx:id="text1400" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                                                         <children>
+                                                            <Label fx:id="text1430" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="15">
+                                                         <children>
+                                                            <Label fx:id="text1500" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="16">
+                                                         <children>
+                                                            <Label fx:id="text1530" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children>
+                                                      </VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="17">
+                                                         <children>
+                                                            <Label fx:id="text1600" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="18">
+                                                         <children>
+                                                            <Label fx:id="text1630" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="19">
+                                                         <children>
+                                                            <Label fx:id="text1700" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="20">
+                                                         <children>
+                                                            <Label fx:id="text1730" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="21">
+                                                         <children>
+                                                            <Label fx:id="text1800" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="22">
+                                                         <children>
+                                                            <Label fx:id="text1830" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="23">
+                                                         <children>
+                                                            <Label fx:id="text1900" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="24">
+                                                         <children>
+                                                            <Label fx:id="text1930" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="25">
+                                                         <children>
+                                                            <Label fx:id="text2000" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="26">
+                                                         <children>
+                                                            <Label fx:id="text2030" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="27">
+                                                         <children>
+                                                            <Label fx:id="text2100" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="28">
+                                                         <children>
+                                                            <Label fx:id="text2130" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="29">
+                                                         <children>
+                                                            <Label fx:id="text2200" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="30">
+                                                         <children>
+                                                            <Label fx:id="text2230" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="31">
+                                                         <children>
+                                                            <Label fx:id="text2300" alignment="TOP_LEFT" prefHeight="16.0" prefWidth="297.0" text="Label" />
+                                                         </children></VBox>
                                                    </children>
                                                 </GridPane>
                                              </children>
@@ -513,7 +608,7 @@
                                                             <Insets />
                                                          </GridPane.margin>
                                                          <children>
-                                                            <Label text="Tuseday" />
+                                                            <Label text="Tuesday" />
                                                          </children>
                                                       </VBox>
                                                       <VBox alignment="CENTER" GridPane.rowIndex="4">
@@ -547,13 +642,34 @@
                                                             <Label text="Event" />
                                                          </children>
                                                       </VBox>
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Label fx:id="Sunday" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="216.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                         <children>
+                                                            <Label fx:id="Monday" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="216.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <Label fx:id="Tuesday" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="216.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                         <children>
+                                                            <Label fx:id="Wednesday" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="216.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                         <children>
+                                                            <Label fx:id="Thursday" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="216.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                         <children>
+                                                            <Label fx:id="Friday" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="216.0" text="Label" />
+                                                         </children></VBox>
+                                                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                         <children>
+                                                            <Label fx:id="Saturday" alignment="TOP_LEFT" prefHeight="59.0" prefWidth="216.0" text="Label" />
+                                                         </children></VBox>
                                                    </children>
                                                 </GridPane>
                                              </children>

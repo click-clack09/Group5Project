@@ -451,53 +451,59 @@ public void setUserSchools()
 				//loop thru logged-in user's hubs
 				for (LifeHub hub: User.getUserHubs())
 				{	
+					System.out.println("Hub name is: "+ hub.getHubName());
 					/////Move type logic here
-					if (hub.getEventType()!=2) {
-					if(hub.getClasses()!=null) 
+					if (hub.getEventType()==1) 
 					{
-						
-					for (SchoolClass sClass: hub.getClasses()) {
-						//Address duplicate class names
-						System.out.println("School or personal category-1 or 3 EventHub of user");
-						PreparedStatement ps = conn.prepareStatement(user_tasks_query);
-						ps.setInt(1, User.getUserID());
-						ps.setString(2, hub.getHubName());
-						ps.setString(3, sClass.getClassName());
-						ResultSet rs = ps.executeQuery();
-						//false means an empty result set
-						if(rs.next() != false) {
-							//gets only user contact names
-							do{
-								sClass.getAssignments().add(new Task(rs.getString("text")));
-								
-							}while(rs.next());
-				        }
+						if(hub.getClasses()!=null) 
+						{
+							for (SchoolClass sClass: hub.getClasses()) {
+								System.out.println("Class name is: "+ sClass.getClassName());
+								//Address duplicate class names
+								PreparedStatement ps = conn.prepareStatement(user_tasks_query);
+								ps.setInt(1, User.getUserID());
+								ps.setString(2, hub.getHubName());
+								ps.setString(3, sClass.getClassName());
+								ResultSet rs = ps.executeQuery();
+								//false means an empty result set
+								if(rs.next() != false) {
+									//gets only user contact names
+									do
+									{
+										System.out.println("note is: "+ rs.getString("text"));
+										sClass.getNotes().add(new Note(rs.getString("text")));
+										
+									}while(rs.next());
+						        }
+							}
+						}
 					}
-					}
-					}
-					else{//loop through hubs
-//					if (hub.getEventType()==2)
-//						ps.setString(3, hub.getHubName());
-//					else
-//						if (hub.getEventType()==2)
-//							hub.getTasks().add(new Task(rs.getString("text")));
-//						else
-						//////	//Address duplicate class names
-							System.out.println("Business category-2 EventHub of user");
-							PreparedStatement ps = conn.prepareStatement(user_tasks_query);
-							ps.setInt(1, User.getUserID());
-							ps.setString(2, hub.getHubName());
-							ps.setString(3, hub.getHubName());
+					else{
+							if(hub.getClasses()!=null) 
+							{
+								System.out.println("From Else -------------Class name is: "+ hub.getHubName());
+									//Address duplicate class names
+								PreparedStatement ps = conn.prepareStatement(user_tasks_query);
+								ps.setInt(1, User.getUserID());
+								ps.setString(2, hub.getHubName());
+								ps.setString(3, hub.getHubName());
+								ResultSet rs = ps.executeQuery();
+								//false means an empty result set
+								if(rs.next() != false) {
+									//gets only user contact names
+									do
+									{
+										System.out.println("note is: "+ rs.getString("text"));
+										hub.getNotes().add(new Note(rs.getString("text")));
+										
+									}while(rs.next());
+						        }
+							}
+							if(hub.getClasses().size()==0)
+								System.out.println("This hub has no classes");	
 							
-							ResultSet rs = ps.executeQuery();
-							//false means an empty result set
-							if(rs.next() != false) {
-								//gets only user contact names
-								do{
-									hub.getTasks().add(new Task(rs.getString("text")));
-									
-								}while(rs.next());
-					        }
+							/////////////
+							
 						}		
 					
 			}
@@ -576,7 +582,7 @@ public void setUserSchools()
 		
 		//step 2!! - set schools, adds all classes to each hub
     	setUserSchools();
-    	
+    	setUserNotes();
 		/*CREATE ALL USER HUBS. THIS CREATES A COMPLETE LISTING TO PULL FROM LATER.
 		 * Pull from Tasks, look at all for user and HubName. Add all, for each class, and hub, in a ArrayList associated with that hub and class
 		 * Need Classes all records from SchoolClass*/

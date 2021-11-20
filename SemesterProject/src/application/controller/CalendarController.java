@@ -38,6 +38,14 @@ public class CalendarController {
 	
 	ObservableList<CheckBox> eventCheckBoxes = FXCollections.observableArrayList();
 	
+    private int displayYear;
+    
+    private int displayMonth;
+    
+    private int displayDay;
+    
+    private ArrayList<Label> labels;
+	
 	@FXML
 	private VBox checkboxDisplay;
     
@@ -46,6 +54,9 @@ public class CalendarController {
 
     @FXML
     private Label calendarLabel;
+    
+    @FXML
+    private Label calendarUserLabel;
     
     @FXML
     private DatePicker dateMenu;
@@ -179,21 +190,28 @@ public class CalendarController {
     @FXML
     private Label Saturday6;
     
-    private int displayYear;
-    
-    private int displayMonth;
-    
-    private int displayDay;
-    
-    private ArrayList<Label> labels;
-    
     @FXML
     void initialize()
     {
     	LocalDate currentdate = LocalDate.now();
+    	calendarUserLabel.setText(User.getUserName()+", Monthly Calendar");
     	
-    	for (int i = 0; i < User.getUserHubs().size(); i++)
-		{	
+    	displayYear = currentdate.getYear();
+    	displayMonth = currentdate.getMonth().getValue();
+    	displayDay = currentdate.getDayOfMonth();
+    	
+    	labels = new ArrayList<Label>();
+    	
+    	initializeLabels();
+    	
+    	initializeCheckboxes();
+    	
+    	updateCalendar();
+    }
+    
+    void initializeCheckboxes() {
+    	
+    	for (int i = 0; i < User.getUserHubs().size(); i++) {	
     		//Make a CheckBox for each task\
 			System.out.println(User.getUserHubs().get(i).getHubName());
         	CheckBox cb = new CheckBox(User.getUserHubs().get(i).getHubName());
@@ -201,27 +219,24 @@ public class CalendarController {
         	cb.setStyle("-fx-text-fill: #ffffff");
         	cb.setSelected(true);
         	cb.setOnAction(event3 -> {
-                if (!cb.isSelected()) 
-                {
+                if (!cb.isSelected()) {
                 	System.out.println("CHECKBOX Unchecked");
+                	updateCalendar();
+                	System.out.println(event3.getSource());//parse this, use to get source, make the labels appear or not
+                	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+                }
+                if (cb.isSelected()) {
+                	System.out.println("CHECKBOX Checked");
+                	updateCalendar();
                 	System.out.println(event3.getSource());//parse this, use to get source, make the labels appear or not
                 	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
                 }
               });
+        	
         	eventCheckBoxes.add(cb);
 		}
+    	
     	checkBoxContainer.getChildren().addAll(eventCheckBoxes);
-    	
-    	displayYear = currentdate.getYear();
-    	displayMonth = currentdate.getMonth().getValue();
-    	displayDay = currentdate.getDayOfMonth();
-    	
-    	labels = new ArrayList<Label>();
-    	initializeLabels();
-    	
-    	updateCalendar();
-    	
-    	//displayHubCheckboxes();
     }
     
     void initializeLabels() {
@@ -319,11 +334,13 @@ public class CalendarController {
 		if(i <= lastDay) {
 			label.setText(getEvent(displayYear, displayMonth, i));
 	    	
+			label.setStyle("-fx-background-color: #FFFFFF");
+			
 			if(i == displayDay) {
-				label.setTextFill(Color.web("#ff0000")); 
+				label.setTextFill(Color.web("#c21919")); 
+				label.setStyle("-fx-background-color: #fffebf");
 			} 
 			
-			label.setStyle("-fx-background-color: #FFFFFF");
 		}
     }
     
@@ -335,13 +352,27 @@ public class CalendarController {
     	for(HubEvent e : events) {
     		Date d = e.getStartDate();
     		if(d.getYear() == year && d.getMonth() == month && d.getDay() == day) {
-    			if(true/*events are in selected hubs*/) {
+    			if(inHub(e)) {
         			display += e.getEventName() + "\n ";
         		}
     		}
     	}
     	
     	return display;
+    }
+    
+    boolean inHub(HubEvent e) {
+    	String name = e.getHubName();
+    	
+    	for(CheckBox c: eventCheckBoxes) {
+    		if(c.isSelected()) { 
+    			if(name.equals(c.getText())) {
+    				return true;
+    			}
+    		}
+    	}
+    	
+    	return false;
     }
     
     @FXML
@@ -609,44 +640,6 @@ public class CalendarController {
 	    window.show();
 	}
     
-//    void displayHubCheckboxes()
-//    {
-//    	//for (int i = 0; i < User.getUserHubs().size(); i++)
-//		//{
-//			//For every class, add an observable checkList
-//            
-//            //make a separator and a VBox 
-//            
-//    		//THIS ONE
-//    		//Separator separator = new Separator();
-//            VBox temp = new VBox();
-//            //temp.setPadding(new Insets(10, 10, 10, 10));
-//            
-//            //this will get all hubs in ArrayList for user
-//            for (int j = 0; j < User.getUserHubs().size(); j++)
-//            {
-//            	//System.out.println("HELLO");
-//            	//Make a CheckBox for each task
-//            	LifeHub hub = (LifeHub)User.getUserHubs().get(j);
-//            	CheckBox cb = new CheckBox("HELLO");//hub.getHubName());
-//                //cb.setStyle("-fx-text-fill:white");
-//                cb.setPadding(new Insets(10, 10, 0, 0));
-//                eventCheckBoxes.add(cb);
-//
-//            }
-//            
-//            System.out.println(eventCheckBoxes.toString());
-//            for(CheckBox c: eventCheckBoxes)
-//            	System.out.println(c.getText());
-//            
-//    		//THIS ONE
-//            checkboxDisplay.getChildren().clear();
-//            checkboxDisplay.getChildren().addAll(eventCheckBoxes);
-//            
-//
-//            
-//		//}
-//    }
     public boolean validateInput(String input)
     {
     	if(input != null)

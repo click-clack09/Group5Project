@@ -60,6 +60,8 @@ public class PersonalController {
     private HashMap<String, Integer> toDoHash;
 	 private HashMap<String, String> taskHash;
     
+	//This goes with item/task delete  deleteTask(Task task, String className)
+	 
     @FXML 
     void initialize() {
     	
@@ -121,9 +123,12 @@ public class PersonalController {
     	                //cb.setStyle("-fx-text-fill:white");
     	                cb.setPadding(new Insets(10, 10, 0, 0));
     	                checkList.add(cb);
+    	                Task tempTask = new Task(User.getClasses().get(i).getAssignments().get(j).getText());
+    	                String tempClass = User.getClasses().get(i).getClassName();
     	                cb.setOnAction(event3 -> {
-    	                    if (cb.isSelected()) 
+    	                	if (cb.isSelected()) 
     	                    {
+    	                    	User.deleteTask(tempTask, tempClass);
     	                    	System.out.println("CHECKBOX ACTIVATED");
     	                    	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
     	                    }
@@ -151,8 +156,9 @@ public class PersonalController {
     void addItem(ActionEvent event) {
     	
     	//This is added to allow for new classes to be added on the fly
-    	//classes.add(0,"New Class");	
-    	ChoiceDialog<String> selection = new ChoiceDialog<String>("Select List",toDoLists);
+    	//classes.add(0,"New Class");
+    	if(User.getCurrentHub().getClasses().size()!=0)
+    	{ChoiceDialog<String> selection = new ChoiceDialog<String>("Select List",toDoLists);
     	TextInputDialog textDialog = new TextInputDialog();
     	String listName = "";
     	String taskString = "";
@@ -187,15 +193,16 @@ public class PersonalController {
       	Task tempTask = new Task(taskString);
       	//Add task to class
       	User.getClasses().get((int) toDoHash.get(listName)).getAssignments().add(tempTask);
-      	
+      	String tempSchool = User.getClasses().get((int) toDoHash.get(listName)).getClassName();
       	//deal with css
 		//add this here, or is this part of parent ObservableList?
         CheckBox cb = new CheckBox(taskString);
         //cb.setStyle("-fx-text-fill:white");
         cb.setPadding(new Insets(10, 10, 0, 0));
         cb.setOnAction(event3 -> {
-            if (cb.isSelected()) 
+        	if (cb.isSelected()) 
             {
+            	User.deleteTask(tempTask, tempSchool);
             	System.out.println("CHECKBOX ACTIVATED");
             	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
             }
@@ -205,7 +212,7 @@ public class PersonalController {
         listsVBoxList.get(VBoxIndex).getChildren().add(cb);
         
         User.addTask(tempTask, listName);
-      	
+    	}
     }
     
     @FXML
@@ -299,12 +306,78 @@ public class PersonalController {
     
     @FXML
     void deleteList(ActionEvent event) {
+    	//Make a dropdown of which to delete, steal this from Ed controller
+    	//User.getClasses().get((int) toDoHash.get(listName));
+    	ArrayList<String> listNameStrings = new ArrayList<String>();
+    	boolean validInput;
+    	
+    	for (int i = 0; i < User.getClasses().size(); i++)
+    		listNameStrings.add(User.getClasses().get(i).getClassName());
+    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", listNameStrings);
+        
+        String input = "";
+        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
 
+        do
+        {
+            choicePopup.setTitle("Delete List");
+            choicePopup.setHeaderText("Please select list to remove");
+            choicePopup.setContentText("Use Dropdown menu:\n");
+            choicePopup.showAndWait();
+            input = choicePopup.getResult().toString();
+            validInput = validateInput(input);
+        }while(!validInput);
+    	//match class to correct class object
+        for (int i = 0; i < User.getClasses().size(); i++)
+        {
+        	if (User.getClasses().get(i).compareTo(input) > 0)
+        	{
+        		User.deleteClass(User.getClasses().get(i));
+        		break;
+        	}
+        }
     }
     
     @FXML
     void deleteNote(ActionEvent event) {
+    	boolean validInput;
+    	boolean find = true;
+    	int noteFound = -1;
+    	ArrayList<String> noteStrings = new ArrayList<String>();
+    	for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
+    		noteStrings.add(User.getCurrentHub().getNotes().get(i).getText());
+    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", noteStrings);
+        
+        String input = "";
+        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
 
+        do
+        {
+            choicePopup.setTitle("Delete note");
+            choicePopup.setHeaderText("Please select note to remove");
+            choicePopup.setContentText("Use Dropdown menu:\n");
+            choicePopup.showAndWait();
+            input = choicePopup.getResult().toString();
+            validInput = validateInput(input);
+        }while(!validInput);
+        System.out.println(input);
+        int count = User.getCurrentHub().getNotes().size();
+        while (find)
+		{
+			if (count > 0)
+			{
+				noteFound=User.getCurrentHub().getNotes().get(--count).compareTo(input);
+				//if valid hubType is returned, search is complete
+				if (noteFound > 0)
+					find = false;
+			}
+			//Ends search when all values have been checked
+			else
+				find = false;
+
+		}
+        if (noteFound > 0)
+        	User.deleteArchivedNote(User.getCurrentHub().getNotes().get(count));
     }
 
     @FXML
@@ -329,10 +402,6 @@ public class PersonalController {
     	note.clear();
     }
 
-    @FXML
-    void selectList(ActionEvent event) {
-
-    }
 
     @FXML
     void tutorial(ActionEvent event) {

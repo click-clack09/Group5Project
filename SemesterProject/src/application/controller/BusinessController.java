@@ -3,7 +3,9 @@ package application.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 
 import application.model.*;
 import javafx.collections.FXCollections;
@@ -48,10 +50,129 @@ public class BusinessController {
     @FXML
     private ListView<Hyperlink> archivedNotes;
     
+    
+private ArrayList<Label> labels = new ArrayList<Label>();
+    
+@FXML
+private Label Sunday;
+
+@FXML
+private Label Monday;
+
+@FXML
+private Label Tuesday;
+
+@FXML
+private Label Wednesday;
+
+@FXML
+private Label Thursday;
+
+@FXML
+private Label Friday;
+
+@FXML
+private Label Saturday;
+
+    @FXML
+    private Label text800;
+
+    @FXML
+    private Label text830;
+
+    @FXML
+    private Label text900;
+
+    @FXML
+    private Label text930;
+
+    @FXML
+    private Label text1000;
+
+    @FXML
+    private Label text1030;
+
+    @FXML
+    private Label text1100;
+
+    @FXML
+    private Label text1130;
+
+    @FXML
+    private Label text1200;
+
+    @FXML
+    private Label text1230;
+
+    @FXML
+    private Label text1300;
+
+    @FXML
+    private Label text1330;
+
+    @FXML
+    private Label text1400;
+
+    @FXML
+    private Label text1430;
+
+    @FXML
+    private Label text1500;
+
+    @FXML
+    private Label text1530;
+
+    @FXML
+    private Label text1600;
+
+    @FXML
+    private Label text1630;
+
+    @FXML
+    private Label text1700;
+
+    @FXML
+    private Label text1730;
+
+    @FXML
+    private Label text1800;
+
+    @FXML
+    private Label text1830;
+
+    @FXML
+    private Label text1900;
+
+    @FXML
+    private Label text1930;
+
+    @FXML
+    private Label text2000;
+
+    @FXML
+    private Label text2030;
+
+    @FXML
+    private Label text2100;
+
+    @FXML
+    private Label text2130;
+
+    @FXML
+    private Label text2200;
+
+    @FXML
+    private Label text2230;
+
+    @FXML
+    private Label text2300;
+    
     private ObservableList<CheckBox> toDoVBoxList = FXCollections.observableArrayList();
     private ObservableList<Hyperlink> archivedNoteList = FXCollections.observableArrayList();
     private ObservableList<Hyperlink> userContactList = FXCollections.observableArrayList();
     int index;
+    
+    //This goes with item/task delete  deleteTask(Task task, String className)
     
     @FXML
     void initialize()
@@ -59,7 +180,9 @@ public class BusinessController {
     	//Add Hub tasks
     	businessHomeLabel.setText(User.getUserName()+", "+User.getCurrentHub().getHubName());
     	
-    	
+    	initializeDailyLabels();
+    	updateDailyCalendar();
+    	updateWeeklyCalendar();
     	
     	if(User.getCurrentHub().getTasks()!=null)
     	{
@@ -70,9 +193,11 @@ public class BusinessController {
     			System.out.println(User.getCurrentHub().getTasks().get(i).getText());
 	        	CheckBox cb = new CheckBox(User.getCurrentHub().getTasks().get(i).getText());
 	        	cb.setPadding(new Insets(10, 10, 0, 0));
+	        	Task tempTask = User.getCurrentHub().getTasks().get(i);
 	        	cb.setOnAction(event3 -> {
                     if (cb.isSelected()) 
                     {
+                    	User.deleteTask(tempTask, User.getCurrentClass());
                     	System.out.println("CHECKBOX ACTIVATED");
                     	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
                     }
@@ -297,6 +422,278 @@ public class BusinessController {
 		
 		          
     }
+    
+    void initializeDailyLabels() {
+    	labels.add(text800);
+    	labels.add(text830);
+    	labels.add(text900);
+    	labels.add(text930);
+    	labels.add(text1000);
+    	labels.add(text1030);
+    	labels.add(text1100);
+    	labels.add(text1130);
+    	labels.add(text1200);
+    	labels.add(text1230);
+    	labels.add(text1300);
+    	labels.add(text1330);
+    	labels.add(text1400);
+    	labels.add(text1430);
+    	labels.add(text1500);
+    	labels.add(text1530);
+    	labels.add(text1600);
+    	labels.add(text1630);
+    	labels.add(text1700);
+    	labels.add(text1730);
+    	labels.add(text1800);
+    	labels.add(text1830);
+    	labels.add(text1900);
+    	labels.add(text1930);
+    	labels.add(text2000);
+    	labels.add(text2030);
+    	labels.add(text2100);
+    	labels.add(text2130);
+    	labels.add(text2200);
+    	labels.add(text2230);
+    	labels.add(text2300);    	
+    }
+    
+    void clearDailyCalendar() {
+    	for(Label label : labels) {
+    		label.setText(" ");
+        	label.setTextFill(Color.web("#000000"));
+        	//label.setStyle("-fx-background-color: #909090");
+    	}
+    }
+    
+    void updateDailyCalendar() {
+    	clearDailyCalendar();
+    	
+    	ArrayList<HubEvent> events = User.getUserEvents();
+    	
+    	LocalDate currentdate = LocalDate.now();
+    	
+    	int year = currentdate.getYear();
+    	int month = currentdate.getMonth().getValue();
+    	int day = currentdate.getDayOfMonth();
+    	
+    	for(HubEvent e : events) {
+    		
+    		Date d = e.getStartDate();
+    		
+    		if(year == d.getYear() && month == d.getMonth() && day == d.getDay()) {
+    			displayDailyEvent(e);
+    		}
+    	}
+    }
+    
+void displayDailyEvent(HubEvent e) {
+    	
+    	Date d = e.getStartDate();
+    	
+    	if(d.getHour() < 8) {
+    		String text = text800.getText();
+    		text += e.getEventName() + " \n";
+    		text800.setText(text);
+    	}
+    	if(d.getHour() == 8) {
+    		if(d.getMinute() >= 30) {
+    			String text = text830.getText();
+        		text += e.getEventName() + " \n";
+        		text830.setText(text);
+    		}
+    		else {
+    			String text = text800.getText();
+        		text += e.getEventName() + " \n";
+        		text800.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 9) {
+    		if(d.getMinute() >= 30) {
+    			String text = text930.getText();
+        		text += e.getEventName() + " \n";
+        		text930.setText(text);
+    		}
+    		else {
+    			String text = text900.getText();
+        		text += e.getEventName() + " \n";
+        		text900.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 10) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1030.getText();
+        		text += e.getEventName() + " \n";
+        		text1030.setText(text);
+    		}
+    		else {
+    			String text = text1000.getText();
+        		text += e.getEventName() + " \n";
+        		text1000.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 11) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1130.getText();
+        		text += e.getEventName() + " \n";
+        		text1130.setText(text);
+    		}
+    		else {
+    			String text = text1100.getText();
+        		text += e.getEventName() + " \n";
+        		text1100.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 12) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1230.getText();
+        		text += e.getEventName() + " \n";
+        		text1230.setText(text);
+    		}
+    		else {
+    			String text = text1200.getText();
+        		text += e.getEventName() + " \n";
+        		text1200.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 13) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1330.getText();
+        		text += e.getEventName() + " \n";
+        		text1330.setText(text);
+    		}
+    		else {
+    			String text = text1300.getText();
+        		text += e.getEventName() + " \n";
+        		text1300.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 14) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1430.getText();
+        		text += e.getEventName() + " \n";
+        		text1430.setText(text);
+    		}
+    		else {
+    			String text = text1400.getText();
+        		text += e.getEventName() + " \n";
+        		text1400.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 15) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1530.getText();
+        		text += e.getEventName() + " \n";
+        		text1530.setText(text);
+    		}
+    		else {
+    			String text = text1500.getText();
+        		text += e.getEventName() + " \n";
+        		text1500.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 16) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1630.getText();
+        		text += e.getEventName() + " \n";
+        		text1630.setText(text);
+    		}
+    		else {
+    			String text = text1600.getText();
+        		text += e.getEventName() + " \n";
+        		text1600.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 17) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1730.getText();
+        		text += e.getEventName() + " \n";
+        		text1730.setText(text);
+    		}
+    		else {
+    			String text = text1700.getText();
+        		text += e.getEventName() + " \n";
+        		text1700.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 18) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1830.getText();
+        		text += e.getEventName() + " \n";
+        		text1830.setText(text);
+    		}
+    		else {
+    			String text = text1800.getText();
+        		text += e.getEventName() + " \n";
+        		text1800.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 19) {
+    		if(d.getMinute() >= 30) {
+    			String text = text1930.getText();
+        		text += e.getEventName() + " \n";
+        		text1930.setText(text);
+    		}
+    		else {
+    			String text = text1900.getText();
+        		text += e.getEventName() + " \n";
+        		text1900.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 20) {
+    		if(d.getMinute() >= 30) {
+    			String text = text2030.getText();
+        		text += e.getEventName() + " \n";
+        		text2030.setText(text);
+    		}
+    		else {
+    			String text = text2000.getText();
+        		text += e.getEventName() + " \n";
+        		text2000.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 21) {
+    		if(d.getMinute() >= 30) {
+    			String text = text2130.getText();
+        		text += e.getEventName() + " \n";
+        		text2130.setText(text);
+    		}
+    		else {
+    			String text = text2100.getText();
+        		text += e.getEventName() + " \n";
+        		text2100.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 20) {
+    		if(d.getMinute() >= 30) {
+    			String text = text2130.getText();
+        		text += e.getEventName() + " \n";
+        		text2130.setText(text);
+    		}
+    		else {
+    			String text = text2100.getText();
+        		text += e.getEventName() + " \n";
+        		text2100.setText(text);
+    		}
+    	}
+    	if(d.getHour() == 22) {
+    		if(d.getMinute() >= 30) {
+    			String text = text2230.getText();
+        		text += e.getEventName() + " \n";
+        		text2230.setText(text);
+    		}
+    		else {
+    			String text = text2200.getText();
+        		text += e.getEventName() + " \n";
+        		text2200.setText(text);
+    		}
+    	}
+    	
+    	if(d.getHour() >= 23) {
+    		String text = text2300.getText();
+    		text += e.getEventName() + " \n";
+    		text2300.setText(text);
+    	}
+    }
 
     @FXML
     void addItem(ActionEvent event) {
@@ -328,8 +725,9 @@ public class BusinessController {
         //cb.setStyle("-fx-text-fill:white");
         cb.setPadding(new Insets(10, 10, 0, 0));
         cb.setOnAction(event3 -> {
-            if (cb.isSelected()) 
+        	if (cb.isSelected()) 
             {
+            	User.deleteTask(tempTask, User.getCurrentClass());
             	System.out.println("CHECKBOX ACTIVATED");
             	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
             }
@@ -343,6 +741,84 @@ public class BusinessController {
         toDoList.getChildren().clear();
         toDoList.getChildren().addAll(toDoVBoxList);
         User.addTask(tempTask,"");
+    }
+    
+    void clearWeeklyCalendar() {
+    	Sunday.setText(" ");
+    	Monday.setText(" ");
+    	Tuesday.setText(" ");
+    	Wednesday.setText(" ");
+    	Thursday.setText(" ");
+    	Friday.setText(" ");
+    	Saturday.setText(" ");
+    	
+    	Sunday.setTextFill(Color.web("#000000"));
+    	Monday.setTextFill(Color.web("#000000"));
+    	Tuesday.setTextFill(Color.web("#000000"));
+    	Wednesday.setTextFill(Color.web("#000000"));
+    	Thursday.setTextFill(Color.web("#000000"));
+    	Friday.setTextFill(Color.web("#000000"));
+    	Saturday.setTextFill(Color.web("#000000"));
+    }
+    
+    void updateWeeklyCalendar() {
+    	clearWeeklyCalendar();
+    	
+    	LocalDate currentdate = LocalDate.now();
+    	System.out.println("glerdsdgf " + currentdate.getDayOfWeek().getValue());
+    	switch(currentdate.getDayOfWeek().getValue()) {
+    		case 1: Monday.setStyle("-fx-background-color: #fffebf"); break;
+    		case 2: Tuesday.setStyle("-fx-background-color: #fffebf"); break;
+    		case 3: Wednesday.setStyle("-fx-background-color: #fffebf"); break;
+    		case 4: Thursday.setStyle("-fx-background-color: #fffebf"); break;
+    		case 5: Friday.setStyle("-fx-background-color: #fffebf"); break;
+    		case 6: Saturday.setStyle("-fx-background-color: #fffebf"); break;
+    		case 7: Sunday.setStyle("-fx-background-color: #fffebf"); break;
+    	}
+    	
+    	while(currentdate.getDayOfWeek().getValue() != 7) {
+    		System.out.println(currentdate.getDayOfWeek());
+    		currentdate = currentdate.minusDays(1);
+    	}
+    	
+    	Sunday.setText(getEvent(currentdate));
+    	currentdate = currentdate.plusDays(1);
+    	
+    	Monday.setText(getEvent(currentdate));
+    	currentdate = currentdate.plusDays(1);
+    	
+    	Tuesday.setText(getEvent(currentdate));
+    	currentdate = currentdate.plusDays(1);
+    	
+    	Wednesday.setText(getEvent(currentdate));
+    	currentdate = currentdate.plusDays(1);
+    	
+    	Thursday.setText(getEvent(currentdate));
+    	currentdate = currentdate.plusDays(1);
+    	
+    	Friday.setText(getEvent(currentdate));
+    	currentdate = currentdate.plusDays(1);
+    	
+    	Saturday.setText(getEvent(currentdate));
+    }	
+    
+    String getEvent(LocalDate date) {
+    	int year = date.getYear();
+    	int month = date.getMonth().getValue();
+    	int day = date.getDayOfMonth();
+    	
+    	String display = " ";
+    	
+    	ArrayList<HubEvent> events = User.getUserEvents();
+    	
+    	for(HubEvent e : events) {
+    		Date d = e.getStartDate();
+    		if(d.getYear() == year && d.getMonth() == month && d.getDay() == day) {
+    			display += e.getEventName() + "\n ";
+    		}
+    	}
+    	
+    	return display;
     }
     
      @FXML
@@ -360,7 +836,47 @@ public class BusinessController {
 
     @FXML
     void removeContact(ActionEvent event) {
-    	
+    	boolean validInput;
+    	boolean find = true;
+    	int contactFound = -1;
+    	ArrayList<String> contactStrings = new ArrayList<String>();
+    	for (int i = 0; i < User.getUserContacts().size(); i++)
+    		contactStrings.add(User.getUserContacts().get(i).getName());
+    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", contactStrings);
+        
+        String input = "";
+        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
+
+        do
+        {
+            choicePopup.setTitle("Delete Contact");
+            choicePopup.setHeaderText("Please select contact to remove");
+            choicePopup.setContentText("Use Dropdown menu:\n");
+            choicePopup.showAndWait();
+            input = choicePopup.getResult().toString();
+            validInput = validateInput(input);
+        }while(!validInput);
+        System.out.println(input);
+        int count = User.getUserContacts().size();
+        while (find)
+		{
+			if (count > 0)
+			{
+				
+				//descending search for hubEntry 
+				contactFound=User.getUserContacts().get(--count).compareTo(input);
+				//System.out.println(count+" ");
+				//if valid hubType is returned, search is complete
+				if (contactFound > 0)
+					find = false;
+			}
+			//Ends search when all values have been checked
+			else
+				find = false;
+
+		}
+        if (contactFound > 0)
+        	User.deleteContact(User.getUserContacts().get(count));
     }
 
     @FXML
@@ -401,8 +917,45 @@ public class BusinessController {
 	}
     
     @FXML
-    void deleteNote(ActionEvent event) {
+    void removeNote(ActionEvent event) {
+    	boolean validInput;
+    	boolean find = true;
+    	int noteFound = -1;
+    	ArrayList<String> noteStrings = new ArrayList<String>();
+    	for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
+    		noteStrings.add(User.getCurrentHub().getNotes().get(i).getText());
+    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", noteStrings);
+        
+        String input = "";
+        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
 
+        do
+        {
+            choicePopup.setTitle("Delete note");
+            choicePopup.setHeaderText("Please select note to remove");
+            choicePopup.setContentText("Use Dropdown menu:\n");
+            choicePopup.showAndWait();
+            input = choicePopup.getResult().toString();
+            validInput = validateInput(input);
+        }while(!validInput);
+        System.out.println(input);
+        int count = User.getCurrentHub().getNotes().size();
+        while (find)
+		{
+			if (count > 0)
+			{
+				noteFound=User.getCurrentHub().getNotes().get(--count).compareTo(input);
+				//if valid hubType is returned, search is complete
+				if (noteFound > 0)
+					find = false;
+			}
+			//Ends search when all values have been checked
+			else
+				find = false;
+
+		}
+        if (noteFound > 0)
+        	User.deleteArchivedNote(User.getCurrentHub().getNotes().get(count));
     }
     
     public boolean validateInput(String input)

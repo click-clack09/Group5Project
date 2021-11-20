@@ -3,6 +3,7 @@ package application.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import application.model.*;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -50,6 +52,8 @@ public class EdClassController {
     private ObservableList<CheckBox> toDoVBoxList = FXCollections.observableArrayList();
     private int index;
 	
+  //This goes with item/task delete  deleteTask(Task task, String className)
+    
     @FXML
     void initialize()
     {
@@ -84,9 +88,12 @@ public class EdClassController {
     		//Make a CheckBox for each task
         	CheckBox cb = new CheckBox(User.getClasses().get(index).getAssignments().get(i).getText());
         	cb.setPadding(new Insets(10, 10, 0, 0));
+        	Task tempTask = new Task(User.getClasses().get(index).getAssignments().get(i).getText());
+            String tempClass = User.getClasses().get(i).getClassName();
         	cb.setOnAction(event3 -> {
-                if (cb.isSelected()) 
+        		if (cb.isSelected()) 
                 {
+                	User.deleteTask(tempTask, tempClass);
                 	System.out.println("CHECKBOX ACTIVATED");
                 	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
                 }
@@ -165,9 +172,11 @@ public class EdClassController {
         CheckBox cb = new CheckBox(taskString);
         //cb.setStyle("-fx-text-fill:white");
         cb.setPadding(new Insets(10, 10, 0, 0));
+        String tempClass = User.getClasses().get(index).getClassName();
         cb.setOnAction(event3 -> {
-            if (cb.isSelected()) 
+        	if (cb.isSelected()) 
             {
+            	User.deleteTask(tempTask, tempClass);
             	System.out.println("CHECKBOX ACTIVATED");
             	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
             }
@@ -257,7 +266,66 @@ public class EdClassController {
     
     @FXML
     void deleteNote(ActionEvent event) {
+    	boolean validInput;
+    	boolean find = true;
+    	int classFound = -1;
+    	int noteFound = -1;
+    	ArrayList<String> noteStrings = new ArrayList<String>();
+    	//which class are we on now?
+    	int countClass = User.getCurrentHub().getClasses().size();
+    	int countNote = -1;
+    	while (find)
+		{
+			if (countClass > 0)
+			{
+				classFound=User.getCurrentHub().getClasses().get(--countClass).compareTo(User.getCurrentClass());
+				//if valid hubType is returned, search is complete
+				if (classFound > 0)
+					find = false;
+			}
+			//Ends search when all values have been checked
+			else
+				find = false;
 
+		}
+        if (classFound > 0)
+        {
+	    	for (int i = 0; i < User.getCurrentHub().getClasses().get(countClass).getNotes().size(); i++)
+	    		noteStrings.add(User.getCurrentHub().getClasses().get(countClass).getNotes().get(i).getText());
+	    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", noteStrings);
+	        
+	        String input = "";
+	        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
+	
+	        do
+	        {
+	            choicePopup.setTitle("Delete note");
+	            choicePopup.setHeaderText("Please select note to remove");
+	            choicePopup.setContentText("Use Dropdown menu:\n");
+	            choicePopup.showAndWait();
+	            input = choicePopup.getResult().toString();
+	            validInput = validateInput(input);
+	        }while(!validInput);
+	        System.out.println(input);
+	        countNote = User.getCurrentHub().getClasses().get(countClass).getNotes().size();
+	        find = true;
+	        while (find)
+			{
+				if (countNote > 0)
+				{
+					noteFound=User.getCurrentHub().getClasses().get(countClass).getNotes().get(--countNote).compareTo(input);
+					//if valid hubType is returned, search is complete
+					if (noteFound > 0)
+						find = false;
+				}
+				//Ends search when all values have been checked
+				else
+					find = false;
+	
+			}
+	        if (noteFound > 0)
+	        	User.deleteArchivedNote(User.getCurrentHub().getClasses().get(countClass).getNotes().get(countNote));
+        }
     }
     
     public boolean validateInput(String input)

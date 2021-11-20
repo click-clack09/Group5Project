@@ -220,10 +220,6 @@ public class User {
 	}
 	//////////////////////////////////////////////////////////////////////////////
 	//These will be used to send things back to the DB
-		public static void addEvent() {
-			
-		}
-
 		
 		public static boolean checkForContactInTable(Contact contact) {
 			boolean flag = false;//free and clear to add contact
@@ -404,7 +400,141 @@ public class User {
 			}
 			return !result;
 		}
+		public static void executeDeleteFromPhoneNumberTable(String contactName, String phoneNumber, String type) {
+			System.out.println("Deleting phone number from PhoneNumber table: "+contactName+" "+phoneNumber+" "+
+				    type);
+					
+					String delete_phone_number = "DELETE FROM lifeHub.PhoneNumber WHERE user_id = ? AND contact_name = ? AND contact_phone = ? AND contact_phone_type = ?";
+					try {
+					    Connection conn = DatabaseConnection.getConnection();	    
+						PreparedStatement ps = conn.prepareStatement(delete_phone_number);
+						ps.setInt(1, User.getUserID());
+						ps.setString(2, contactName);
+						ps.setString(3, phoneNumber);
+						ps.setString(4, type);
+						int result = ps.executeUpdate();					
+						if(result > 0){
+							System.out.println("Successful delete from PhoneNumber table!!!");
+						}
+						else {
+							System.out.println("Failed delete PhoneNumber table!");
+						}
+				
+							//close connection
+							try {
+								conn.close();
+							}catch (SQLException se){
+								System.out.println("Error closing SQL connection.");
+							}	
+							
+					    }catch(SQLSyntaxErrorException see) {
+					       System.out.println("Error: DB syntax is incorrect while deleting from PhoneNumber table");
+					          	//see.printStackTrace();
+					    }catch(Exception e) {
+					       System.out.println("Error: DB connection failed while deleting fromPhoneNumber table");
+					          	e.printStackTrace();
+					    }
+		}
+		public static void executeDeleteFromEmailAddressTable(String contactName, String email, String type) {
+			System.out.println("Deleting email from Email Address table: "+contactName+" "+email+" "+
+				    type);
+					
+					String delete_email = "DELETE FROM lifeHub.EmailAddress WHERE user_id = ? AND email_contact = ? AND email_detail = ? AND email_type = ?";
+					try {
+					    Connection conn = DatabaseConnection.getConnection();	    
+						PreparedStatement ps = conn.prepareStatement(delete_email);
+						ps.setInt(1, User.getUserID());
+						ps.setString(2, contactName);
+						ps.setString(3, email);
+						ps.setString(4, type);
+						int result = ps.executeUpdate();					
+						if(result > 0){
+							System.out.println("Successful delete email from EmailAdress table!!!");
+						}
+						else {
+							System.out.println("Failed to delete email from EmailAdress table!");
+						}
+				
+							//close connection
+							try {
+								conn.close();
+							}catch (SQLException se){
+								System.out.println("Error closing SQL connection.");
+							}	
+							
+					    }catch(SQLSyntaxErrorException see) {
+					       System.out.println("Error: DB syntax is incorrect while deleting from PhoneNumber table");
+					          	//see.printStackTrace();
+					    }catch(Exception e) {
+					       System.out.println("Error: DB connection failed while deleting fromPhoneNumber table");
+					          	e.printStackTrace();
+					    }
+		}
+		
+		public static void executeDeleteFromContactTable(Contact contact) {
+			System.out.println("Deleting Contact from Contact Table. "+"user: "+User.getUserName()+" contact: "+contact.getName());
+			String delete_from_contact_table = "DELETE FROM lifeHub.Contact WHERE user_id = ? AND contact_name = ?";
+			try {
+			    Connection conn = DatabaseConnection.getConnection();	    
+				PreparedStatement ps = conn.prepareStatement(delete_from_contact_table);
+				ps.setInt(1, User.getUserID());
+				ps.setString(2, contact.getName());
+				int result = ps.executeUpdate();					
+				if(result > 0){
+					System.out.println("Successful delete of contact from Contact Table!!!");
+				}
+				else {
+					System.out.println("Failed delete of contact from Contact Table!");
+				}
+		
+					//close connection
+					try {
+						conn.close();
+					}catch (SQLException se){
+						System.out.println("Error closing SQL connection.");
+					}	
+					
+			    }catch(SQLSyntaxErrorException see) {
+			       System.out.println("Error: DB syntax is incorrect while deleting contact from Contact Table");
+			          	//see.printStackTrace();
+			    }catch(Exception e) {
+			       System.out.println("Error: DB connection failed deleting contact from Contact Table");
+			          	e.printStackTrace();
+			    }
+		}
+		
+		public static boolean deleteContact(Contact contact) {
+	  
+			boolean result;
 
+			result = User.checkForContactInTable(contact);
+			
+			if(result) {
+								
+				if (contact.getPhoneList()!=null) {
+				
+					for (int i = 0; i < contact.getPhoneList().size(); i++)
+					{		
+						User.executeDeleteFromPhoneNumberTable(contact.getName(), contact.getPhoneList().get(i).getNumber(),
+								contact.getPhoneList().get(i).getType());
+
+					}
+				}
+				
+
+				if (contact.getEmailsList()!=null) {
+					for (int i=0; i< contact.getEmailsList().size(); i++)
+					{
+						User.executeDeleteFromEmailAddressTable(contact.getName(), contact.getEmailsList().get(i).getAddress(),
+								contact.getEmailsList().get(i).getType());				
+					}
+				}
+				
+				User.executeDeleteFromContactTable(contact);
+			}
+			return !result;
+		}
+		
 		//eventID,eventType,hubName,eventName,imgPath,text
 		public static void executeInsertIntoTaskTable(int eventID, int eventType, String hubName, String eventName, String imgPath,
 				String text) {
@@ -458,17 +588,85 @@ public class User {
 			if (User.getCurrentHub().getEventType()==2)//this means it's a Business tasks link to Hub
 			{
 				eventName=hubName;
-				
+				System.out.println("Event Name "+ eventName+". hubName "+hubName);
 				//send to hub copy ot class String imgPath = null, String text task.getText()		
 			}
 			else
 			{
 				//send to hub and class
 				eventName = className;
-				
+				System.out.println("Event Name "+ eventName+". Class Name "+className);
 			}
 			//do insert here
 			User.executeInsertIntoTaskTable(eventID,eventType,hubName,eventName,imgPath,text);
+			
+		}
+		public static void executeDeleteFromTaskTable(int eventType,String hubName,String eventName,String imgPath,String text) {
+			System.out.println("Deleting task from Task table: "+User.getUserID()+" "+eventType+" "+hubName+" "+eventName+" "+text);
+			String delete_from_task_table = "DELETE FROM lifehub.task WHERE user_id = ? AND event_type = ? AND event_hub = ? AND event_name = ? AND text = ?";
+			try {
+			    Connection conn = DatabaseConnection.getConnection();	    
+				PreparedStatement ps = conn.prepareStatement(delete_from_task_table);
+				
+				ps.setInt(1, User.getUserID());
+				ps.setInt(2, eventType);
+				ps.setString(3, hubName);
+				ps.setString(4, eventName);
+				ps.setString(5, text);
+				int result = ps.executeUpdate();					
+				if(result > 0){
+					System.out.println("Successful deletion from Task table!!!");
+				}
+				else {
+					System.out.println("Failed deletion from Task table!");
+				}
+		
+					//close connection
+					try {
+						conn.close();
+					}catch (SQLException se){
+						System.out.println("Error closing SQL connection.");
+					}	
+					
+			    }catch(SQLSyntaxErrorException see) {
+			       System.out.println("Error: DB syntax is incorrect while deleting from Task table");
+			          	//see.printStackTrace();
+			    }catch(Exception e) {
+			       System.out.println("Error: DB connection failed deleting Task table");
+			          	e.printStackTrace();
+			    }
+		}
+		
+		public static void deleteTask(Task task, String className) {
+			//need user_id event_type event_hub event_name img_path text
+			User.getUserID(); //user_id
+			int eventType = User.getCurrentHub().getEventType(); 
+			//String eventTypeString = "";
+			String hubName = User.getCurrentHub().getHubName();
+			String eventName;
+			String imgPath = "";
+			String text = task.getText();
+			
+			if (User.getCurrentHub().getEventType()==2)//this means it's a Business tasks link to Hub
+			{
+				eventName=hubName;
+				System.out.println("Event Name "+ eventName+". hubName "+hubName);
+				//send to hub copy ot class String imgPath = null, String text task.getText()		
+			}
+			else if (User.getCurrentHub().getEventType()==1)
+			{
+				//send to hub and class
+				eventName = className;
+				System.out.println("Event Name "+ eventName+". Class Name "+className);
+			}
+			else
+			{
+				//send to hub and class
+				eventName = className;
+				System.out.println("Event Name "+ eventName+". Class Name "+className);
+			}
+			//do insert here
+			User.executeDeleteFromTaskTable(eventType,hubName,eventName,imgPath,text);
 			
 		}
 		//add deletes based on these adds
@@ -612,7 +810,7 @@ public class User {
 		public static void executeInsertIntoArchivedNoteTable(int userID, int eventType, String noteLifeHubName,
 			String noteSchoolClassName, String noteImagePath, String noteText) {
 			System.out.println("Inserting into Archived Note Table: "+userID+" "+eventType+" "+noteText);
-			String insert_into_task_table = "INSERT INTO lifeHub.archivednotes (archived_notes_id,user_id,event_type,life_hub_name,school_class,img_path,text) "+"VALUES(?,?,?,?,?,?,?)";
+			String insert_into_task_table = "INSERT INTO lifeHub.ArchivedNotes (archived_notes_id,user_id,event_type,life_hub_name,school_class,img_path,text) "+"VALUES(?,?,?,?,?,?,?)";
 			try {
 			    Connection conn = DatabaseConnection.getConnection();	    
 				PreparedStatement ps = conn.prepareStatement(insert_into_task_table);
@@ -620,8 +818,8 @@ public class User {
 				ps.setInt(2, userID);
 				ps.setInt(3, eventType);
 				ps.setString(4, noteLifeHubName);
-				if (noteSchoolClassName==null)
-					noteSchoolClassName="N/A";
+				if(noteSchoolClassName == null)
+					noteSchoolClassName = noteLifeHubName;
 				ps.setString(5, noteSchoolClassName);
 				ps.setString(6, noteImagePath);
 				ps.setString(7, noteText);
@@ -651,6 +849,7 @@ public class User {
 			
 		}
 
+		
 		//QC WITH RICHARD!!    /////HOLD******************************************************* 
 		public static void addArchivedNote(Note note) {
 			//image path to null
@@ -661,106 +860,167 @@ public class User {
 			String noteText = note.getText();
 			String noteLifeHubName = User.getCurrentHub().getHubName();
 			String noteSchoolClassName;
-			if (User.getCurrentHub().getEventType()==2)
-				noteSchoolClassName = User.getCurrentHub().getHubName();
-			else
+			if (User.getCurrentHub().getEventType()==1)
 				noteSchoolClassName = User.getCurrentClass();
+			else
+				noteSchoolClassName = User.getCurrentHub().getHubName();
 			
 			//String
 			
-			System.out.println(userID+" "+eventType+" "+noteLifeHubName+" "+noteSchoolClassName+" "+noteImagePath+" "+noteText);
+		
 			User.executeInsertIntoArchivedNoteTable(userID,eventType,noteLifeHubName,
 					noteSchoolClassName,noteImagePath,noteText);
 		}
-		//////////////////////////////////////
-		public static void executeInsertIntoHubEventTable(int event_id, int user_id, int event_type, String event_recurring, String event_hub,
-                String event_name, String event_location, Date startDate, Date endDate) {
-
-            String event_start_mm = String.valueOf(startDate.getMonth());
-            String event_start_dd = String.valueOf(startDate.getDay());
-            String event_start_yr = String.valueOf(startDate.getYear());
-            String event_start_hr = String.valueOf(startDate.getHour());
-            String event_start_min = String.valueOf(startDate.getMinute());
-            //end date of HubEvent
-            String event_end_mm = String.valueOf(endDate.getMonth());
-            String event_end_dd = String.valueOf(endDate.getDay());
-            String event_end_yr = String.valueOf(endDate.getYear());
-            String event_end_hr = String.valueOf(endDate.getHour());
-            String event_end_min = String.valueOf(endDate.getMinute());
-
-
-            //17 total fields for inserting 1 HubEvent
-            //7 fields passed individually, 5 from Date startDate, 5 from Date endDate = 17 total
-		String insert_into_task_table = "INSERT INTO lifeHub.HubEvent2 (event_id,user_id,event_type,event_recurring,event_hub,event_name,event_location,event_start_mm,event_start_dd,event_start_yr,event_start_hr,event_start_min,event_end_mm,event_end_dd,event_end_yr,event_end_hr,event_end_min) "+
-		"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		try {
-		    Connection conn = DatabaseConnection.getConnection();	    
-			PreparedStatement ps = conn.prepareStatement(insert_into_task_table);
-			ps.setInt(1, event_id);//sent in as default, 0 for auto-increment
-			ps.setInt(2, user_id);
-			ps.setInt(3, event_type);
-			ps.setString(4, event_recurring);
-			ps.setString(5, event_hub);
-			ps.setString(6, event_name);				
-			ps.setString(7, event_location);
-			ps.setString(8, event_start_mm);
-			ps.setString(9, event_start_dd);
-			ps.setString(10, event_start_yr);
-			ps.setString(11, event_start_hr);
-			ps.setString(12, event_start_min);
-			ps.setString(13, event_end_mm);
-			ps.setString(14, event_end_dd);
-			ps.setString(15, event_end_yr);
-			ps.setString(16, event_end_hr);
-			ps.setString(17, event_end_min);
+		
+		public static void executeDeleteFromArchivedNoteTable(int userID,int eventType,String noteLifeHubName,
+				String noteSchoolClassName,String noteImagePath, String noteText) {
+			System.out.println("Deleting from Archived Note Table: "+userID+" "+eventType+" "+noteText);
+			String delete_from_archived_note_table = "DELETE FROM lifeHub.ArchivedNotes WHERE user_id = ? AND event_type = ? AND life_hub_name = ? "
+					+ "AND school_class = ? AND img_path = ? AND text = ?";
+			try {
+			    Connection conn = DatabaseConnection.getConnection();	    
+				PreparedStatement ps = conn.prepareStatement(delete_from_archived_note_table);
+				ps.setInt(1, userID);
+				ps.setInt(2, eventType);
+				ps.setString(3, noteLifeHubName);
+				ps.setString(4, noteSchoolClassName);
+				ps.setString(5, noteImagePath);
+				ps.setString(6, noteText);
+		
+				int result = ps.executeUpdate();					
+				if(result > 0){
+					System.out.println("Successful deletion from Archived Note Table!!!");
+				}
+				else {
+					System.out.println("Failed deletion from Archived Note Table!");
+				}
+		
+					//close connection
+					try {
+						conn.close();
+					}catch (SQLException se){
+						System.out.println("Error closing SQL connection.");
+					}	
+					
+			    }catch(SQLSyntaxErrorException see) {
+			       System.out.println("Error: DB syntax is incorrect while deleting from Archived Note Table");
+			          	//see.printStackTrace();
+			    }catch(Exception e) {
+			       System.out.println("Error: DB connection failed while deleting from Archived Note Table");
+			          	e.printStackTrace();
+			    }				
+		}
+		
+		public static void deleteArchivedNote(Note note) {
+			//image path to null
+			//need event_type, life_hub_name, school_class, img_path, text
+			int userID = User.getUserID();
+			int eventType = User.getCurrentHub().getEventType();
+			String noteImagePath = "";
+			String noteText = note.getText();
+			String noteLifeHubName = User.getCurrentHub().getHubName();
+			String noteSchoolClassName;
+			if (User.getCurrentHub().getEventType()==1)
+				noteSchoolClassName = User.getCurrentClass();
+			else
+				noteSchoolClassName = User.getCurrentHub().getHubName();
 			
-			//ACTUAL HUBEVENT INSERT IS COMMENTED OUT
-			int result = ps.executeUpdate();					
-			if(result > 0){
-				System.out.println("Successful insert into Archived Note Table!!!");
-			}
-			else {
-				System.out.println("Failed insert into Archived Note Table!");
-			}
-	
-				//close connection
-				try {
-					conn.close();
-				}catch (SQLException se){
-					System.out.println("Error closing SQL connection.");
-				}	
+			//String
+			
+		
+			User.executeDeleteFromArchivedNoteTable(userID,eventType,noteLifeHubName,
+					noteSchoolClassName,noteImagePath,noteText);
+		}
+		
+		public static void executeInsertIntoHubEventTable(int event_id, int user_id, int event_type, String event_recurring, String event_hub,
+				String event_name, String event_location, Date startDate, Date endDate) {
+						
+			String event_start_mm = String.valueOf(startDate.getMonth());
+			String event_start_dd = String.valueOf(startDate.getDay());
+			String event_start_yr = String.valueOf(startDate.getYear());
+			String event_start_hr = String.valueOf(startDate.getHour());
+			String event_start_min = String.valueOf(startDate.getMinute());
+			//end date of HubEvent
+			String event_end_mm = String.valueOf(endDate.getMonth());
+			String event_end_dd = String.valueOf(endDate.getDay());
+			String event_end_yr = String.valueOf(endDate.getYear());
+			String event_end_hr = String.valueOf(endDate.getHour());
+			String event_end_min = String.valueOf(endDate.getMinute());
+			
+			
+			//17 total fields for inserting 1 HubEvent
+			//7 fields passed individually, 5 from Date startDate, 5 from Date endDate = 17 total
+			String insert_into_task_table = "INSERT INTO lifeHub.HubEvent2 (event_id,user_id,event_type,event_recurring,event_hub,event_name,"
+					+ "event_location,event_start_mm,event_start_dd,event_start_yr,event_start_hr,event_start_min,event_end_mm,event_end_dd,"
+					+ "event_end_yr,event_end_hr,event_end_min) "+
+			"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			try {
+			    Connection conn = DatabaseConnection.getConnection();	    
+				PreparedStatement ps = conn.prepareStatement(insert_into_task_table);
+				ps.setInt(1, event_id);//sent in as default, 0 for auto-increment
+				ps.setInt(2, user_id);
+				ps.setInt(3, event_type);
+				ps.setString(4, event_recurring);
+				ps.setString(5, event_hub);
+				ps.setString(6, event_name);				
+				ps.setString(7, event_location);
+				ps.setString(8, event_start_mm);
+				ps.setString(9, event_start_dd);
+				ps.setString(10, event_start_yr);
+				ps.setString(11, event_start_hr);
+				ps.setString(12, event_start_min);
+				ps.setString(13, event_end_mm);
+				ps.setString(14, event_end_dd);
+				ps.setString(15, event_end_yr);
+				ps.setString(16, event_end_hr);
+				ps.setString(17, event_end_min);
 				
-		    }catch(SQLSyntaxErrorException see) {
-		       System.out.println("Error: DB syntax is incorrect while inserting into Archived Note Table");
-		          	//see.printStackTrace();
-		    }catch(Exception e) {
-		       System.out.println("Error: DB connection failed inserting into Archived Note Table");
-		          	e.printStackTrace();
-		    }
+				//ACTUAL HUBEVENT INSERT IS COMMENTED OUT
+				int result = ps.executeUpdate();					
+				if(result > 0){
+					System.out.println("Successful insert into HubEvent table!!!");
+				}
+				else {
+					System.out.println("Failed insert into HubEvent table!");
+				}
 		
-	}
-	
-	//QC WITH RICHARD!!/////HOLD*******************************************************
-	public static void addHubEvent(HubEvent hubEvent) {	
-		System.out.println("Made it to addHubEvent");
-		//String lifeHubName = hubEvent.getHubName();
-		int event_id = hubEvent.getEventID();
-		int user_id = User.getUserID();
-		int event_type = hubEvent.getEventType();
-		String event_recurring = "FALSE";
-		String event_hub = hubEvent.getHubName();//CODE CAMP 
-		String event_name = hubEvent.getEventName();
-		String event_location = hubEvent.getLocation();
-		//start date of HubEvent
-		Date startDate = hubEvent.getStartDate();
-		Date endDate = hubEvent.getEndDate();
+					//close connection
+					try {
+						conn.close();
+					}catch (SQLException se){
+						System.out.println("Error closing SQL connection.");
+					}	
+					
+			    }catch(SQLSyntaxErrorException see) {
+			       System.out.println("Error: DB syntax is incorrect while inserting into Archived Note Table");
+			          	//see.printStackTrace();
+			    }catch(Exception e) {
+			       System.out.println("Error: DB connection failed inserting into Archived Note Table");
+			          	e.printStackTrace();
+			    }
+			
+		}
 		
+		//QC WITH RICHARD!!/////HOLD*******************************************************
+		public static void addHubEvent(HubEvent hubEvent) {	
+			//String lifeHubName = hubEvent.getHubName();
+			int event_id = hubEvent.getEventID();
+			int user_id = User.getUserID();
+			int event_type = hubEvent.getEventType();
+			String event_recurring = "FALSE";
+			String event_hub = hubEvent.getHubName();//CODE CAMP 
+			String event_name = hubEvent.getEventName();
+			String event_location = hubEvent.getLocation();
+			//start date of HubEvent
+			Date startDate = hubEvent.getStartDate();
+			Date endDate = hubEvent.getEndDate();
+			
 
+			
+			User.executeInsertIntoHubEventTable(event_id, user_id, event_type, event_recurring, event_hub,
+					event_name, event_location, startDate, endDate);
+		}
 		
-		User.executeInsertIntoHubEventTable(event_id, user_id, event_type, event_recurring, event_hub,
-				event_name, event_location, startDate, endDate);
-	}
-		//////////////////////////////////////
 		public void executeInsertNewUserIntoUserTable() {
 			//check username, for dupes after create button is selected
 		

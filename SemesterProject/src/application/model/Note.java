@@ -1,6 +1,6 @@
 package application.model;
 
-public class Note {
+public class Note implements Comparable {
 
 	private String imagePath;
 	private String text;
@@ -42,5 +42,12 @@ public class Note {
 	
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (this.getText().equals(o))
+			return 1;// TODO Auto-generated method stub
+		return -1;
 	}
 }
