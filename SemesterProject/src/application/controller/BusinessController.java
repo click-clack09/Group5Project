@@ -27,6 +27,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -166,7 +168,8 @@ private Label Saturday;
 
     @FXML
     private Label text2300;
-    
+    @FXML
+    private VBox topBox;
     private ObservableList<CheckBox> toDoVBoxList = FXCollections.observableArrayList();
     private ObservableList<Hyperlink> archivedNoteList = FXCollections.observableArrayList();
     private ObservableList<Hyperlink> userContactList = FXCollections.observableArrayList();
@@ -177,6 +180,12 @@ private Label Saturday;
     @FXML
     void initialize()
     {
+    	int r = 255;
+    	int g = 1;
+    	int b = 255;
+    	//coordinate logo to match color scheme
+    	//topBox.setBackground(new Background(new BackgroundFill(Color.rgb(r,g,b), null, null)));
+    	//topBox.setStyle(null);
     	//Add Hub tasks
     	businessHomeLabel.setText(User.getUserName()+", "+User.getCurrentHub().getHubName());
     	
@@ -194,14 +203,40 @@ private Label Saturday;
 	        	CheckBox cb = new CheckBox(User.getCurrentHub().getTasks().get(i).getText());
 	        	cb.setPadding(new Insets(10, 10, 0, 0));
 	        	Task tempTask = User.getCurrentHub().getTasks().get(i);
+//	        	Thread t1 = new Thread(new Runnable() {
+//	        	      @Override
+//	        	      public void run() {
+//	        	        try {
+//	        	            Thread.sleep(200);
+//	        	            if (cb.isSelected()) 
+//		                    {
+//		                    	User.deleteTask(tempTask, User.getCurrentClass());
+//		                    	toDoVBoxList.remove(cb);
+//		                    	toDoList.getChildren().clear();
+//		                    	toDoList.getChildren().addAll(toDoVBoxList);
+//		                    }
+//	        	          } catch (InterruptedException e) {
+//	        	            e.printStackTrace();
+//	        	          }
+//
+//	        	      }
+//	        	    });
+	        	
 	        	cb.setOnAction(event3 -> {
                     if (cb.isSelected()) 
                     {
+                    	//t1.start();
+                    	toDoVBoxList.remove(cb);
+                    	toDoList.getChildren().clear();
+                    	toDoList.getChildren().addAll(toDoVBoxList);
                     	User.deleteTask(tempTask, User.getCurrentClass());
-                    	System.out.println("CHECKBOX ACTIVATED");
+						System.out.println("CHECKBOX ACTIVATED");
                     	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+						//call method that makes a new thread, thread sleeps, checks again, deletes or terminates
                     }
                   });
+	        	
+	        	
 	        	toDoVBoxList.add(cb);
     		}
     		
@@ -341,85 +376,97 @@ private Label Saturday;
     	String etype = "";
     	String ptype = "";
       	
-    	do
-        {
-    		textDialog.getEditor().clear();
-    		textDialog.setTitle("New Contact");
-	     	textDialog.setHeaderText("Please enter the new contact name");
-	     	textDialog.setContentText("Name:");
-	     	textDialog.showAndWait();
-	     	contactName = textDialog.getResult();
-	     	validInput = validateInput(contactName);
-        }while(!validInput);
-    	
-    	do
-        {
-    		textDialog.getEditor().clear();
-    		textDialog.setTitle("New Contact");
-    		textDialog.setHeaderText("Please enter a phone number");
-    		textDialog.setContentText("Number:");
-    		textDialog.showAndWait();
-    		phone = textDialog.getResult();
-    		validInput = validateInput(phone);
-        }while(!validInput);
-		
-    	do
+    	try
     	{
-	    	choice = new ChoiceDialog("Please select", phoneTypes);
-	    	choice.setTitle("New Contact");
-	    	choice.setHeaderText("Please enter a phone type");
-	    	choice.setContentText("Type:");
+	    	do
+	        {
+	    		textDialog.getEditor().clear();
+	    		textDialog.setTitle("New Contact");
+		     	textDialog.setHeaderText("Please enter the new contact name");
+		     	textDialog.setContentText("Name:");
+		     	textDialog.showAndWait();
+		     	if(textDialog.getResult()==null)
+		     		throw new Exception();
+		     	contactName = textDialog.getResult();
+		     	validInput = validateInput(contactName);
+	        }while(!validInput);
+	    	
+	    	do
+	        {
+	    		textDialog.getEditor().clear();
+	    		textDialog.setTitle("New Contact");
+	    		textDialog.setHeaderText("Please enter a phone number");
+	    		textDialog.setContentText("Number:");
+	    		textDialog.showAndWait();
+	    		if(textDialog.getResult()==null)
+		     		throw new Exception();
+	    		phone = textDialog.getResult();
+	    		validInput = validateInput(phone);
+	        }while(!validInput);
+			
+	    	do
+	    	{
+		    	choice = new ChoiceDialog("Please select", phoneTypes);
+		    	choice.setTitle("New Contact");
+		    	choice.setHeaderText("Please enter a phone type");
+		    	choice.setContentText("Type:");
+				choice.showAndWait();
+				ptype = choice.getSelectedItem().toString();
+				validInput = validateInput(ptype);
+		    }while(!validInput);
+	    	
+			//either add logic to loop this or make a multifield popup
+	    	
+	    	do
+	        {
+		    	textDialog.getEditor().clear();
+				textDialog.setTitle("New Contact");
+				textDialog.setHeaderText("Please enter an email address");
+				textDialog.setContentText("Email:");
+				textDialog.showAndWait();
+				if(textDialog.getResult()==null)
+		     		throw new Exception();
+				email = textDialog.getResult();
+				validInput = validateInput(email);
+		    }while(!validInput);
+	    	
+	    	//change this to dropdown selection
+	    	do
+	        {
+	    		choice = new ChoiceDialog("Please select", emailTypes);
+			choice.setTitle("New Contact");
+			choice.setHeaderText("Please enter an email type");
+			choice.setContentText("Type:");
 			choice.showAndWait();
-			ptype = choice.getSelectedItem().toString();
-			validInput = validateInput(ptype);
-	    }while(!validInput);
-    	
-		//either add logic to loop this or make a multifield popup
-    	
-    	do
-        {
-	    	textDialog.getEditor().clear();
-			textDialog.setTitle("New Contact");
-			textDialog.setHeaderText("Please enter an email address");
-			textDialog.setContentText("Email:");
-			textDialog.showAndWait();
-			email = textDialog.getResult();
-			validInput = validateInput(email);
-	    }while(!validInput);
-    	
-    	//change this to dropdown selection
-    	do
-        {
-    		choice = new ChoiceDialog("Please select", emailTypes);
-		choice.setTitle("New Contact");
-		choice.setHeaderText("Please enter an email type");
-		choice.setContentText("Type:");
-		choice.showAndWait();
-		etype = choice.getSelectedItem().toString();
-		validInput = validateInput(etype);
-	    }while(!validInput);
-    	
-		Contact temp = new Contact(contactName, phone, ptype, email, etype);
-		//Add contact hyperlink
-		  
-		User.getUserContacts().add(temp);
-		
-		//Push to DB
-		if (User.addContact(temp))
-		{
-			Hyperlink tempLink = new Hyperlink(temp.getName());
-			userContactList.add(tempLink);
-			tempLink.setOnAction(event2 ->{
-			alert.setHeaderText(temp.getName());
-			alert.setContentText(temp.toString());
-			alert.showAndWait();
-			});
-		}
-		//Add the date to this as well. Wishlist make this a hyperlink with a popup
-		//deal with the output
-		contactList.getItems().clear();
-		contactList.getItems().addAll(userContactList);
-		
+			etype = choice.getSelectedItem().toString();
+			validInput = validateInput(etype);
+		    }while(!validInput);
+	    	
+			Contact temp = new Contact(contactName, phone, ptype, email, etype);
+			//Add contact hyperlink
+			  
+			User.getUserContacts().add(temp);
+			
+			//Push to DB
+			if (User.addContact(temp))
+			{
+				Hyperlink tempLink = new Hyperlink(temp.getName());
+				userContactList.add(tempLink);
+				tempLink.setOnAction(event2 ->{
+				alert.setHeaderText(temp.getName());
+				alert.setContentText(temp.toString());
+				alert.showAndWait();
+				});
+			}
+			//Add the date to this as well. Wishlist make this a hyperlink with a popup
+			//deal with the output
+			contactList.getItems().clear();
+			contactList.getItems().addAll(userContactList);
+    	}
+    	catch(Exception e)
+    	{
+    		
+    	}
 		          
     }
     
@@ -701,46 +748,57 @@ void displayDailyEvent(HubEvent e) {
 	 	String className = User.getCurrentClass();
 		String taskString = "";
 		Boolean validInput;
-		
-		do
-        {
-			textDialog.getEditor().clear();
-	      	textDialog.setTitle("New Task");
-	      	textDialog.setHeaderText("Please enter the To-Do item");
-	      	textDialog.setContentText("Task:");
-	      	textDialog.showAndWait();
-	      	taskString = textDialog.getResult();
-	      	validInput = validateInput(taskString);
-        }while(!validInput);
-      	
-      	Task tempTask = new Task(taskString);
-      	//Add task to class. Need to pass class index
-      	User.getCurrentHub().getTasks().add(tempTask);
-      	//This might need to be passed to the User Hub ArrayList instead
-      	
-      	//deal with css
-		//add this here, or is this part of parent ObservableList?
-        CheckBox cb = new CheckBox(taskString);
-        
-        //cb.setStyle("-fx-text-fill:white");
-        cb.setPadding(new Insets(10, 10, 0, 0));
-        cb.setOnAction(event3 -> {
-        	if (cb.isSelected()) 
-            {
-            	User.deleteTask(tempTask, User.getCurrentClass());
-            	System.out.println("CHECKBOX ACTIVATED");
-            	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
-            }
-          });
-        
-        //This adds it to the appropriate observable VBox
-       
-        toDoVBoxList.add(cb);
-        //toDoVBoxList.add(cb);
-	 	//classToDo.getChildren().addAll(toDoVBoxList);
-        toDoList.getChildren().clear();
-        toDoList.getChildren().addAll(toDoVBoxList);
-        User.addTask(tempTask,"");
+		try
+		{
+			do
+	        {
+				textDialog.getEditor().clear();
+		      	textDialog.setTitle("New Task");
+		      	textDialog.setHeaderText("Please enter the To-Do item");
+		      	textDialog.setContentText("Task:");
+		      	textDialog.showAndWait();
+		      	if(textDialog.getResult()==null)
+		      		throw new Exception();
+		      	taskString = textDialog.getResult();
+		      	validInput = validateInput(taskString);
+	        }while(!validInput);
+	      	
+	      	Task tempTask = new Task(taskString);
+	      	//Add task to class. Need to pass class index
+	      	User.getCurrentHub().getTasks().add(tempTask);
+	      	//This might need to be passed to the User Hub ArrayList instead
+	      	
+	      	//deal with css
+			//add this here, or is this part of parent ObservableList?
+	        CheckBox cb = new CheckBox(taskString);
+	        
+	        //cb.setStyle("-fx-text-fill:white");
+	        cb.setPadding(new Insets(10, 10, 0, 0));
+	        cb.setOnAction(event3 -> {
+	        	if (cb.isSelected()) 
+	            {
+	        		toDoVBoxList.remove(cb);
+	            	toDoList.getChildren().clear();
+	            	toDoList.getChildren().addAll(toDoVBoxList);
+	            	User.deleteTask(tempTask, User.getCurrentClass());
+	            	System.out.println("CHECKBOX ACTIVATED");
+	            	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
+	            }
+	          });
+	        
+	        //This adds it to the appropriate observable VBox
+	       
+	        toDoVBoxList.add(cb);
+	        //toDoVBoxList.add(cb);
+		 	//classToDo.getChildren().addAll(toDoVBoxList);
+	        toDoList.getChildren().clear();
+	        toDoList.getChildren().addAll(toDoVBoxList);
+	        User.addTask(tempTask,"");
+		}
+		catch(Exception e)
+		{
+			
+		}
     }
     
     void clearWeeklyCalendar() {
@@ -802,6 +860,7 @@ void displayDailyEvent(HubEvent e) {
     	Saturday.setText(getEvent(currentdate));
     }	
     
+    //What if we passed a HubEvent instead?
     String getEvent(LocalDate date) {
     	int year = date.getYear();
     	int month = date.getMonth().getValue();
@@ -847,37 +906,55 @@ void displayDailyEvent(HubEvent e) {
         String input = "";
         //choicePopup = new ChoiceDialog("Please select", classNameStrings);
 
-        do
+        try 
         {
-            choicePopup.setTitle("Delete Contact");
-            choicePopup.setHeaderText("Please select contact to remove");
-            choicePopup.setContentText("Use Dropdown menu:\n");
-            choicePopup.showAndWait();
-            input = choicePopup.getResult().toString();
-            validInput = validateInput(input);
-        }while(!validInput);
-        System.out.println(input);
-        int count = User.getUserContacts().size();
-        while (find)
-		{
-			if (count > 0)
+	        do
+	        {
+	            choicePopup.setTitle("Delete Contact");
+	            choicePopup.setHeaderText("Please select contact to remove");
+	            choicePopup.setContentText("Use Dropdown menu:\n");
+	            choicePopup.showAndWait();
+	            if (choicePopup.getResult()==null)
+	            {
+	            	throw new Exception();
+	            }
+	            input = choicePopup.getResult().toString();
+	        	validInput = validateInput(input);
+	        }while(!validInput);
+	        
+	        int count = User.getUserContacts().size();
+	        while (find)
 			{
-				
-				//descending search for hubEntry 
-				contactFound=User.getUserContacts().get(--count).compareTo(input);
-				//System.out.println(count+" ");
-				//if valid hubType is returned, search is complete
-				if (contactFound > 0)
+				if (count > 0)
+				{
+					
+					//descending search for hubEntry 
+					contactFound=User.getUserContacts().get(--count).compareTo(input);
+					//System.out.println(count+" ");
+					//if valid hubType is returned, search is complete
+					if (contactFound > 0)
+						find = false;
+				}
+				//Ends search when all values have been checked
+				else
 					find = false;
+	
 			}
-			//Ends search when all values have been checked
-			else
-				find = false;
-
-		}
-        if (contactFound > 0)
-        	User.deleteContact(User.getUserContacts().get(count));
+	        if (contactFound > 0)
+	        {
+	        	userContactList.remove(choicePopup.getItems().indexOf(input));
+	        	contactList.getItems().clear();
+	        	contactList.getItems().addAll(userContactList);
+	        	User.deleteContact(User.getUserContacts().get(count));
+	        	User.getUserContacts().remove(count);
+	        }
+        }
+        catch(Exception e)
+        {
+        	
+        }
     }
+    
 
     @FXML
     void saveNote(ActionEvent event) {
@@ -893,8 +970,10 @@ void displayDailyEvent(HubEvent e) {
     		tempLink.setOnAction(event2 ->{
     			alert.showAndWait();
 			});
-    	
+    		
+    		archivedNoteList.add(tempLink);
     		archivedNotes.getItems().add(tempLink);
+    		
     		//Push to DB
     		User.addArchivedNote(tempNote);
     	}
@@ -918,44 +997,61 @@ void displayDailyEvent(HubEvent e) {
     
     @FXML
     void removeNote(ActionEvent event) {
-    	boolean validInput;
-    	boolean find = true;
-    	int noteFound = -1;
-    	ArrayList<String> noteStrings = new ArrayList<String>();
-    	for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
-    		noteStrings.add(User.getCurrentHub().getNotes().get(i).getText());
-    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", noteStrings);
-        
-        String input = "";
-        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
-
-        do
-        {
-            choicePopup.setTitle("Delete note");
-            choicePopup.setHeaderText("Please select note to remove");
-            choicePopup.setContentText("Use Dropdown menu:\n");
-            choicePopup.showAndWait();
-            input = choicePopup.getResult().toString();
-            validInput = validateInput(input);
-        }while(!validInput);
-        System.out.println(input);
-        int count = User.getCurrentHub().getNotes().size();
-        while (find)
-		{
-			if (count > 0)
-			{
-				noteFound=User.getCurrentHub().getNotes().get(--count).compareTo(input);
-				//if valid hubType is returned, search is complete
-				if (noteFound > 0)
-					find = false;
-			}
-			//Ends search when all values have been checked
-			else
-				find = false;
-
-		}
-        if (noteFound > 0)
-        	User.deleteArchivedNote(User.getCurrentHub().getNotes().get(count));
+    	if (archivedNoteList.size()!=0)
+    	{
+	    	boolean validInput;
+	    	boolean find = true;
+	    	int noteFound = -1;
+	    	ArrayList<String> noteStrings = new ArrayList<String>();
+	    	for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
+	    		noteStrings.add(User.getCurrentHub().getNotes().get(i).getText());
+	    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", noteStrings);
+	        
+	        String input = "";
+	        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
+	        try
+	        {
+		        do
+		        {
+		            choicePopup.setTitle("Delete note");
+		            choicePopup.setHeaderText("Please select note to remove");
+		            choicePopup.setContentText("Use Dropdown menu:\n");
+		            choicePopup.showAndWait();
+		            if (choicePopup.getResult()==null)
+		            	throw new Exception();
+		            input = choicePopup.getResult().toString();
+		            validInput = validateInput(input);
+		        }while(!validInput);
+		        System.out.println(input);
+		        int count = User.getCurrentHub().getNotes().size();
+		        while (find)
+				{
+					if (count > 0)
+					{
+						noteFound=User.getCurrentHub().getNotes().get(--count).compareTo(input);
+						//if valid hubType is returned, search is complete
+						if (noteFound > 0)
+							find = false;
+					}
+					//Ends search when all values have been checked
+					else
+						find = false;
+		
+				}
+		        if (noteFound > 0)
+		        {
+		        	archivedNoteList.remove(choicePopup.getItems().indexOf(input));
+		        	archivedNotes.getItems().clear();
+		        	archivedNotes.getItems().addAll(archivedNoteList);
+		        	User.deleteArchivedNote(User.getCurrentHub().getNotes().get(count));
+		        	User.getCurrentHub().getNotes().remove(count);
+		        }
+	        }
+	        catch(Exception e)
+	        {
+	        	
+	        }
+    	}
     }
     
     public boolean validateInput(String input)

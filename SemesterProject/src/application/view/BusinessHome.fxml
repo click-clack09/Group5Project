@@ -46,7 +46,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <VBox layoutY="26.0" prefHeight="624.0" prefWidth="800.0">
+      <VBox fx:id="topBox" layoutY="26.0" prefHeight="624.0" prefWidth="800.0">
          <children>
             <HBox alignment="CENTER" prefHeight="84.0" prefWidth="791.0">
                <children>
