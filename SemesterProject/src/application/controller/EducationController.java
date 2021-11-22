@@ -3,6 +3,7 @@ package application.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import application.model.*;
@@ -21,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Separator;
 
@@ -30,6 +32,101 @@ public class EducationController {
 	 
 	 @FXML
     private Label educationLabel;
+	 
+	 @FXML
+	    private Label text800;
+
+	    @FXML
+	    private Label text830;
+
+	    @FXML
+	    private Label text900;
+
+	    @FXML
+	    private Label text930;
+
+	    @FXML
+	    private Label text1000;
+
+	    @FXML
+	    private Label text1030;
+
+	    @FXML
+	    private Label text1100;
+
+	    @FXML
+	    private Label text1130;
+
+	    @FXML
+	    private Label text1200;
+
+	    @FXML
+	    private Label text1230;
+
+	    @FXML
+	    private Label text1300;
+
+	    @FXML
+	    private Label text1330;
+
+	    @FXML
+	    private Label text1400;
+
+	    @FXML
+	    private Label text1430;
+
+	    @FXML
+	    private Label text1500;
+
+	    @FXML
+	    private Label text1530;
+
+	    @FXML
+	    private Label text1600;
+
+	    @FXML
+	    private Label text1630;
+
+	    @FXML
+	    private Label text1700;
+
+	    @FXML
+	    private Label text1730;
+
+	    @FXML
+	    private Label text1800;
+
+	    @FXML
+	    private Label text1830;
+
+	    @FXML
+	    private Label text1900;
+
+	    @FXML
+	    private Label text1930;
+
+	    @FXML
+	    private Label text2000;
+
+	    @FXML
+	    private Label text2030;
+
+	    @FXML
+	    private Label text2100;
+
+	    @FXML
+	    private Label text2130;
+
+	    @FXML
+	    private Label text2200;
+
+	    @FXML
+	    private Label text2230;
+
+	    @FXML
+	    private Label text2300;
+	    
+	    private ArrayList<Label> labels = new ArrayList<Label>();
 	 
 	 @FXML
     private VBox classButtonBox;
@@ -52,6 +149,9 @@ public class EducationController {
     void initialize()
     {
 		 //make String ArrayList of classes
+		 initializeDailyLabels();
+	    	updateDailyCalendar();
+	    	
 		 classes = new ArrayList<String>();
 		 
 		 for (SchoolClass schoolClass : User.getClasses())
@@ -110,7 +210,7 @@ public class EducationController {
                 cb.setOnAction(event3 -> {
                 	if (cb.isSelected()) 
                     {
-                    	User.deleteTask(tempTask, tempClass);
+                		User.deleteTask(tempTask, tempClass);
                     	System.out.println("CHECKBOX ACTIVATED");
                     	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
                     }
@@ -156,6 +256,8 @@ public class EducationController {
     	
     	classButtonBox.getChildren().addAll(classButtonList);
     }
+	 
+	
 	 
 	 @FXML
 	    void changeTheme(ActionEvent event) {
@@ -316,24 +418,32 @@ public class EducationController {
             
             String input = "";
             //choicePopup = new ChoiceDialog("Please select", classNameStrings);
-
-            do
+            try
             {
-	            choicePopup.setTitle("Delete Class");
-	            choicePopup.setHeaderText("Please select class to remove");
-	            choicePopup.setContentText("Use Dropdown menu:\n");
-	            choicePopup.showAndWait();
-	            input = choicePopup.getResult().toString();
-	            validInput = validateInput(input);
-            }while(!validInput);
-	    	//match class to correct class object
-            for (int i = 0; i < User.getClasses().size(); i++)
+	            do
+	            {
+		            choicePopup.setTitle("Delete Class");
+		            choicePopup.setHeaderText("Please select class to remove");
+		            choicePopup.setContentText("Use Dropdown menu:\n");
+		            choicePopup.showAndWait();
+		            if(choicePopup.getResult()==null)
+		            	throw new Exception();
+		            input = choicePopup.getResult().toString();
+		            validInput = validateInput(input);
+	            }while(!validInput);
+		    	//match class to correct class object
+	            for (int i = 0; i < User.getClasses().size(); i++)
+	            {
+	            	if (User.getClasses().get(i).compareTo(input) > 0)
+	            	{
+	            		User.deleteClass(User.getClasses().get(i));
+	            		break;
+	            	}
+	            }
+            }
+            catch(Exception e)
             {
-            	if (User.getClasses().get(i).compareTo(input) > 0)
-            	{
-            		User.deleteClass(User.getClasses().get(i));
-            		break;
-            	}
+            	
             }
             
             //remove button, remove 
@@ -459,6 +569,278 @@ public class EducationController {
 	   		window.setScene(scene);
 	   		window.show();
 		}
+	 
+	 void initializeDailyLabels() {
+	    	labels.add(text800);
+	    	labels.add(text830);
+	    	labels.add(text900);
+	    	labels.add(text930);
+	    	labels.add(text1000);
+	    	labels.add(text1030);
+	    	labels.add(text1100);
+	    	labels.add(text1130);
+	    	labels.add(text1200);
+	    	labels.add(text1230);
+	    	labels.add(text1300);
+	    	labels.add(text1330);
+	    	labels.add(text1400);
+	    	labels.add(text1430);
+	    	labels.add(text1500);
+	    	labels.add(text1530);
+	    	labels.add(text1600);
+	    	labels.add(text1630);
+	    	labels.add(text1700);
+	    	labels.add(text1730);
+	    	labels.add(text1800);
+	    	labels.add(text1830);
+	    	labels.add(text1900);
+	    	labels.add(text1930);
+	    	labels.add(text2000);
+	    	labels.add(text2030);
+	    	labels.add(text2100);
+	    	labels.add(text2130);
+	    	labels.add(text2200);
+	    	labels.add(text2230);
+	    	labels.add(text2300);    	
+	    }
+	    
+	    void clearDailyCalendar() {
+	    	for(Label label : labels) {
+	    		label.setText(" ");
+	        	label.setTextFill(Color.web("#000000"));
+	        	//label.setStyle("-fx-background-color: #909090");
+	    	}
+	    }
+	    
+	    void updateDailyCalendar() {
+	    	clearDailyCalendar();
+	    	
+	    	ArrayList<HubEvent> events = User.getUserEvents();
+	    	
+	    	LocalDate currentdate = LocalDate.now();
+	    	
+	    	int year = currentdate.getYear();
+	    	int month = currentdate.getMonth().getValue();
+	    	int day = currentdate.getDayOfMonth();
+	    	
+	    	for(HubEvent e : events) {
+	    		
+	    		Date d = e.getStartDate();
+	    		
+	    		if(year == d.getYear() && month == d.getMonth() && day == d.getDay()) {
+	    			displayDailyEvent(e);
+	    		}
+	    	}
+	    }
+	    
+	    void displayDailyEvent(HubEvent e) {
+	    	
+	    	Date d = e.getStartDate();
+	    	
+	    	if(d.getHour() < 8) {
+	    		String text = text800.getText();
+	    		text += e.getEventName() + " \n";
+	    		text800.setText(text);
+	    	}
+	    	if(d.getHour() == 8) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text830.getText();
+	        		text += e.getEventName() + " \n";
+	        		text830.setText(text);
+	    		}
+	    		else {
+	    			String text = text800.getText();
+	        		text += e.getEventName() + " \n";
+	        		text800.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 9) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text930.getText();
+	        		text += e.getEventName() + " \n";
+	        		text930.setText(text);
+	    		}
+	    		else {
+	    			String text = text900.getText();
+	        		text += e.getEventName() + " \n";
+	        		text900.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 10) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1030.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1030.setText(text);
+	    		}
+	    		else {
+	    			String text = text1000.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1000.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 11) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1130.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1130.setText(text);
+	    		}
+	    		else {
+	    			String text = text1100.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1100.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 12) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1230.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1230.setText(text);
+	    		}
+	    		else {
+	    			String text = text1200.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1200.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 13) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1330.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1330.setText(text);
+	    		}
+	    		else {
+	    			String text = text1300.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1300.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 14) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1430.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1430.setText(text);
+	    		}
+	    		else {
+	    			String text = text1400.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1400.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 15) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1530.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1530.setText(text);
+	    		}
+	    		else {
+	    			String text = text1500.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1500.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 16) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1630.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1630.setText(text);
+	    		}
+	    		else {
+	    			String text = text1600.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1600.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 17) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1730.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1730.setText(text);
+	    		}
+	    		else {
+	    			String text = text1700.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1700.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 18) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1830.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1830.setText(text);
+	    		}
+	    		else {
+	    			String text = text1800.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1800.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 19) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text1930.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1930.setText(text);
+	    		}
+	    		else {
+	    			String text = text1900.getText();
+	        		text += e.getEventName() + " \n";
+	        		text1900.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 20) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text2030.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2030.setText(text);
+	    		}
+	    		else {
+	    			String text = text2000.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2000.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 21) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text2130.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2130.setText(text);
+	    		}
+	    		else {
+	    			String text = text2100.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2100.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 20) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text2130.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2130.setText(text);
+	    		}
+	    		else {
+	    			String text = text2100.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2100.setText(text);
+	    		}
+	    	}
+	    	if(d.getHour() == 22) {
+	    		if(d.getMinute() >= 30) {
+	    			String text = text2230.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2230.setText(text);
+	    		}
+	    		else {
+	    			String text = text2200.getText();
+	        		text += e.getEventName() + " \n";
+	        		text2200.setText(text);
+	    		}
+	    	}
+	    	
+	    	if(d.getHour() >= 23) {
+	    		String text = text2300.getText();
+	    		text += e.getEventName() + " \n";
+	    		text2300.setText(text);
+	    	}
+	    }
 	 public boolean validateInput(String input)
 	    {
 	    	if(input != null)
