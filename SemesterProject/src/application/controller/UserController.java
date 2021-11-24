@@ -23,12 +23,16 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**This class acts as the controller for the UserHome view, which allows the user
+ * to navigate to their LifeHubs and create new ones.
+ * 
+ * @author group 5 11-23-21
+ *
+ */
 
 public class UserController {
 	@FXML
 	 private AnchorPane mainPane;
-	
-	
 	
 	@FXML
     private ChoiceBox<String> selection;
@@ -40,7 +44,14 @@ public class UserController {
 	ArrayList<HubEvent> events;
 	ArrayList<Contact> contacts;
 	
-public ArrayList<UserHubRecord> getUserLifeHubs(ArrayList<UserHubRecord> userHubRecords) {
+	/**This method accepts an ArrayList of UserHubRecords, performs a database query
+	 * for all LifeHubs belonging to the User, creates a new UserHubRecord for each,
+	 * adds it to the ArrayList and returns the updated ArrayList.
+	 * 
+	 * @param userHubRecords- the initial ArrayList of UserHubRecords
+	 * @return- the updated ArrayList of UserHubRecords
+	 */
+	public ArrayList<UserHubRecord> getUserLifeHubs(ArrayList<UserHubRecord> userHubRecords) {
 	
 	String user_lifehub_query = "SELECT * FROM lifehub.lifehub WHERE user_id = ?";
 		    	    
@@ -76,8 +87,14 @@ public ArrayList<UserHubRecord> getUserLifeHubs(ArrayList<UserHubRecord> userHub
 		return userHubRecords;
 	}
 	
-
-public ArrayList<PhoneNumber> getUserContactNumbers(String contact){//ArrayList<PhoneNumber> userNumbers) {
+	/**This method accepts a String of the Contact's name, performs a database query for all PhoneNumbers 
+	 * which belong the this User and Contact name, adds them to an ArrayList of 
+	 * PhoneNumbers, and returns this ArrayList.
+	 * 
+	 * @param contact- the name of the contact to be searched for.
+	 * @return- the ArrayList of PhoneNumbers 
+	 */
+	public ArrayList<PhoneNumber> getUserContactNumbers(String contact){//ArrayList<PhoneNumber> userNumbers) {
 	ArrayList<PhoneNumber> phoneArrayListOfContact = new ArrayList<PhoneNumber>();
 	PhoneNumber phoneObject;
 	
@@ -126,8 +143,14 @@ public ArrayList<PhoneNumber> getUserContactNumbers(String contact){//ArrayList<
 }
 
 
-
-public ArrayList<EmailAddress> getUserEmailAddresses(String contact){//ArrayList<PhoneNumber> userNumbers) {
+	/**This method accepts a String of the Contact's name, performs a database query for all email
+	 * addresses which belong the this User and Contact name, adds them to an ArrayList of 
+	 * EmailAddresses, and returns this ArrayList.
+	 * 
+	 * @param contact- the name of the contact to be searched for.
+	 * @return- the ArrayList of EmailAddresses 
+	 */
+	public ArrayList<EmailAddress> getUserEmailAddresses(String contact){//ArrayList<PhoneNumber> userNumbers) {
 	ArrayList<EmailAddress> emailAddressArrayList = new ArrayList<EmailAddress>();
 	EmailAddress emailAddress;
 	
@@ -175,8 +198,13 @@ public ArrayList<EmailAddress> getUserEmailAddresses(String contact){//ArrayList
 	return emailAddressArrayList;
 }
 
-
-public ArrayList<HubEvent> getUserHubEvents(ArrayList<HubEvent> userHubEvents) {
+	/**This method accepts an ArrayList of HubEvents, performs a database query to
+	 * pull in all user HubEvents, adds them to the ArrayList, and returns the ArrayList.
+	 *
+	 * @param userHubEvents- the initial ArrayList of HubEvents
+	 * @return- the updated ArrayList of HubEvents
+	 */
+	public ArrayList<HubEvent> getUserHubEvents(ArrayList<HubEvent> userHubEvents) {
 	ArrayList <Contact> attendees = new ArrayList<Contact>();
 	String user_hub_events_query = "SELECT * FROM lifehub.hubevent2 WHERE user_id = ?";
 	    	    
@@ -240,8 +268,13 @@ public ArrayList<HubEvent> getUserHubEvents(ArrayList<HubEvent> userHubEvents) {
 	return userHubEvents;
 }
 
-
-public ArrayList<Contact> getUserContacts(ArrayList<Contact> contacts) {
+	/**This method accepts an ArrayList of Contacts, performs a database query to
+	 * pull in all user Contacts, adds them to the ArrayList, and returns the ArrayList.
+	 * 
+	 * @param contact- the initial ArrayList of Contacts
+	 * @return- the updated ArrayList of Contacts
+	 */
+	public ArrayList<Contact> getUserContacts(ArrayList<Contact> contacts) {
 	
 		String user_contacts_query = "SELECT * FROM lifehub.contact WHERE user_id = ?";
 		    	    
@@ -302,8 +335,12 @@ public ArrayList<Contact> getUserContacts(ArrayList<Contact> contacts) {
 		return contacts;
 	}
 
-//void this
-public void getUserTasksSchool(ArrayList<Task> tasks) {
+	/**This method performs a database query to pull all Tasks for all hubs and classes
+	 * for the current user and returns nothing. 
+	 *
+	 * @param tasks- The ArrayList of Tasks to be added to for a specific Hub or SchoolClass (deprecated)
+	 */
+	public void getUserTasksSchool(ArrayList<Task> tasks) {
 	
 	String user_tasks_query = "SELECT * FROM lifehub.task WHERE user_id = ? AND event_hub = ? AND event_name = ?";    	    
 	try {
@@ -339,13 +376,7 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 				}
 				}
 				else{//loop through hubs
-//				if (hub.getEventType()==2)
-//					ps.setString(3, hub.getHubName());
-//				else
-//					if (hub.getEventType()==2)
-//						hub.getTasks().add(new Task(rs.getString("text")));
-//					else
-					//////	//Address duplicate class names
+
 						System.out.println("Business category-2 EventHub of user");
 						PreparedStatement ps = conn.prepareStatement(user_tasks_query);
 						ps.setInt(1, User.getUserID());
@@ -365,8 +396,7 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 				
 		}
 			
-			//close connection
-			//closeConnection(conn);
+	
 			try {
 				conn.close();
 			}catch (SQLException se){
@@ -381,55 +411,51 @@ public void getUserTasksSchool(ArrayList<Task> tasks) {
 	       System.out.println("Error: DB connection failed in controller while getting user's tasks.");
 	          	e.printStackTrace();
 	    }
-}
+	}
 
-public void setUserSchools()
-{
-	String user_school_classes_query = "SELECT * FROM lifehub.schoolclass WHERE user_id = ?";  
-	//for (LifeHub hub : User.getUserHubs()) {
-	//	Look at school_class table, pull all classes that mathc this user and hub
-	//Do your DB magic here
-		
-		//hub.getClasses().add(new SchoolClass (String className, String professor, String location, New ArrayList<Task>(),
-			//new HubEvent(), new ArrayList<Note>()));	
-		//	
-	//}
-		    
-	try {
-	    Connection conn = DatabaseConnection.getConnection();
-	    
-		if(User.getUserHubs()!=null)	
-		{
+	/**This method performs a database query to pull all SchoolClasses for all LifeHubs for 
+	 * the current user and returns nothing. 
+	 * 
+	 */
+	public void setUserSchools()
+	{
+		String user_school_classes_query = "SELECT * FROM lifehub.schoolclass WHERE user_id = ?";  
+			    
+		try {
+			Connection conn = DatabaseConnection.getConnection();
+	    	
+			if(User.getUserHubs()!=null)	
+			{
 
-			System.out.println("reached schools");
-			//loop thru logged-in user's hubs
-			for (LifeHub hub: User.getUserHubs())
-			{	
-				//Address duplicate class names
-				PreparedStatement ps = conn.prepareStatement(user_school_classes_query);
-				ps.setInt(1, User.getUserID());
-				ResultSet rs = ps.executeQuery();
-				//false means an empty result set
-				if(rs.next() != false) {
-						//gets only user contact names
-					do {
-						String school_hub_name = rs.getString("hub_name");
-						if(hub.getHubName().equals(school_hub_name)) {
-								hub.getClasses().add(new SchoolClass(rs.getString("school_class_name"), rs.getString("school_class_professor"), 
-								rs.getString("school_class_location"), new ArrayList<Task>(), new HubEvent(), new ArrayList<Note>()));
-							}
-						}while(rs.next());	
-					}
-			     }
-			
-			
-			//close connection
-			try {
-				conn.close();
-			}catch (SQLException se){
-				System.out.println("Error closing SQL connection.");
+				System.out.println("reached schools");
+				//loop thru logged-in user's hubs
+				for (LifeHub hub: User.getUserHubs())
+				{	
+					//Address duplicate class names
+					PreparedStatement ps = conn.prepareStatement(user_school_classes_query);
+					ps.setInt(1, User.getUserID());
+					ResultSet rs = ps.executeQuery();
+					//false means an empty result set
+					if(rs.next() != false) {
+							//gets only user contact names
+						do {
+							String school_hub_name = rs.getString("hub_name");
+							if(hub.getHubName().equals(school_hub_name)) {
+									hub.getClasses().add(new SchoolClass(rs.getString("school_class_name"), rs.getString("school_class_professor"), 
+									rs.getString("school_class_location"), new ArrayList<Task>(), new HubEvent(), new ArrayList<Note>()));
+								}
+							}while(rs.next());	
+						}
+				     }
+				
+				
+				//close connection
+					try {
+						conn.close();
+					}catch (SQLException se){
+						System.out.println("Error closing SQL connection.");
+				}	
 			}	
-		}	
 
 	    }catch(SQLSyntaxErrorException see) {
 	       System.out.println("Error: DB syntax is incorrect while getting user's classes");
@@ -438,10 +464,14 @@ public void setUserSchools()
 	       System.out.println("Error: DB connection failed in controller while getting user's classes.");
 	          	e.printStackTrace();
 	    }
-}
-	public void setUserNotes()//**************************************************************************DEAL WITH THIS*********************************
+	}
+	
+	/**This method performs a database query to pull all notes for all hubs and classes
+	 * for the current user and returns nothing. 
+	 * 
+	 */
+	public void setUserNotes()
 	{
-		//////////////////////////////////////Borrowed from tasks
 		String user_tasks_query = "SELECT * FROM lifehub.archivednotes WHERE user_id = ? AND life_hub_name = ? AND school_class = ?";    	    
 		try {
 		    Connection conn = DatabaseConnection.getConnection();    
@@ -502,14 +532,9 @@ public void setUserSchools()
 							if(hub.getClasses().size()==0)
 								System.out.println("This hub has no classes");	
 							
-							/////////////
-							
 						}		
 					
 			}
-				
-				//close connection
-				//closeConnection(conn);
 				try {
 					conn.close();
 				}catch (SQLException se){
@@ -524,14 +549,22 @@ public void setUserSchools()
 		       System.out.println("Error: DB connection failed in controller while getting user's tasks.");
 		          	e.printStackTrace();
 		    }
-		//////////////////////////////////////////////////////////
+		
 	}
-
+	
+	/**This method calls methods to read all LifeHubs and their associated
+	 * SchoolClasses, Tasks, HubEvents, Notes and Contacts, creates ArrayLists
+	 * of each to be used for all subsequent references to these classes, and returns
+	 * nothing. 
+	 * 
+	 * Note**To reduce database calls and increase performance, the choice was made to
+	 * pull everything from the database for a specific user after they logged in. 
+	 * 
+	 */
 	@FXML
 		void initialize()
 	{
-		/****IGNORE*******/
-	    //start fresh new hub
+		//start fresh new hub
 
 		User.setLastHub(null);
     	User.setCurrentHub(null);
@@ -539,7 +572,6 @@ public void setUserSchools()
     	
     	welcomeLabel.setText("Welcome "+User.getUserName());
     	
-    	//////////NEED THIS/////////////
     	// step 1!! make call to the UserHubRecord model - target lifehub table
     	userHubRecords = getUserLifeHubs(new ArrayList<UserHubRecord>());
 		
@@ -549,8 +581,7 @@ public void setUserSchools()
 
     	
     	//GIVE RICHARD EVERYTHING FROM EVENTS FOR THIS USER
-    	//This is redundent to do every time
-		events = new ArrayList<HubEvent>();
+    	events = new ArrayList<HubEvent>();
 		
 		events = getUserHubEvents(events);
 		
@@ -568,7 +599,7 @@ public void setUserSchools()
 		
 	
 		
-	//RICHARD NEEDS ALL OF THE USER HUBS AND TYPES IN AN ARRAYLIST OF UserHubRecords. List is called UserHubRecords
+		//RICHARD NEEDS ALL OF THE USER HUBS AND TYPES IN AN ARRAYLIST OF UserHubRecords. List is called UserHubRecords
 		//Dynamically Added Hubs from LifeHub TABLE - for step 1)
 		if(userHubRecords!=null)
 		{
@@ -590,7 +621,7 @@ public void setUserSchools()
 		
 		//call classFromDB method here
 		
-				/*********STEP 2*********/
+				//*********STEP 2*********/
 		
 		//1	FALL 2021	App Programming test		Bring notes - open book test
 		//3	HOME	    Brother's wedding		    Get tuxedo from cleaners
@@ -599,20 +630,6 @@ public void setUserSchools()
 		
 		//now void - see 2) - setSchools
 		getUserTasksSchool(arrayListOfTasks);
-		
-//		if(User.getUserHubs()!=null)	
-//		{
-//			for (LifeHub hub: User.getUserHubs())
-//			{	
-//				for (SchoolClass ThisClass: hub.getClasses())
-//				{
-//					System.out.println("This class name is : "+ThisClass.getClassName());
-//					for(Task ThisTask: ThisClass.getAssignments())
-//						System.out.println("This task is : "+ThisTask.getText());
-//				}//DB call to events and add tasks, add them to arrayLists, pass to current object;
-//			}
-//		}
-
 		//set user's business tasks
 		//for the user, Create each unique hubs - each name (life, tasks, events , and notes during creating
 				//tasks for type business only 
@@ -652,41 +669,75 @@ public void setUserSchools()
 		
 	}
 	
+	/**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
 	@FXML
     void addHub(ActionEvent event) {
     	System.out.println("testHub");
     }
 	
+	/**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
 	@FXML
     void changeTheme(ActionEvent event) {
     	System.out.println("testChangeTheme");
     }
-    
+	
+	/**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
 	 @FXML
 	    void tutorial(ActionEvent event) {
 		 System.out.println("testTutorial");
 	    }
 	 
+	 /**Top menu item. Unused at this time.
+	  * 
+	  * @param event- the triggering event
+	  */
 	 @FXML
-	    void about(ActionEvent event) {
+	 void about(ActionEvent event) {
 		 System.out.println("testAbout");
-	    }
-	 
-	    @FXML
-	    void logout(ActionEvent event) {
-	    	System.out.println("testLogout");
-	    }
-	    
+	 }
+	
+	 /**Top menu item. Unused at this time.
+	  * 
+	  * @param event- the triggering event
+	  */
+    @FXML
+    void logout(ActionEvent event) {
+    	System.out.println("testLogout");
+    }
+	   
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */    
     @FXML
     void close(ActionEvent event) {
     	System.out.println("testClose");
     }
 
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void deleteHub(ActionEvent event) {
     	System.out.println("testDelete");
     }
 
+    /**This method accepts an ActionEvent, navigates to the selected LifeHub
+     * from the name supplied by the user, navigates to the correct Hub view,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent which triggered this method
+     */
     @FXML
     void goTo(ActionEvent event) {
     	String userChoice = selection.getSelectionModel().getSelectedItem().toString();
@@ -763,6 +814,12 @@ public void setUserSchools()
     	}
     }
 
+    /**This method accepts an ActionEvent, displays a TextInputDialog, creates a new Business LifeHub
+     * from the name supplied by the user, adds it to the ArrayList of the user's LifeHubs and 
+     * the database, navigates to the new hub view, and returns nothing.
+     * 
+     * @param event- the ActionEvent which triggered this method
+     */
     @FXML
     void newBusiness(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
@@ -800,8 +857,6 @@ public void setUserSchools()
         	{
         		URL url = new File("src/application/view/BusinessHome.fxml").toURI().toURL();
         		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());        		
- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////           	
-        		//User.setCurrentHub(hubName);
         		mainPane = FXMLLoader.load(url);
             	//use FXMLloader to pass all user data to next controller
             	Scene scene = new Scene(mainPane);// pane you are GOING TO show
@@ -813,10 +868,14 @@ public void setUserSchools()
         	{
         		//popup error window
         	}   
-            //validInput = textInputChecker(tempUser,0);
-        //}
     }
 
+    /**This method accepts an ActionEvent, displays a TextInputDialog, creates a new Education LifeHub
+     * from the name supplied by the user, adds it to the ArrayList of the user's LifeHubs and 
+     * the database, navigates to the new hub view, and returns nothing.
+     * 
+     * @param event- the ActionEvent which triggered this method
+     */
     @FXML
     void newEducation(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
@@ -851,7 +910,6 @@ public void setUserSchools()
        	{
        		URL url = new File("src/application/view/EducationHome.fxml").toURI().toURL();
        		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());
-       	 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////      		
        		//User.setCurrentHub(hubName);
        		//use FXMLloader to pass all user data to next controller
            	mainPane = FXMLLoader.load(url);
@@ -864,18 +922,14 @@ public void setUserSchools()
        	{
        		//popup error window
        	} 
-           
-           
-           
-           
-           
-           
-           
-           
-           //validInput = textInputChecker(tempUser,0);
-       //}
-    }
+     }
 
+    /**This method accepts an ActionEvent, displays a TextInputDialog, creates a new Personal LifeHub
+     * from the name supplied by the user, adds it to the ArrayList of the user's LifeHubs and 
+     * the database, navigates to the new hub view, and returns nothing.
+     * 
+     * @param event- the ActionEvent which triggered this method
+     */
     @FXML
     void newPersonal(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
@@ -912,10 +966,8 @@ public void setUserSchools()
        		URL url = new File("src/application/view/PersonalHome.fxml").toURI().toURL();
        		User.setLastHub(new File("src/application/view/UserHome.fxml").toURI().toURL());
        		//Make a New Hub, add it to the users arrayList, send it to DB
-       	 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
        		
-       		//User.setCurrentHub(hubName);
-       	//use FXMLloader to pass all user data to next controller
+	       	//use FXMLloader to pass all user data to next controller
            	mainPane = FXMLLoader.load(url);
            	Scene scene = new Scene(mainPane);// pane you are GOING TO show
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
@@ -926,10 +978,14 @@ public void setUserSchools()
        	{
        		//popup error window
        	} 
-           //validInput = textInputChecker(tempUser,0);
-       //}
+           
     }
     
+    /**This method accepts an ActionEvent, changes the scene the Login view, and returns
+     * nothing.
+     * 
+     * @param event- the ActionEvent which triggers this method
+     */
     @FXML
     void logOutButton(ActionEvent event) {
     	try
@@ -948,6 +1004,12 @@ public void setUserSchools()
        	} 
     }
     
+    /**This method accepts a String, returns true if the String is not empty
+     * and not null, otherwise returns false.
+     * 
+     * @param input- The String being validated.
+     * @return- the Boolean value determined by the String being null or empty.
+     */
     public boolean validateInput(String input)
     {
     	if(input != null)

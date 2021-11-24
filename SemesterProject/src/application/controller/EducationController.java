@@ -26,6 +26,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Separator;
 
+/**This class acts as the controller for the EducationalHome view.
+ * 
+ * @author group 5 11-23-21
+ *
+ */
+
 public class EducationController {
 	 @FXML
 	 private AnchorPane mainPane;
@@ -143,8 +149,12 @@ public class EducationController {
 	 //The part below gets dynamically added to the parent classesList
 	 //private ObservableList<CheckBox> classToDoList = FXCollections.observableArrayList();
 	 
-	//This goes with item/task delete  deleteTask(Task task, String className)
+	
 	 
+	 /**This method displays the initial values for the HubEvents, Tasks, Notes, and contacts that were read from the database by the UserController,
+	     * no additional fields or methods.
+	     * 
+	     */
 	 @FXML
     void initialize()
     {
@@ -258,38 +268,67 @@ public class EducationController {
     }
 	 
 	
-	 
-	 @FXML
-	    void changeTheme(ActionEvent event) {
-	    	System.out.println("testChangeTheme");
+	 	/**Top menu item. Unused at this time.
+	 	 * 
+	 	 * @param event- the triggering event
+	 	 */
+	 	@FXML
+	 	void changeTheme(ActionEvent event) {
+	 		System.out.println("testChangeTheme");
 	    }
 	    
-		 @FXML
-		    void tutorial(ActionEvent event) {
+		 /**Top menu item. Unused at this time.
+		  * 
+		  * @param event- the triggering event
+		  */
+	 	@FXML
+	    void tutorial(ActionEvent event) {
 			 System.out.println("testTutorial");
-		    }
+	 	}
 		 
+		 /**Top menu item. Unused at this time.
+		  * 
+		  * @param event- the triggering event
+		  */
 		 @FXML
-		    void about(ActionEvent event) {
+		 void about(ActionEvent event) {
 			 System.out.println("testAbout");
-		    }
+		 }
 		 
-		    @FXML
-		    void logout(ActionEvent event) {
-		    	System.out.println("testLogout");
-		    }
-		    
+		 /**Top menu item. Unused at this time.
+		  * 
+		  * @param event- the triggering event
+		  */
+		 @FXML
+		 void logout(ActionEvent event) {
+			 System.out.println("testLogout");
+		 }
+		   
+	    /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
 	    @FXML
 	    void close(ActionEvent event) {
 	    	System.out.println("testClose");
 	    }
 
+	    /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
 	    @FXML
 	    void deleteHub(ActionEvent event) {
 	    	System.out.println("testDelete");
 	    }
 	    
-	    ///CLASS VALUES NEED TO NOT BE NULL
+	    /**This method accepts and ActionEvent, displays a series of TextInputDialogs to collect
+	     * user input, creates a SchoolClass from this input, creates a Button and a Task Label
+	     *  for the class, adds these to the ObservableLists, adds the SchoolClass to the database,
+	     *  and returns nothing.
+	     * 
+	     * @param event
+	     */
 	    @FXML
 	    void addClass(ActionEvent event) {
 	    	TextInputDialog textDialog = new TextInputDialog();
@@ -297,11 +336,8 @@ public class EducationController {
 	    	String location = "";
 	    	String professor = "";
 	    	boolean validInput;
-	      	//while(!validInput)
-	          //{
-	      	 
-	    	  //this will need input validation, particularly for "New Class"
-            do  
+	      	
+	    	do  
             {
             	textDialog.getEditor().clear();
 	    		textDialog.setTitle("New Class");
@@ -365,18 +401,15 @@ public class EducationController {
 	              validInput = validateInput(professor);
               }while(!validInput);
               
-              ///////////////////////////DEAL WITH THIS??????????///////////////////////////////
               HubEvent meetingTime = new HubEvent(); 
               
               System.out.println(className+" "+location+" "+professor);
               
               //use this class to set DB entry
               SchoolClass newClass = new SchoolClass(className, professor, location, new ArrayList<Task>(), meetingTime, new ArrayList<Note>());
-            //SCHOOL_CLASS_ID	USER_ID	SCHOOL_CLASS_NAME	SCHOOL_CLASS_LOCATION	SCHOOL_CLASS_PROFESSOR
               User.addClass(newClass);
               
             //add the class to the User classes ArrayList
-              //SchoolClass tempClass =new SchoolClass(className,professor,location, new ArrayList<Task>(),new HubEvent(), new ArrayList<Task>());
               
               User.getClasses().add(newClass);
               User.getCurrentHub();
@@ -406,6 +439,12 @@ public class EducationController {
               
 	    }
 	    
+	    /**This method accepts an ActionEvent, displays a ChoiceDialog of SchoolClasses associated with this LifeHub,
+	     * then removes the SchoolClass from the ObservableList and database based on the user's selection, and returns
+	     * nothing.
+	     * 
+	     * @param event
+	     */
 	    @FXML
 	    void removeClass(ActionEvent event) {
 	    	//ask for class from drop-down popup
@@ -445,27 +484,31 @@ public class EducationController {
             {
             	
             }
-            
-            //remove button, remove 
-            	
+           	
 	    }
 	    
-	    //Used to determine the source of the event and set the Current class when changing to class view
+	    /**This method accepts a String, which is used to determine the source of the event, 
+	     * sets the Current class when changing to class view, and returns nothing.
+	     * 
+	     * @param caller- The String which is split to determine the calling Event. 
+	     */
 	    public void setCallingClass(String caller)
 	    {
 	    	String[] buttonSplit;
 	    	buttonSplit=caller.split("\'");
-  			//System.out.println(buttonSplit[1]);
-	    	User.setCurrentClass(buttonSplit[1]);
+  			User.setCurrentClass(buttonSplit[1]);
 	    	System.out.println(User.getCurrentClass());
 	    }
 
-	    //This will add a task
+	    /**This method accepts an ActionEvent, displays a TextInputDialog to collect user
+	     * input, creates a new Task, adds it to the ObservableList, sets the Action for the
+	     * checkbox, pushes the new Task to the database, ad returns nothing.
+	     * 
+	     * @param event- the button press which triggers this method
+	     */
 	    @FXML
 	    void addItem(ActionEvent event) {
 	    	
-	    	//This is added to allow for new classes to be added on the fly
-	    	//classes.add(0,"New Class");	
 	    	ChoiceDialog<String> selection = new ChoiceDialog<String>("Select Class",classes);
 	    	TextInputDialog textDialog = new TextInputDialog();
 	    	String className = "";
@@ -481,9 +524,6 @@ public class EducationController {
 	            className = selection.getResult();
 	            validInput = validateInput(className);
 	    	}while(!validInput);
-            //remove it here though to not disrupt indexing
-	      	//classes.remove("New Class");
-	      	//if className.equals("New Class"); <------------deal with this
             
 	    	do
 	    	{
@@ -523,28 +563,22 @@ public class EducationController {
             User.addTask(tempTask, className);
 	      	
 	    }
+	    
+	    /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
 	    @FXML
 	    void addHub(ActionEvent event) {
 	    	System.out.println("testHub");
 	    }
-	    
-//	    @FXML
-//	    void goToClass2(ActionEvent event) {
-//	    	System.out.println("testClass2");
-//	    }
-	    	
-//	 @FXML
-//	    void goToClass1(ActionEvent event) throws IOException {
-//		User.setLastHub(new File("src/application/view/EducationHome.fxml").toURI().toURL());
-//    	URL url = new File("src/application/view/EdClass.fxml").toURI().toURL();
-//    	mainPane = FXMLLoader.load(url);
-//        Scene scene = new Scene(mainPane);// pane you are GOING TO show
-//        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-//        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-//        window.setScene(scene);
-//        window.show();
-//    }
-	 
+	  
+	    /**This method accepts an ActionEvent, changes the view to the monthly Calendar, and 
+	     * returns nothing.
+	     * 
+	     * @param event- the button click that triggers this method call
+	     * @throws IOException- handles issues with the fxml documents.
+	     */
 	 @FXML
 	    void goToCalendar(ActionEvent event) throws IOException {
 		User.setLastHub(new File("src/application/view/EducationHome.fxml").toURI().toURL());
@@ -558,6 +592,12 @@ public class EducationController {
         window.show();
 	    }
 	 
+	 /**This method accepts an ActionEvent, changes the scene to the UserHome,
+	     * and returns nothing.
+	     * 
+	     * @param event- the ActionEvent that triggers this method
+	     * @throws IOException- handles issues with the fxml documents.
+	     */
 	 @FXML
 	    void userHome(ActionEvent event) throws IOException {
 	    	URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
@@ -569,7 +609,10 @@ public class EducationController {
 	   		window.setScene(scene);
 	   		window.show();
 		}
-	 
+	 /**This method accepts no arguments, sets the text for all of the daily calendar labels,
+	     * and returns nothing.
+	     * 
+	     */
 	 void initializeDailyLabels() {
 	    	labels.add(text800);
 	    	labels.add(text830);
@@ -604,6 +647,9 @@ public class EducationController {
 	    	labels.add(text2300);    	
 	    }
 	    
+	 	/**This method accepts no arguments, sets the daily calendar labels to a single space character,
+	     * and returns nothing.
+	     */
 	    void clearDailyCalendar() {
 	    	for(Label label : labels) {
 	    		label.setText(" ");
@@ -612,6 +658,10 @@ public class EducationController {
 	    	}
 	    }
 	    
+	    /**This method accepts no arguments, gets the current date, checks for user HubEvents from the current date,
+	     * calls the displayDailyEvent method if the HubEvent date matches the current date, and returns nothing.
+	     * 
+	     */
 	    void updateDailyCalendar() {
 	    	clearDailyCalendar();
 	    	
@@ -633,6 +683,11 @@ public class EducationController {
 	    	}
 	    }
 	    
+	    /**This method accepts an instance of the HubEvent Class, sets the text in the
+	     * label corresponding to the correct hour, and returns nothing.
+	     * 
+	     * @param e-the HubEvent to be displayed.
+	     */
 	    void displayDailyEvent(HubEvent e) {
 	    	
 	    	Date d = e.getStartDate();
@@ -841,7 +896,14 @@ public class EducationController {
 	    		text2300.setText(text);
 	    	}
 	    }
-	 public boolean validateInput(String input)
+	    
+	    /**This method accepts a String, returns true if the String is not empty
+	     * and not null, otherwise returns false.
+	     * 
+	     * @param input- The String being validated.
+	     * @return- the Boolean value determined by the String being null or empty.
+	     */
+	    public boolean validateInput(String input)
 	    {
 	    	if(input != null)
 	    	{
@@ -850,9 +912,5 @@ public class EducationController {
 	    	}
 	    	return false;
 	    }
-	 //could move stuff from lambda expression hear for cleaner flow
-//	 void goToClass(ActionEvent event)
-//	 {
-//		 
-//	 }
+	 
 }
