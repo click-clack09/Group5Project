@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import application.model.Contact;
 import application.model.Date;
 import application.model.HubEvent;
@@ -37,7 +36,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class PersonalController {
+/**This class acts as the controller for the PersonalHome view.
+ * 
+ * @author group 5 11-23-21
+ *
+ */
+public class PersonalController 
+{
 
 	@FXML
 	 private AnchorPane mainPane;
@@ -58,19 +63,22 @@ public class PersonalController {
     private ObservableList<VBox> listsVBoxList = FXCollections.observableArrayList();
     private ArrayList<String> toDoLists;
     private HashMap<String, Integer> toDoHash;
-	 private HashMap<String, String> taskHash;
+	private HashMap<String, String> taskHash;
     
-	//This goes with item/task delete  deleteTask(Task task, String className)
-	 
+	/**This method take no parameters, uses the User class static fields to display the Tasks,
+	 * and Notes belonging the this LifeHub, returns nothing. 
+	 * 
+	 */
     @FXML 
     void initialize() {
     	
     	toDoLists = new ArrayList<String>();
 		
     	personalLabel.setText(User.getUserName()+", "+User.getCurrentHub().getHubName());
+    	/*If the user has notes associated with this LifeHub, create a Hyperlink for each one and 
+    	  display it under the archived notes list.*/
     	if(User.getCurrentHub().getNotes() !=null)
     	{
-    		
     		for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
     		{	
     			Hyperlink tempLink = new Hyperlink(User.getCurrentHub().getNotes().get(i).getText());
@@ -84,10 +92,7 @@ public class PersonalController {
                 });
                 archivedNoteList.add(tempLink);
     		}
-    		//Add the date to this as well. Wishlist make this a hyperlink with a popup
     		archivedNotes.getItems().addAll(archivedNoteList);
-    		
-    		//probably should consider how to delete notes
     		
     		for (SchoolClass schoolClass : User.getClasses())
     			toDoLists.add(schoolClass.getClassName());
@@ -147,11 +152,22 @@ public class PersonalController {
     		}
     	}
     }
+    
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void about(ActionEvent event) {
 
     }
 
+    /**This method accepts an ActionEvent, displays a TextInputDialog to collect user
+     * input, creates a new Task, adds it to the ObservableList, sets the Action for the
+     * checkbox, pushes the new Task to the database, ad returns nothing.
+     * 
+     * @param event- the button press which triggers this method
+     */
     @FXML
     void addItem(ActionEvent event) {
     	
@@ -215,21 +231,28 @@ public class PersonalController {
     	}
     }
     
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void addHub(ActionEvent event) {
     	System.out.println("testAddHub");
     }
 
+    /**This method accepts an ActionEvent, displays a TextInputDialog to collect
+     * the name of the new list, creates the list, adds the list to the ObservableList
+     * and the database, and returns nothing.
+     * 
+     * @param event-the ActionEvent which triggers this method
+     */
     @FXML
     void addList(ActionEvent event) {
-//////////////////
     	TextInputDialog textDialog = new TextInputDialog();
     	String listName = "";
     	boolean validInput;
-          //{
-      	 
-    	  //this will need input validation, particularly for "New Class"
-        do
+       
+    	do
         {
         	textDialog.getEditor().clear();
         	textDialog.setTitle("New List");
@@ -263,47 +286,65 @@ public class PersonalController {
         		  new ArrayList<Contact>(), "N/A", new Date(1900,1,1,1,1));
           //use this class to set DB entry
           SchoolClass newClass = new SchoolClass(listName, "N/A", "N/A", new ArrayList<Task>(),dummyEvent , new ArrayList<Note>());
-        //SCHOOL_CLASS_ID	USER_ID	SCHOOL_CLASS_NAME	SCHOOL_CLASS_LOCATION	SCHOOL_CLASS_PROFESSOR
           User.addClass(newClass);
           
-        //add the class to the User classes ArrayList
-          //SchoolClass tempClass =new SchoolClass(className,professor,location, new ArrayList<Task>(),new HubEvent(), new ArrayList<Task>());
+          //add the class to the User classes ArrayList
           
           User.getClasses().add(newClass);
           User.getCurrentHub();
-         
-          
-//          System.out.println(newClass.getProfessor()+" "+newClass.getLocation()+" "+newClass.getMeetingTime());
-          
-    
-    	//////////
     }
-
+    
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void changeTheme(ActionEvent event) {
 
     }
-
+    
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void close(ActionEvent event) {
 
     }
 
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void deleteHub(ActionEvent event) {
 
     }
 
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void goBack(ActionEvent event) {
 
     }
 
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void logout(ActionEvent event) {
 
     }
     
+    /**This method accepts an ActionEvent, displays a ChoiceDialog of the LifeHub's Task lists,
+     * then based on the user's selection, removes the list from the ObservableList
+     * and the database, and returns nothing.
+     * 
+     * @param event-the ActionEvent which triggers this method
+     */
     @FXML
     void deleteList(ActionEvent event) {
     	//Make a dropdown of which to delete, steal this from Ed controller
@@ -338,6 +379,12 @@ public class PersonalController {
         }
     }
     
+    /**This method accepts an ActionEvent, displays a ChoiceDialog of the LifeHub's notes,
+     * removes the note from the ArchivedNotes and the database based on the users selection,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method.
+     */
     @FXML
     void deleteNote(ActionEvent event) {
     	boolean validInput;
@@ -380,6 +427,12 @@ public class PersonalController {
         	User.deleteArchivedNote(User.getCurrentHub().getNotes().get(count));
     }
 
+    /**This method accepts an ActionEvent, gets the text from the "notes" TextField,
+     * creates a Hyperlink from the text, adds the Hyperlink to an ObservableList,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     */
     @FXML
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
@@ -402,12 +455,21 @@ public class PersonalController {
     	note.clear();
     }
 
-
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void tutorial(ActionEvent event) {
 
     }
 
+    /**This method accepts an ActionEvent, changes the scene to the UserHome,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     * @throws IOException- handles issues with the fxml documents.
+     */
     @FXML
     void userHome(ActionEvent event) throws IOException {
     	URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
@@ -420,6 +482,12 @@ public class PersonalController {
    		window.show();
 	}
     
+    /**This method accepts an ActionEvent, changes the view to the monthly Calendar, and 
+     * returns nothing.
+     * 
+     * @param event- the button click that triggers this method call
+     * @throws IOException- handles issues with the fxml documents.
+     */
     @FXML
     void goToCalendar(ActionEvent event) throws IOException {
    	User.setLastHub(new File("src/application/view/PersonalHome.fxml").toURI().toURL());
@@ -433,6 +501,14 @@ public class PersonalController {
         window.show();
 	    }
     
+    /**This method accepts a String title, header, and content used to create an Alert pop-up
+     * and returns the crafted Alert pop-up.
+     * 
+     * @param title -String to be use as the title
+     * @param header -String to be use as the header
+     * @param content -String to be use as the content
+     * @return the Alert containing the title, header, and content
+     */
     public Alert getAlert(String title, String header, String content)
     {
     	Alert alert = new Alert(AlertType.INFORMATION);
@@ -443,6 +519,12 @@ public class PersonalController {
     	return alert;
     }
     
+    /**This method accepts a String, returns true if the String is not empty
+     * and not null, otherwise returns false.
+     * 
+     * @param input- The String being validated.
+     * @return- the Boolean value determined by the String being null or empty.
+     */
     public boolean validateInput(String input)
     {
     	if(input != null)

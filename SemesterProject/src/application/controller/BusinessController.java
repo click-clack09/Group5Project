@@ -6,7 +6,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
-
 import application.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +31,12 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**This class controls the BusinessHome view.
+ * 
+ * @author group 5 11-23-21
+ *
+ */
+
 public class BusinessController {
 	
 	@FXML
@@ -51,30 +56,27 @@ public class BusinessController {
 
     @FXML
     private ListView<Hyperlink> archivedNotes;
-    
-    
-private ArrayList<Label> labels = new ArrayList<Label>();
-    
-@FXML
-private Label Sunday;
-
-@FXML
-private Label Monday;
-
-@FXML
-private Label Tuesday;
-
-@FXML
-private Label Wednesday;
-
-@FXML
-private Label Thursday;
-
-@FXML
-private Label Friday;
-
-@FXML
-private Label Saturday;
+        
+	@FXML
+	private Label Sunday;
+	
+	@FXML
+	private Label Monday;
+	
+	@FXML
+	private Label Tuesday;
+	
+	@FXML
+	private Label Wednesday;
+	
+	@FXML
+	private Label Thursday;
+	
+	@FXML
+	private Label Friday;
+	
+	@FXML
+	private Label Saturday;
 
     @FXML
     private Label text800;
@@ -168,15 +170,22 @@ private Label Saturday;
 
     @FXML
     private Label text2300;
+    
     @FXML
     private VBox topBox;
+    
+
+	private ArrayList<Label> labels = new ArrayList<Label>();
+	
     private ObservableList<CheckBox> toDoVBoxList = FXCollections.observableArrayList();
     private ObservableList<Hyperlink> archivedNoteList = FXCollections.observableArrayList();
     private ObservableList<Hyperlink> userContactList = FXCollections.observableArrayList();
     int index;
     
-    //This goes with item/task delete  deleteTask(Task task, String className)
-    
+    /**This method displays the initial values for the HubEvents, Tasks, Notes, and contacts that were read from the database by the UserController,
+     * no additional fields or methods.
+     * 
+     */
     @FXML
     void initialize()
     {
@@ -193,35 +202,19 @@ private Label Saturday;
     	updateDailyCalendar();
     	updateWeeklyCalendar();
     	
+    	//If this hub has Tasks (To-Do check boxes)
     	if(User.getCurrentHub().getTasks()!=null)
     	{
-    		System.out.println(User.getCurrentHub().getTasks().size());
     		for (int i = 0; i < User.getCurrentHub().getTasks().size(); i++)
     		{	
-	    		//Make a CheckBox for each task\
-    			System.out.println(User.getCurrentHub().getTasks().get(i).getText());
-	        	CheckBox cb = new CheckBox(User.getCurrentHub().getTasks().get(i).getText());
+	    		//Make a CheckBox for each task
+    			CheckBox cb = new CheckBox(User.getCurrentHub().getTasks().get(i).getText());
 	        	cb.setPadding(new Insets(10, 10, 0, 0));
+	        	//This tempTask is to allow the current task to be used in the Lambda expression
 	        	Task tempTask = User.getCurrentHub().getTasks().get(i);
-//	        	Thread t1 = new Thread(new Runnable() {
-//	        	      @Override
-//	        	      public void run() {
-//	        	        try {
-//	        	            Thread.sleep(200);
-//	        	            if (cb.isSelected()) 
-//		                    {
-//		                    	User.deleteTask(tempTask, User.getCurrentClass());
-//		                    	toDoVBoxList.remove(cb);
-//		                    	toDoList.getChildren().clear();
-//		                    	toDoList.getChildren().addAll(toDoVBoxList);
-//		                    }
-//	        	          } catch (InterruptedException e) {
-//	        	            e.printStackTrace();
-//	        	          }
-//
-//	        	      }
-//	        	    });
 	        	
+	        	/*Assigns the delete method to the current CheckBox, meaning when this CheckBox is checked,
+	        	 *the item will be removed from the database.*/
 	        	cb.setOnAction(event3 -> {
                     if (cb.isSelected()) 
                     {
@@ -230,78 +223,69 @@ private Label Saturday;
                     	toDoList.getChildren().clear();
                     	toDoList.getChildren().addAll(toDoVBoxList);
                     	User.deleteTask(tempTask, User.getCurrentClass());
-						System.out.println("CHECKBOX ACTIVATED");
-                    	//delete task, use taskHash and classHash as applicable, start thread, if still checked delete?
-						//call method that makes a new thread, thread sleeps, checks again, deletes or terminates
-                    }
+					}
                   });
 	        	
-	        	
+	        	//Add the task to the observable VBox
 	        	toDoVBoxList.add(cb);
     		}
     		
-    		
-    		//cb.setStyle("-fx-text-fill:white");
-            
-            toDoList.getChildren().addAll(toDoVBoxList);
+    		//Once all Tasks have been read and their action assigned, add them to the
+    		//FXML VBox
+    		toDoList.getChildren().addAll(toDoVBoxList);
             
           //Deal with Archived notes
         	if(User.getCurrentHub().getNotes() !=null)
         	{
-        		System.out.println(User.getCurrentHub().getNotes().size());
         		for (int i = 0; i < User.getCurrentHub().getNotes().size(); i++)
         		{	
+        			//create a hyperlink for the note
         			Hyperlink tempLink = new Hyperlink(User.getCurrentHub().getNotes().get(i).getText());
-        			System.out.println(User.getCurrentHub().getNotes().get(i).getText()+"<______________________________");
-        			 
+        			
+        			//Create an alert popup for the note
         			Alert alert = getAlert("Display Note","Note",User.getCurrentHub().getNotes().get(i).getText());
                   	
+        			//assign the alert to tempLink
                     tempLink.setOnAction(event2 ->{
                   	  alert.showAndWait();
                   	  
                     });
                     archivedNoteList.add(tempLink);
         		}
-        		//Add the date to this as well. Wishlist make this a hyperlink with a popup
         		archivedNotes.getItems().addAll(archivedNoteList);
-        		//probably should consider how to delete notes
         	}
         	
     	}
+    	//deal with contacts (hyperlinks and alerts)
     	if (User.getUserContacts()!=null)
     	{
     	TextInputDialog textDialog = new TextInputDialog();
     	
-
-    	  //Add contact hyperlink
-//        String contactHeader = "";
-//        String contactContent = "";
-//        String contactHeader = "";
-    	//ArrayList<Alert> popups = new ArrayList<Alert>();
-		for (int i = 0; i < User.getUserContacts().size(); i++)
+    	for (int i = 0; i < User.getUserContacts().size(); i++)
           {
-          //User.getUserContacts().add(User.getUserContacts().get(i));
-          System.out.println("");
-          
-          Hyperlink tempLink = new Hyperlink(User.getUserContacts().get(i).getName());
-          userContactList.add(tempLink);
-          
-        
-          
-          Alert alert = getAlert("Display Contact",User.getUserContacts().get(i).getName(),User.getUserContacts().get(i).toString());
+    		Hyperlink tempLink = new Hyperlink(User.getUserContacts().get(i).getName());
+    		userContactList.add(tempLink);
+            Alert alert = getAlert("Display Contact",User.getUserContacts().get(i).getName(),User.getUserContacts().get(i).toString());
         	
-          tempLink.setOnAction(event2 ->{
-        	  alert.showAndWait();
+            tempLink.setOnAction(event2 ->{
+            	alert.showAndWait();
         	  
-          });
-          
-          //contactList.getItems().add(tempLink); 
+            });
           }
-		contactList.getItems().addAll(userContactList);
+		
+    	contactList.getItems().addAll(userContactList);
     	}
     	
     }
     
+    /**This method accepts a String title, header, and content used to create an Alert pop-up
+     * and returns the crafted Alert pop-up.
+     * 
+     * @param title -String to be use as the title
+     * @param header -String to be use as the header
+     * @param content -String to be use as the content
+     * @return the Alert containing the title, header, and content
+     */
     public Alert getAlert(String title, String header, String content)
     {
     	Alert alert = new Alert(AlertType.INFORMATION);
@@ -312,50 +296,79 @@ private Label Saturday;
     	return alert;
     }
 
-    
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void addHub(ActionEvent event) {
     	System.out.println("testAddHub");
     }
     
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void changeTheme(ActionEvent event) {
     	System.out.println("testChangeTheme");
     }
     
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
 	 @FXML
-	    void tutorial(ActionEvent event) {
+	 void tutorial(ActionEvent event) {
 		 System.out.println("testTutorial");
 	    }
 	 
+	 /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
 	 @FXML
-	    void about(ActionEvent event) {
+	 void about(ActionEvent event) {
 		 System.out.println("testAbout");
-	    }
+	 }
 	 
-	    @FXML
-	    void logout(ActionEvent event) {
-	    	System.out.println("testLogout");
-	    }
-	    
-    @FXML
-    void close(ActionEvent event) {
-    	System.out.println("testClose");
+	 /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
+	 @FXML
+	 void logout(ActionEvent event) {
+		 System.out.println("testLogout");
+	 }
+	 
+	 /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
+	 @FXML
+	 void close(ActionEvent event) {
+		 System.out.println("testClose");
+	 }
+
+	 /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
+	 @FXML
+ 	void deleteHub(ActionEvent event) {
+		 System.out.println("testDelete");
     }
 
-    @FXML
-    void deleteHub(ActionEvent event) {
-    	System.out.println("testDelete");
-    }
-
+	 /**This method will create a series of Alert pop-ups to get user input, create
+	  * a new contact, and call the method to push it up the database.
+	  * 
+	  * @param event- the button click which triggers this method
+	  */
     @FXML
     void addContact(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
     	ChoiceDialog choice = new ChoiceDialog();
-    	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Display Contact");
-    	alert.setHeaderText("Contact Name");
-    	alert.setContentText("Contact toString");
+    	Alert alert = getAlert("Display Contact","Contact Name","Contact toString");
     	boolean validInput;
     	ArrayList<String> phoneTypes = new ArrayList<String>();
     	ArrayList<String> emailTypes = new ArrayList<String>();
@@ -378,6 +391,7 @@ private Label Saturday;
       	
     	try
     	{
+    		//series of pop-ups to get new contact info 
 	    	do
 	        {
 	    		textDialog.getEditor().clear();
@@ -415,8 +429,6 @@ private Label Saturday;
 				validInput = validateInput(ptype);
 		    }while(!validInput);
 	    	
-			//either add logic to loop this or make a multifield popup
-	    	
 	    	do
 	        {
 		    	textDialog.getEditor().clear();
@@ -430,7 +442,6 @@ private Label Saturday;
 				validInput = validateInput(email);
 		    }while(!validInput);
 	    	
-	    	//change this to dropdown selection
 	    	do
 	        {
 	    		choice = new ChoiceDialog("Please select", emailTypes);
@@ -458,8 +469,6 @@ private Label Saturday;
 				alert.showAndWait();
 				});
 			}
-			//Add the date to this as well. Wishlist make this a hyperlink with a popup
-			//deal with the output
 			contactList.getItems().clear();
 			contactList.getItems().addAll(userContactList);
     	}
@@ -470,6 +479,10 @@ private Label Saturday;
 		          
     }
     
+    /**This method accepts no arguments, sets the text for all of the daily calendar labels,
+     * and returns nothing.
+     * 
+     */
     void initializeDailyLabels() {
     	labels.add(text800);
     	labels.add(text830);
@@ -504,6 +517,9 @@ private Label Saturday;
     	labels.add(text2300);    	
     }
     
+    /**This method accepts no arguments, sets the daily calendar labels to a single space character,
+     * and returns nothing.
+     */
     void clearDailyCalendar() {
     	for(Label label : labels) {
     		label.setText(" ");
@@ -512,6 +528,10 @@ private Label Saturday;
     	}
     }
     
+    /**This method accepts no arguments, gets the current date, checks for user HubEvents from the current date,
+     * calls the displayDailyEvent method if the HubEvent date matches the current date, and returns nothing.
+     * 
+     */
     void updateDailyCalendar() {
     	clearDailyCalendar();
     	
@@ -533,7 +553,12 @@ private Label Saturday;
     	}
     }
     
-void displayDailyEvent(HubEvent e) {
+    /**This method accepts an instance of the HubEvent Class, sets the text in the
+     * label corresponding to the correct hour, and returns nothing.
+     * 
+     * @param e-the HubEvent to be displayed.
+     */
+    void displayDailyEvent(HubEvent e) {
     	
     	Date d = e.getStartDate();
     	
@@ -742,6 +767,12 @@ void displayDailyEvent(HubEvent e) {
     	}
     }
 
+    /**This method accepts an ActionEvent, displays a TextInputDialog to collect user
+     * input, creates a new Task, adds it to the ObservableList, sets the Action for the
+     * checkbox, pushes the new Task to the database, ad returns nothing.
+     * 
+     * @param event- the button press which triggers this method
+     */
     @FXML
     void addItem(ActionEvent event) {
     	TextInputDialog textDialog = new TextInputDialog();
@@ -801,6 +832,10 @@ void displayDailyEvent(HubEvent e) {
 		}
     }
     
+    /**The method sets the text for each day of the weekly calendar to 
+     * a space, reinitializes their color, and returns nothing. 
+     * 
+     */
     void clearWeeklyCalendar() {
     	Sunday.setText(" ");
     	Monday.setText(" ");
@@ -819,11 +854,15 @@ void displayDailyEvent(HubEvent e) {
     	Saturday.setTextFill(Color.web("#000000"));
     }
     
+    /**This method calls clears the weekly calendar, sets the background color
+     * for the current day, sets the labels for the daily events, and returns
+     * nothing.
+     * 
+     */
     void updateWeeklyCalendar() {
     	clearWeeklyCalendar();
     	
     	LocalDate currentdate = LocalDate.now();
-    	System.out.println("glerdsdgf " + currentdate.getDayOfWeek().getValue());
     	switch(currentdate.getDayOfWeek().getValue()) {
     		case 1: Monday.setStyle("-fx-background-color: #fffebf"); break;
     		case 2: Tuesday.setStyle("-fx-background-color: #fffebf"); break;
@@ -835,7 +874,6 @@ void displayDailyEvent(HubEvent e) {
     	}
     	
     	while(currentdate.getDayOfWeek().getValue() != 7) {
-    		System.out.println(currentdate.getDayOfWeek());
     		currentdate = currentdate.minusDays(1);
     	}
     	
@@ -860,7 +898,13 @@ void displayDailyEvent(HubEvent e) {
     	Saturday.setText(getEvent(currentdate));
     }	
     
-    //What if we passed a HubEvent instead?
+    /**This method accepts a LocalDate, searches for matches to the LocalDate,
+     * adds matching HubEvents to a concatenated String of all matching HubEvents,
+     * and returns the String.
+     * 
+     * @param date- the LocalDate to be checked against
+     * @return a String concatenation of the HubEvents with a matching date
+     */
     String getEvent(LocalDate date) {
     	int year = date.getYear();
     	int month = date.getMonth().getValue();
@@ -880,19 +924,29 @@ void displayDailyEvent(HubEvent e) {
     	return display;
     }
     
+    /**This method accepts an ActionEvent, changes the view to the monthly Calendar, and 
+     * returns nothing.
+     * 
+     * @param event- the button click that triggers this method call
+     * @throws IOException- handles issues with the fxml documents.
+     */
      @FXML
      void goToCalendar(ActionEvent event) throws IOException {
     	User.setLastHub(new File("src/application/view/BusinessHome.fxml").toURI().toURL());
      	URL url = new File("src/application/view/Calendar.fxml").toURI().toURL();
      	mainPane = FXMLLoader.load(url);
-     	//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
-         Scene scene = new Scene(mainPane);// pane you are GOING TO show
-         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
-         window.setScene(scene);
-         window.show();
+     	Scene scene = new Scene(mainPane);
+     	Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+     	window.setScene(scene);
+     	window.show();
  	    }
 
+     /**This method accepts an ActionEvent, displays a ChoiceDialog with the user's Contacts,
+      * removes the selected Contact from both the ObservableList of Contacts as well as the 
+      * database, and returns nothing. 
+      * 
+      * @param event-the button press that triggers this method.
+      */
     @FXML
     void removeContact(ActionEvent event) {
     	boolean validInput;
@@ -904,8 +958,7 @@ void displayDailyEvent(HubEvent e) {
     	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", contactStrings);
         
         String input = "";
-        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
-
+        
         try 
         {
 	        do
@@ -930,7 +983,6 @@ void displayDailyEvent(HubEvent e) {
 					
 					//descending search for hubEntry 
 					contactFound=User.getUserContacts().get(--count).compareTo(input);
-					//System.out.println(count+" ");
 					//if valid hubType is returned, search is complete
 					if (contactFound > 0)
 						find = false;
@@ -955,16 +1007,19 @@ void displayDailyEvent(HubEvent e) {
         }
     }
     
-
+    /**This method accepts an ActionEvent, gets the text from the "notes" TextField,
+     * creates a Hyperlink from the text, adds the Hyperlink to an ObservableList,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     */
     @FXML
     void saveNote(ActionEvent event) {
-    	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
     	//Add a note to the class notes
     	if (!notes.getText().equals(""))
     	{
     		Note tempNote = new Note(notes.getText());
     		User.getCurrentHub().getNotes().add(tempNote);
-    		//Add the date to this as well. Wishlist make this a hyperlink with a popup
     		Alert alert = getAlert("Display Note","Note",notes.getText());
     		Hyperlink tempLink = new Hyperlink(notes.getText());
     		tempLink.setOnAction(event2 ->{
@@ -980,21 +1035,29 @@ void displayDailyEvent(HubEvent e) {
     	notes.clear();
     }
 
-    
-
+    /**This method accepts an ActionEvent, changes the scene to the UserHome,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     * @throws IOException- handles issues with the fxml documents.
+     */
     @FXML
     void userHome(ActionEvent event) throws IOException {
     	User.setLastHub(new File("src/application/view/BusinessHome.fxml").toURI().toURL());
    		URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
    		mainPane = FXMLLoader.load(url);
-   		//mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
-   		Scene scene = new Scene(mainPane);// pane you are GOING TO show
-        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-   		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are ON
+   		Scene scene = new Scene(mainPane);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 	    window.setScene(scene);
 	    window.show();
 	}
     
+    /**This method accepts an ActionEvent, displays a ChoiceDialog of the LifeHub's notes,
+     * removes the note from the ArchivedNotes and the database based on the users selection,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method.
+     */
     @FXML
     void removeNote(ActionEvent event) {
     	if (archivedNoteList.size()!=0)
@@ -1008,7 +1071,7 @@ void displayDailyEvent(HubEvent e) {
 	    	ChoiceDialog<String> choicePopup = new ChoiceDialog<String>("Please select:", noteStrings);
 	        
 	        String input = "";
-	        //choicePopup = new ChoiceDialog("Please select", classNameStrings);
+	       
 	        try
 	        {
 		        do
@@ -1054,6 +1117,12 @@ void displayDailyEvent(HubEvent e) {
     	}
     }
     
+    /**This method accepts a String, returns true if the String is not empty
+     * and not null, otherwise returns false.
+     * 
+     * @param input- The String being validated.
+     * @return- the Boolean value determined by the String being null or empty.
+     */
     public boolean validateInput(String input)
     {
     	if(input != null)

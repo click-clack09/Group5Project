@@ -21,6 +21,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**This class controls the login page for the LifeHub application.
+ * 
+ * @author Group 5 11-23-21
+ *
+ */
 public class MainController {
 
 	@FXML
@@ -35,6 +40,10 @@ public class MainController {
     @FXML
     private Label loginError;
 
+    /**Sets all static user variables to null or 0, effectively clearing the User data and 
+     * prepping the application for the next user.
+     * 
+     */
     @FXML
     void initialize()
     {
@@ -47,27 +56,44 @@ public class MainController {
     	User.setCurrentClass(null);
     	User.setUserContacts(null);
     	User.setUserEvents(null);
-    	User.setClasses(null);
-    	
-    	
+    	User.setClasses(null);    	
     }
     
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void about(ActionEvent event) {
     	System.out.println("testAbout");
     }
 
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void addHub(ActionEvent event) {
     	System.out.println("testAddHub");
     	//KILL THIS
     }
     
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void close(ActionEvent event) {
     	//System.out.println("testClose");
     }
 
+    /**This method accepts an ActionEvent and attempts to create a new user log-in,
+     * succeeding if the username and password are acceptable, failing if not. Sets
+     * label text in the event of failure, logs the user in in the case of success.
+     * Returns nothing.
+     * 
+     * @param event- The button click which triggered the event.
+     */
     @FXML
     void create(ActionEvent event) {
     	loginError.setText("");
@@ -89,6 +115,13 @@ public class MainController {
     		loginError.setText("Username cannot be empty. Please try again");
     }
 
+    /**This method accepts an ActionEvent and attempts to log the user in with the 
+     * provided credentials, succeeding if the username and password match a found 
+     * record, failing if not. Sets label text in the event of failure, logs the 
+     * user in in the case of success. Returns nothing.
+     * 
+     * @param event
+     */
     @FXML
     void login(ActionEvent event) {
     	loginError.setText("");
@@ -114,7 +147,6 @@ public class MainController {
     	{
     		//print to error label
     	}
-    	//System.out.println("testLogin");
     	/*Need to verify that user is valid.
     	 * -Pass username and password to validation method which will make a call to the DB
     	 * -if valid:
@@ -122,6 +154,10 @@ public class MainController {
     	 * 		proceed to next scene*/
     }
 
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
     @FXML
     void tutorial(ActionEvent event) {
     	//System.out.println("testTutorial");

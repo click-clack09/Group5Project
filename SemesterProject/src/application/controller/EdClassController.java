@@ -30,6 +30,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**This class controls the EdClass view, which is used to display a single SchoolClass
+ * from an Educational Hub.
+ * 
+ * @author group 5 11-23-21
+ *
+ */
+
 public class EdClassController {
 	
 	@FXML
@@ -151,6 +158,10 @@ public class EdClassController {
 	
   //This goes with item/task delete  deleteTask(Task task, String className)
     
+    /**This method displays the initial values for the HubEvents, Tasks, Notes, and contacts that were read from the database by the UserController,
+     * no additional fields or methods.
+     * 
+     */
     @FXML
     void initialize()
     {
@@ -228,23 +239,39 @@ public class EdClassController {
     	}
    } 
     
+    /**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
 	@FXML
     void addHub(ActionEvent event) {
     	System.out.println("testAddHub");
     }
 	
-	
-	
+	/**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
 	@FXML
     void changeTheme(ActionEvent event) {
     	System.out.println("testChangeTheme");
     }
     
+	/**Top menu item. Unused at this time.
+     * 
+     * @param event- the triggering event
+     */
 	 @FXML
 	    void tutorial(ActionEvent event) {
 		 System.out.println("testTutorial");
 	    }
 	 
+	 /**This method accepts an ActionEvent, displays a TextInputDialog to collect user
+	     * input, creates a new Task, adds it to the ObservableList, sets the Action for the
+	     * checkbox, pushes the new Task to the database, ad returns nothing.
+	     * 
+	     * @param event- the button press which triggers this method
+	     */
 	 @FXML
 	 void addItem(ActionEvent event) {
 	 	System.out.println("testAddItem");
@@ -302,38 +329,60 @@ public class EdClassController {
 		}
 	 }
 	 
-	 
-	 
 	 @FXML
 	    void about(ActionEvent event) {
 		 System.out.println("testAbout");
 	    }
-	 
-	    @FXML
-	    void logout(ActionEvent event) {
-	    	System.out.println("testLogout");
-	    }
-	    
-    @FXML
-    void close(ActionEvent event) {
-    	System.out.println("testClose");
-    }
+	
+	 /**Top menu item. Unused at this time.
+	     * 
+	     * @param event- the triggering event
+	     */
+	 @FXML
+	 void logout(ActionEvent event) {
+		 System.out.println("testLogout");
+	 }
+	   
+	 /**Top menu item. Unused at this time.
+	  * 
+	  * @param event- the triggering event
+	  */    
+	 @FXML
+	 void close(ActionEvent event) {
+		 System.out.println("testClose");
+	 }
 
-    @FXML
-    void deleteHub(ActionEvent event) {
-    	System.out.println("testDelete");
-    }
+	 /**Top menu item. Unused at this time.
+	  * 
+	  * @param event- the triggering event
+	  */
+	 @FXML
+	 void deleteHub(ActionEvent event) {
+		 System.out.println("testDelete");
+	 }
     
-    @FXML
-    void goBack(ActionEvent event) throws IOException {
-   		mainPane = FXMLLoader.load(User.getLastHub());
-    	User.setLastHub(new File("src/application/view/EdClass.fxml").toURI().toURL());
-    	Scene scene = new Scene(mainPane);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-	    window.setScene(scene);
-	    window.show();
-	}
+	 /**This method accepts an ActionEvent, takes the user back to the main education hub,
+	  * and returns nothing.
+	  * 
+	  * @param event- the ActionEvent that triggers this method
+	  * @throws IOException- handles issues with the fxml documents.
+	  */
+	 @FXML
+	 void goBack(ActionEvent event) throws IOException {
+		 mainPane = FXMLLoader.load(User.getLastHub());
+		 User.setLastHub(new File("src/application/view/EdClass.fxml").toURI().toURL());
+		 Scene scene = new Scene(mainPane);
+		 Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		 window.setScene(scene);
+		 window.show();
+	 }
 
+    /**This method accepts an ActionEvent, gets the text from the "notes" TextField,
+     * creates a Hyperlink from the text, adds the Hyperlink to an ObservableList,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     */
     @FXML
     void saveNote(ActionEvent event) {
     	//archivedNoteList.add(User.getClasses().get(index).getNotes().get(i).getText());
@@ -356,6 +405,12 @@ public class EdClassController {
     	classNotes.clear();
     }
 
+    /**This method accepts an ActionEvent, changes the scene to the UserHome,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     * @throws IOException- handles issues with the fxml documents.
+     */
     public Alert getAlert(String title, String header, String content)
     {
     	Alert alert = new Alert(AlertType.INFORMATION);
@@ -366,6 +421,12 @@ public class EdClassController {
     	return alert;
     }
 
+    /**This method accepts an ActionEvent, changes the scene to the UserHome,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     * @throws IOException- handles issues with the fxml documents.
+     */
     @FXML
     void userHome(ActionEvent event) throws IOException {
     	URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
@@ -378,6 +439,12 @@ public class EdClassController {
 	    window.show();
 	}
     
+    /**This method accepts an ActionEvent, displays a ChoiceDialog of the SchoolClasses's notes,
+     * removes the note from the ArchivedNotes and the database based on the users selection,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method.
+     */
     @FXML
     void deleteNote(ActionEvent event) {
     	if (archivedNoteList.size()>0)
@@ -461,6 +528,11 @@ public class EdClassController {
 	        }
         }
     }
+    
+    /**This method accepts no arguments, sets the text for all of the daily calendar labels,
+     * and returns nothing.
+     * 
+     */
     void initializeDailyLabels() {
     	labels.add(text800);
     	labels.add(text830);
@@ -495,6 +567,9 @@ public class EdClassController {
     	labels.add(text2300);    	
     }
     
+    /**This method accepts no arguments, sets the daily calendar labels to a single space character,
+     * and returns nothing.
+     */
     void clearDailyCalendar() {
     	for(Label label : labels) {
     		label.setText(" ");
@@ -503,6 +578,10 @@ public class EdClassController {
     	}
     }
     
+    /**This method accepts no arguments, gets the current date, checks for user HubEvents from the current date,
+     * calls the displayDailyEvent method if the HubEvent date matches the current date, and returns nothing.
+     * 
+     */
     void updateDailyCalendar() {
     	clearDailyCalendar();
     	
@@ -524,7 +603,12 @@ public class EdClassController {
     	}
     }
     
-void displayDailyEvent(HubEvent e) {
+    /**This method accepts an instance of the HubEvent Class, sets the text in the
+     * label corresponding to the correct hour, and returns nothing.
+     * 
+     * @param e-the HubEvent to be displayed.
+     */
+    	void displayDailyEvent(HubEvent e) {
     	
     	Date d = e.getStartDate();
     	
@@ -733,6 +817,12 @@ void displayDailyEvent(HubEvent e) {
     	}
     }
     
+/**This method accepts a String, returns true if the String is not empty
+ * and not null, otherwise returns false.
+ * 
+ * @param input- The String being validated.
+ * @return- the Boolean value determined by the String being null or empty.
+ */
     public boolean validateInput(String input)
     {
     	if(input != null)
