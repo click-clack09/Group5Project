@@ -106,7 +106,7 @@ public class User {
 		return flag;
 	}
 
-	/** This is a getter that retreives the LastHub
+	/** This is a getter that retrieves the LastHub
 	 * 
 	 * @return URL
 	 */
@@ -114,7 +114,7 @@ public class User {
 		return lastHub;
 	}
 
-	/** This is a getter that retreives the user's name
+	/** This is a getter that retrieves the user's name
 	 * 
 	 * @return userName, String
 	 */
@@ -122,7 +122,7 @@ public class User {
 		return userName;
 	}
 
-	/** This is a getter that retreives the userID
+	/** This is a getter that retrieves the userID
 	 * 
 	 * @return userID, int
 	 */
@@ -130,7 +130,7 @@ public class User {
 		return userID;
 	}
 
-	/** This is a getter that retreives a LifeHub
+	/** This is a getter that retrieves a LifeHub
 	 * 
 	 * @return LifeHub object
 	 */
@@ -138,7 +138,7 @@ public class User {
 		return currentHub;
 	}
 
-	/** This is a getter that retreives an ArrayList of LifeHubs
+	/** This is a getter that retrieves an ArrayList of LifeHubs
 	 * 
 	 * @return  ArrayList<LifeHub>
 	 */
@@ -146,7 +146,7 @@ public class User {
 		return userHubs;
 	}
 
-	/** This is a getter that retreives the current clas
+	/** This is a getter that retrieves the current clas
 	 * 
 	 * @return  String currentClass
 	 */
@@ -154,7 +154,7 @@ public class User {
 		return currentClass;
 	}
 
-	/** This is a getter that retreives an ArrayList of Contacts
+	/** This is a getter that retrieves an ArrayList of Contacts
 	 * 
 	 * @return  ArrayList of Contact objects
 	 */
@@ -162,7 +162,7 @@ public class User {
 		return userContacts;
 	}
 
-	/** This is a getter that retreives an ArrayList of HubEvents
+	/** This is a getter that retrieves an ArrayList of HubEvents
 	 * 
 	 * @return  ArrayList of HubEvent
 	 */
@@ -170,7 +170,7 @@ public class User {
 		return userEvents;
 	}
 
-	/** This is a getter that retreives an ArrayList of School Classes
+	/** This is a getter that retrieves an ArrayList of School Classes
 	 * 
 	 * @return  ArrayList<SchoolClass>
 	 */
