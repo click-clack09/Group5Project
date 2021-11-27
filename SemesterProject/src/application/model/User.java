@@ -10,32 +10,40 @@ import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**This Class is used to represent the application's users and
+ * all pertinent information relating to his/her site activity
+ * 
+ */
 public class User {
-	//holds all data
-	//userID
-	//password
-	//list of contacts
+
 	private static URL lastHub;
 	private static String userName;
 	private static int userID;
 	private static LifeHub currentHub;
 	private static ArrayList<LifeHub> userHubs;
-	
-	//This is not SOLID compliant. Use index in ed class instead?
-	private static String currentClass;
-	
+	private static String currentClass;	
 	private static ArrayList<Contact> userContacts;
 	private static ArrayList<HubEvent> userEvents;
 	private static ArrayList<SchoolClass> classes;
 	private String userLoggedInName;
 	private String password;
-		
+	
+	/**This a parameterized constructor for the Task class
+	 * 
+	 * @param user - String that represents the user's log-in name
+	 * @param password - String that represents user's password
+	 * @return none
+	 */
 	public User(String user, String password) {
 		this.userLoggedInName = user;
 		this.password = password;
 	}
 	
-	//QC with Richard
+	/**This method is used to close any open database connection
+	 * 
+	 * @param Connection - conn
+	 * @return none
+	 */
 	public static void closeConnection(Connection connection) {
 		
 		try {
@@ -48,6 +56,11 @@ public class User {
 		}
 	}
 	
+	/**This method is used to validate user's attempting to login
+	 * 
+	 * @param String userName, String password
+	 * @return true for valid login, false for invalid login
+	 */
 	public static Boolean validate(String userName, String password)
 	{  	
 		boolean flag = false;
@@ -93,134 +106,166 @@ public class User {
 		return flag;
 	}
 
-	/**
-	 * @return the lastHub
+	/** This is a getter that retreives the LastHub
+	 * 
+	 * @return URL
 	 */
 	public static URL getLastHub() {
 		return lastHub;
 	}
 
-	/**
-	 * @return the userName
+	/** This is a getter that retreives the user's name
+	 * 
+	 * @return userName, String
 	 */
 	public static String getUserName() {
 		return userName;
 	}
 
-	/**
-	 * @return the userID
+	/** This is a getter that retreives the userID
+	 * 
+	 * @return userID, int
 	 */
 	public static int getUserID() {
 		return userID;
 	}
 
-	/**
-	 * @return the currentHub
+	/** This is a getter that retreives a LifeHub
+	 * 
+	 * @return LifeHub object
 	 */
 	public static LifeHub getCurrentHub() {
 		return currentHub;
 	}
 
-	/**
-	 * @return the userHubs
+	/** This is a getter that retreives an ArrayList of LifeHubs
+	 * 
+	 * @return  ArrayList<LifeHub>
 	 */
 	public static ArrayList<LifeHub> getUserHubs() {
 		return userHubs;
 	}
 
-	/**
-	 * @return the currentClass
+	/** This is a getter that retreives the current clas
+	 * 
+	 * @return  String currentClass
 	 */
 	public static String getCurrentClass() {
 		return currentClass;
 	}
 
-	/**
-	 * @return the userContacts
+	/** This is a getter that retreives an ArrayList of Contacts
+	 * 
+	 * @return  ArrayList of Contact objects
 	 */
 	public static ArrayList<Contact> getUserContacts() {
 		return userContacts;
 	}
 
-	/**
-	 * @return the userEvents
+	/** This is a getter that retreives an ArrayList of HubEvents
+	 * 
+	 * @return  ArrayList of HubEvent
 	 */
 	public static ArrayList<HubEvent> getUserEvents() {
 		return userEvents;
 	}
 
-	/**
-	 * @return the classes
+	/** This is a getter that retreives an ArrayList of School Classes
+	 * 
+	 * @return  ArrayList<SchoolClass>
 	 */
 	public static ArrayList<SchoolClass> getClasses() {
 		return classes;
 	}
 
-	/**
-	 * @param lastHub the lastHub to set
+	/** This is a setter that sets the user's last hub
+	 * 
+	 * @param URL lastHub
+	 * @return  none
 	 */
 	public static void setLastHub(URL lastHub) {
 		User.lastHub = lastHub;
 	}
 
-	/**
-	 * @param userName the userName to set
+	/** This is a setter that sets the user's name
+	 * 
+	 * @param String userName
+	 * @return  none
 	 */
 	public static void setUserName(String userName) {
 		User.userName = userName;
 	}
 
-	/**
-	 * @param userID the userID to set
+	/** This is a setter that sets the user's id
+	 * 
+	 * @param int userID
+	 * @return  none
 	 */
 	public static void setUserID(int userID) {
 		User.userID = userID;
 	}
 
-	/**
-	 * @param currentHub the currentHub to set
+	/** This is a setter that sets the user's current hub
+	 * 
+	 * @param LifeHub currentHub
+	 * @return  none
 	 */
 	public static void setCurrentHub(LifeHub currentHub) {
 		User.currentHub = currentHub;
 	}
 
-	/**
-	 * @param userHubs the userHubs to set
+	/** This is a setter that sets the user's array list of LifeHubs
+	 * 
+	 * @param ArrayList<LifeHub> userHubs
+	 * @return  none
 	 */
 	public static void setUserHubs(ArrayList<LifeHub> userHubs) {
 		User.userHubs = userHubs;
 	}
 
-	/**
-	 * @param currentClass the currentClass to set
+	/** This is a setter that sets the current class
+	 * 
+	 * @param String currentClass
+	 * @return  none
 	 */
 	public static void setCurrentClass(String currentClass) {
 		User.currentClass = currentClass;
 	}
 
-	/**
-	 * @param userContacts the userContacts to set
+	/** This is a setter that sets the user's ArrayList of Contact objects
+	 * 
+	 * @param ArrayList<Contact> userContacts
+	 * @return  none
 	 */
 	public static void setUserContacts(ArrayList<Contact> userContacts) {
 		User.userContacts = userContacts;
 	}
 
-	/**
-	 * @param userEvents the userEvents to set
+	/** This is a setter that sets the user's ArrayList of HubEvent objects
+	 * 
+	 * @param ArrayList<HubEvent> userEvents
+	 * @return  none
 	 */
 	public static void setUserEvents(ArrayList<HubEvent> userEvents) {
 		User.userEvents = userEvents;
 	}
 
-	/**
-	 * @param classes the classes to set
+	/** This is a setter that sets the user's ArrayList of School Class objects
+	 * 
+	 * @param ArrayList<SchoolClass> classes
+	 * @return  none
 	 */
 	public static void setClasses(ArrayList<SchoolClass> classes) {
 		User.classes = classes;
 	}
 	//////////////////////////////////////////////////////////////////////////////
 	//These will be used to send things back to the DB
-		
+	/** This method is used to check the database's contact table for an already
+	 * existing user.
+	 * 
+	 * @param Contact contact
+	 * @return  boolean
+	 */
 		public static boolean checkForContactInTable(Contact contact) {
 			boolean flag = false;//free and clear to add contact
 		    String check_for_existing_contact = "SELECT * FROM lifeHub.Contact WHERE user_id = ? AND contact_name = ?";
@@ -254,6 +299,12 @@ public class User {
 			return flag;
 		}
 
+		/** This method is used to insert a contact into the database
+		 * existing user.
+		 * 
+		 * @param Contact contact
+		 * @return  none
+		 */
 		public static void executeInsertIntoContactTable(Contact contact) {
 			String insert_into_contact_table = "INSERT INTO lifeHub.Contact (user_id,contact_name) "+"VALUES(?,?)";
 			try {
@@ -286,6 +337,12 @@ public class User {
 			
 		}
 
+		/** This method is used to insert a phone number into the database
+		 * existing user.
+		 * 
+		 * @param String contact_name, String phone_number, String type
+		 * @return  none
+		 */
 		public static void executeInsertIntoPhoneNumberTable(String contact_name, String phone_number, String type) {
 			System.out.println("Inserting phone number into table: "+contact_name+" "+phone_number+" "+
 		    type);
@@ -324,6 +381,12 @@ public class User {
 			
 		}
 
+		/** This method is used to insert an email into the database
+		 * existing user.
+		 * 
+		 * @param String contact_name, String email, String type
+		 * @return  none
+		 */
 		public static void executeInsertIntoEmailAddressTable(String contact_name, String email, String type) {
 			System.out.println("Inserting email into table: "+contact_name+" "+email+" "+
 				    type);
@@ -359,17 +422,15 @@ public class User {
 			          	e.printStackTrace();
 			    }
 		}
+		
+		/** This method is used to insert an email into the database
+		 * existing user.
+		 * 
+		 * @param Contact contact
+		 * @return  boolean
+		 */
 		public static boolean addContact(Contact contact) {
-		//"INSERT INTO Employees (id, first, last, age) " +
-	            //"VALUES(200,'Zia', 'Ali', 30)";
-	  
 			boolean result;
-
-			//userID;//UserID Int
-			
-			//push userID and contact name up to Contact Table
-			//userID; //name of user's current hub
-			//if (contact table doesn't contain contact.getName())
 
 			result = User.checkForContactInTable(contact);
 			
@@ -382,8 +443,6 @@ public class User {
 					{		
 						User.executeInsertIntoPhoneNumberTable(contact.getName(), contact.getPhoneList().get(i).getNumber(),
 								contact.getPhoneList().get(i).getType());
-						//push to phone table as userID + contact_name [contact.getName()] + 
-						//contact_phone [contact.getPhoneList(i).getNumber]+ contact_type. [contact.getPhoneList(i).getType];
 					}
 				}
 				
@@ -391,8 +450,6 @@ public class User {
 				if (contact.getEmailsList()!=null) {
 					for (int i=0; i< contact.getEmailsList().size(); i++)
 					{
-						//push to email table as userID + contact_name [contact.getName()]+ 
-						//contact_email [contact.getEmailsList(i).getAddress]+ email_type [contact.getEmailsList(i).getType];
 						User.executeInsertIntoEmailAddressTable(contact.getName(), contact.getEmailsList().get(i).getAddress(),
 								contact.getEmailsList().get(i).getType());				
 					}
@@ -400,6 +457,13 @@ public class User {
 			}
 			return !result;
 		}
+		
+		/** This method is used to delete a phone number from the database
+		 * 
+		 * 
+		 * @param String contactName, String phoneNumber, String type
+		 * @return  none
+		 */
 		public static void executeDeleteFromPhoneNumberTable(String contactName, String phoneNumber, String type) {
 			System.out.println("Deleting phone number from PhoneNumber table: "+contactName+" "+phoneNumber+" "+
 				    type);
@@ -435,6 +499,13 @@ public class User {
 					          	e.printStackTrace();
 					    }
 		}
+		
+		/** This method is used to delete an email address from the database
+		 * 
+		 * 
+		 * @param String contactName, String phoneNumber, String type
+		 * @return  none
+		 */
 		public static void executeDeleteFromEmailAddressTable(String contactName, String email, String type) {
 			System.out.println("Deleting email from Email Address table: "+contactName+" "+email+" "+
 				    type);
@@ -471,6 +542,12 @@ public class User {
 					    }
 		}
 		
+		/** This method is used to delete a user Contactfrom the database
+		 * 
+		 * 
+		 * @param Contact contact
+		 * @return  none
+		 */
 		public static void executeDeleteFromContactTable(Contact contact) {
 			System.out.println("Deleting Contact from Contact Table. "+"user: "+User.getUserName()+" contact: "+contact.getName());
 			String delete_from_contact_table = "DELETE FROM lifeHub.Contact WHERE user_id = ? AND contact_name = ?";
@@ -503,6 +580,12 @@ public class User {
 			    }
 		}
 		
+		/** This method is used check the database for a user before deleting the contact
+		 * 
+		 * 
+		 * @param Contact contact
+		 * @return  boolean
+		 */
 		public static boolean deleteContact(Contact contact) {
 	  
 			boolean result;
@@ -536,6 +619,13 @@ public class User {
 		}
 		
 		//eventID,eventType,hubName,eventName,imgPath,text
+		/** This method is used insert a Task into the database
+		 * 
+		 * 
+		 * @param int eventID, int eventType, String hubName, String eventName, String imgPath,
+				String text
+		 * @return  none
+		 */
 		public static void executeInsertIntoTaskTable(int eventID, int eventType, String hubName, String eventName, String imgPath,
 				String text) {
 			System.out.println("Inserting task into Task table: "+hubName+" "+eventName+" "+text);
@@ -574,6 +664,13 @@ public class User {
 			          	e.printStackTrace();
 			    }
 		}
+		
+		/** This method is used to prep a Task for entry into the database
+		 * 
+		 * 
+		 * @param Task task, String className
+		 * @return  none
+		 */
 		public static void addTask(Task task, String className) {
 			//need user_id event_id=99 event_type event_hub event_name img_path text
 			User.getUserID(); //user_id
@@ -588,8 +685,7 @@ public class User {
 			if (User.getCurrentHub().getEventType()==2)//this means it's a Business tasks link to Hub
 			{
 				eventName=hubName;
-				System.out.println("Event Name "+ eventName+". hubName "+hubName);
-				//send to hub copy ot class String imgPath = null, String text task.getText()		
+				System.out.println("Event Name "+ eventName+". hubName "+hubName);	
 			}
 			else
 			{
@@ -601,6 +697,13 @@ public class User {
 			User.executeInsertIntoTaskTable(eventID,eventType,hubName,eventName,imgPath,text);
 			
 		}
+		
+		/** This method is used to delete a Task from the database
+		 * 
+		 * 
+		 * @param int eventType,String hubName,String eventName,String imgPath,String text
+		 * @return  none
+		 */
 		public static void executeDeleteFromTaskTable(int eventType,String hubName,String eventName,String imgPath,String text) {
 			System.out.println("Deleting task from Task table: "+User.getUserID()+" "+eventType+" "+hubName+" "+eventName+" "+text);
 			String delete_from_task_table = "DELETE FROM lifehub.task WHERE user_id = ? AND event_type = ? AND event_hub = ? AND event_name = ? AND text = ?";
@@ -619,8 +722,7 @@ public class User {
 				}
 				else {
 					System.out.println("Failed deletion from Task table!");
-				}
-		
+				}	
 					//close connection
 					try {
 						conn.close();
@@ -637,11 +739,15 @@ public class User {
 			    }
 		}
 		
+		/** This method is used to prep a Task before deletion from a database
+		 * 
+		 * 
+		 * @param Task task, String className
+		 * @return  none
+		 */
 		public static void deleteTask(Task task, String className) {
-			//need user_id event_type event_hub event_name img_path text
 			User.getUserID(); //user_id
 			int eventType = User.getCurrentHub().getEventType(); 
-			//String eventTypeString = "";
 			String hubName = User.getCurrentHub().getHubName();
 			String eventName;
 			String imgPath = "";
@@ -650,8 +756,7 @@ public class User {
 			if (User.getCurrentHub().getEventType()==2)//this means it's a Business tasks link to Hub
 			{
 				eventName=hubName;
-				System.out.println("Event Name "+ eventName+". hubName "+hubName);
-				//send to hub copy ot class String imgPath = null, String text task.getText()		
+				System.out.println("Event Name "+ eventName+". hubName "+hubName);		
 			}
 			else if (User.getCurrentHub().getEventType()==1)
 			{
@@ -669,9 +774,13 @@ public class User {
 			User.executeDeleteFromTaskTable(eventType,hubName,eventName,imgPath,text);
 			
 		}
-		//add deletes based on these adds
-		//QC with Richard
-		
+
+		/** This method is used to delete a school class from the database
+		 * 
+		 * 
+		 * @param int userID, String hubName, String schoolClassName, String schoolClassLocation, String schoolClassProfessor
+		 * @return  none
+		 */
 		public static void executeDeleteFromSchoolClassTable(int userID, String hubName, String schoolClassName, String schoolClassLocation, String schoolClassProfessor) {
 			System.out.println("Deleting from SchoolClass table: "+hubName+" "+schoolClassName+" "+schoolClassProfessor);
 			String delete_from_school_class_table = "DELETE FROM lifeHub.SchoolClass WHERE user_id = ? AND hub_name = ? AND school_class_name = ?"
@@ -708,6 +817,13 @@ public class User {
 			          	e.printStackTrace();
 			    }
 		}
+		
+		/** This method is used to  prep a School Class for deletion from the database
+		 * 
+		 * 
+		 * @param SchoolClass thisClass
+		 * @return  none
+		 */
 		public static void deleteClass(SchoolClass thisClass) {
 			//userID hubName schoolClassName schoolClassLocation schoolClassProfessor
 			int userID = User.getUserID();
@@ -718,7 +834,12 @@ public class User {
 			User.executeDeleteFromSchoolClassTable(userID,hubName,schoolClassName,schoolClassLocation,schoolClassProfessor);	
 		}
 
-		//userID,hubName,schoolClassName,schoolClassLocation,schoolClassProfessor
+		/** This method is used to insert a School Class into the database
+		 * 
+		 * 
+		 * @param int userID, String hubName, String schoolClassName, String schoolClassLocation, String schoolClassProfessor
+		 * @return  none
+		 */
 		public static void executeInsertIntoSchoolClassTable(int userID, String hubName, String schoolClassName, String schoolClassLocation, String schoolClassProfessor) {
 			System.out.println("Inserting task into SchoolClass table: "+hubName+" "+schoolClassName+" "+schoolClassProfessor);
 			String insert_into_task_table = "INSERT INTO lifeHub.SchoolClass (school_class_id,user_id,hub_name,school_class_name,school_class_location,school_class_professor) "+"VALUES(?,?,?,?,?,?)";
@@ -755,8 +876,14 @@ public class User {
 			          	e.printStackTrace();
 			    }
 		}
+		
+		/** This method is used to insert a School Class into the database
+		 * 
+		 * 
+		 * @param SchoolClass thisClass
+		 * @return  none
+		 */
 		public static void addClass(SchoolClass thisClass) {
-			//userID hubName schoolClassName schoolClassLocation schoolClassProfessor
 			int userID = User.getUserID();
 			String hubName = User.getCurrentHub().getHubName();
 			String schoolClassName = thisClass.getClassName();
@@ -765,6 +892,12 @@ public class User {
 			User.executeInsertIntoSchoolClassTable(userID,hubName,schoolClassName,schoolClassLocation,schoolClassProfessor);	
 		}
 
+		/** This method is used to insert a LifeHub into the database
+		 * 
+		 * 
+		 * @param int userID, int eventType, String lifeHubName
+		 * @return  none
+		 */
 		public static void executeInsertIntoLifeHubTable(int userID, int eventType, String lifeHubName) {
 			System.out.println("Inserting Life Hub Table: "+userID+" "+eventType+" "+lifeHubName);
 			String insert_into_task_table = "INSERT INTO lifeHub.LifeHub (life_hub_id,user_id,event_type,life_hub_name) "+"VALUES(?,?,?,?)";
@@ -799,7 +932,13 @@ public class User {
 			          	e.printStackTrace();
 			    }
 		}
-
+		
+		/** This method is used to prepare a LifeHub before entry into the database
+		 * 
+		 * 
+		 * @param LifeHub hub
+		 * @return  none
+		 */
 		public static void addHub(LifeHub hub) {
 			int userID = User.getUserID();
 			int eventType = hub.getEventType();
@@ -807,6 +946,13 @@ public class User {
 			User.executeInsertIntoLifeHubTable(userID,eventType,lifeHubName);	
 		}
 
+		/** This method is used to insert an archived note into the database
+		 * 
+		 * 
+		 * @param int userID, int eventType, String noteLifeHubName,
+			String noteSchoolClassName, String noteImagePath, String noteText
+		 * @return  none
+		 */
 		public static void executeInsertIntoArchivedNoteTable(int userID, int eventType, String noteLifeHubName,
 			String noteSchoolClassName, String noteImagePath, String noteText) {
 			System.out.println("Inserting into Archived Note Table: "+userID+" "+eventType+" "+noteText);
@@ -849,11 +995,14 @@ public class User {
 			
 		}
 
-		
-		//QC WITH RICHARD!!    /////HOLD******************************************************* 
+		/** This method is used to prep an archived note for insert into the database
+		 * 
+		 * 
+		 * @param int userID, int eventType, String noteLifeHubName,
+			String noteSchoolClassName, String noteImagePath, String noteText
+		 * @return  none
+		 */
 		public static void addArchivedNote(Note note) {
-			//image path to null
-			//need event_type, life_hub_name, school_class, img_path, text
 			int userID = User.getUserID();
 			int eventType = User.getCurrentHub().getEventType();
 			String noteImagePath = "";
@@ -865,13 +1014,17 @@ public class User {
 			else
 				noteSchoolClassName = User.getCurrentHub().getHubName();
 			
-			//String
-			
-		
 			User.executeInsertIntoArchivedNoteTable(userID,eventType,noteLifeHubName,
 					noteSchoolClassName,noteImagePath,noteText);
 		}
 		
+		/** This method is used to delete an archived note for insert into the database
+		 * 
+		 * 
+		 * @param int userID,int eventType,String noteLifeHubName,
+				String noteSchoolClassName,String noteImagePath, String noteText
+		 * @return  none
+		 */
 		public static void executeDeleteFromArchivedNoteTable(int userID,int eventType,String noteLifeHubName,
 				String noteSchoolClassName,String noteImagePath, String noteText) {
 			System.out.println("Deleting from Archived Note Table: "+userID+" "+eventType+" "+noteText);
@@ -911,9 +1064,13 @@ public class User {
 			    }				
 		}
 		
+		/** This method is used to prepare an archived note for deletion from the database
+		 * 
+		 * 
+		 * @param Note note
+		 * @return  none
+		 */
 		public static void deleteArchivedNote(Note note) {
-			//image path to null
-			//need event_type, life_hub_name, school_class, img_path, text
 			int userID = User.getUserID();
 			int eventType = User.getCurrentHub().getEventType();
 			String noteImagePath = "";
@@ -925,16 +1082,21 @@ public class User {
 			else
 				noteSchoolClassName = User.getCurrentHub().getHubName();
 			
-			//String
-			
-		
 			User.executeDeleteFromArchivedNoteTable(userID,eventType,noteLifeHubName,
 					noteSchoolClassName,noteImagePath,noteText);
 		}
 		
+		/** This method is used to insert Hub Event into the database
+		 * 
+		 * 
+		 * @param int event_id, int user_id, int event_type, String event_recurring, String event_hub,
+				String event_name, String event_location, Date startDate, Date endDate
+		 * @return  none
+		 */
 		public static void executeInsertIntoHubEventTable(int event_id, int user_id, int event_type, String event_recurring, String event_hub,
 				String event_name, String event_location, Date startDate, Date endDate) {
-						
+			
+			//start date of HubEvent
 			String event_start_mm = String.valueOf(startDate.getMonth());
 			String event_start_dd = String.valueOf(startDate.getDay());
 			String event_start_yr = String.valueOf(startDate.getYear());
@@ -975,7 +1137,6 @@ public class User {
 				ps.setString(16, event_end_hr);
 				ps.setString(17, event_end_min);
 				
-				//ACTUAL HUBEVENT INSERT IS COMMENTED OUT
 				int result = ps.executeUpdate();					
 				if(result > 0){
 					System.out.println("Successful insert into HubEvent table!!!");
@@ -1001,9 +1162,13 @@ public class User {
 			
 		}
 		
-		//QC WITH RICHARD!!/////HOLD*******************************************************
+		/** This method is used to prepare a Hub Event for entry into the database
+		 * 
+		 * 
+		 * @param HubEvent hubEvent
+		 * @return  none
+		 */
 		public static void addHubEvent(HubEvent hubEvent) {	
-			//String lifeHubName = hubEvent.getHubName();
 			int event_id = hubEvent.getEventID();
 			int user_id = User.getUserID();
 			int event_type = hubEvent.getEventType();
@@ -1014,17 +1179,18 @@ public class User {
 			//start date of HubEvent
 			Date startDate = hubEvent.getStartDate();
 			Date endDate = hubEvent.getEndDate();
-			
-
-			
+						
 			User.executeInsertIntoHubEventTable(event_id, user_id, event_type, event_recurring, event_hub,
 					event_name, event_location, startDate, endDate);
 		}
 		
+		/** This method is used to insert a new user into the database
+		 * 
+		 * 
+		 * @param none
+		 * @return  none
+		 */
 		public void executeInsertNewUserIntoUserTable() {
-			//check username, for dupes after create button is selected
-		
-		//"INSERT INTO lifeHub.EmailAddress (email_id,user_id,email_contact,email_detail,email_type) "+"VALUES(?,?,?,?,?)";
 		    String new_user_insert_query = "INSERT INTO lifeHub.User (user_id,username,password) "+"VALUES(?,?,?)";;
 		
 		    try {
@@ -1056,10 +1222,14 @@ public class User {
 		    }		
 		}
 		
+		/** This method is used to check whether a new user's name already exists in the database
+		 * 
+		 * 
+		 * @param none
+		 * @return  boolean
+		 */
 		public boolean checkForNewUserInDatabase() {
-			//check username, for dupes after create button is selected
-			//return true if available
-			//make db call here with this.user, not username
+
 			boolean flag = true;
 		    String check_for_new_user_duplicate_query = "SELECT * FROM lifeHub.User WHERE username = ?";
 		
@@ -1092,12 +1262,18 @@ public class User {
 			return flag;
 		}
 
+		
+		/** This method returns a boolean that determines whether a new user can or cannot be entered into
+		 * the database
+		 * 
+		 * 
+		 * @param none
+		 * @return  boolean
+		 */
 		public boolean addUser() {
 			boolean wentThrough = false;
-			//cfnuidb, if true, insert into User table
 			if (checkForNewUserInDatabase()) 
 			{
-				//insert in db
 				this.executeInsertNewUserIntoUserTable();
 				wentThrough = true;
 			}
