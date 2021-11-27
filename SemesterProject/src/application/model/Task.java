@@ -1,24 +1,23 @@
 package application.model;
 
+/**The Task Class is used to create tasks for the user
+ * 
+ * This class has a textfield represented as a String
+ */
 public class Task implements Comparable<Task> {
 	
-	//Add Class or extend to SchoolTask so I can add a class? How to deal with that?
-	private String text;//this is unnecessary
-	//all details to instantiate object
-	//Name, description, all database metadata
-	/*
-	 * CONSTRUCTORS
-	 */
+	private String text;
 	
+	/**This a parameterized constructor for the Task class
+	 * 
+	 * @param task - String that represents the details of the user's task
+	 * @return none
+	 */
 	public Task(String text) {
 		this.text =  text;
 	}
 	
-	
-	/*
-	 * HELPER METHODS
-	 */
-	
+
 	public void addSubtask(Task subtask) {
 		//MUST FINISH
 	}
@@ -31,15 +30,6 @@ public class Task implements Comparable<Task> {
 		//MUST FINISH
 	}
 	
-	/*
-	 * GETTERS
-	 */
-	
-	
-	
-	/*
-	 * OVERRIDES
-	 */
 	
 	@Override
 	public int compareTo(Task task) {
@@ -47,16 +37,19 @@ public class Task implements Comparable<Task> {
 	}
 
 
-	/**
-	 * @return the text
+	/** This is a getter that retreives the text of the task
+	 * 
+	 * @return String text
 	 */
 	public String getText() {
 		return text;
 	}
 
 
-	/**
-	 * @param text the text to set
+	/** This a setter that sets the text of the Task
+	 * 
+	 * @param String text
+	 * @return none
 	 */
 	public void setText(String text) {
 		this.text = text;
