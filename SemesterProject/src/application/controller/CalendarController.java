@@ -34,6 +34,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**This class acts as the controller for the Calendar view.
+ * 
+ * @author group 5 11-23-21
+ *
+ */
 public class CalendarController {
 	
 	ObservableList<CheckBox> eventCheckBoxes = FXCollections.observableArrayList();
@@ -190,6 +195,9 @@ public class CalendarController {
     @FXML
     private Label Saturday6;
     
+    /**
+     * calls various methods to instantiate lists and display the calendar
+     */
     @FXML
     void initialize()
     {
@@ -209,6 +217,9 @@ public class CalendarController {
     	updateCalendar();
     }
     
+    /**
+     * loads checkboxes on the sidebar base on User Hubs
+     */
     void initializeCheckboxes() {
     	
     	for (int i = 0; i < User.getUserHubs().size(); i++) {	
@@ -239,6 +250,9 @@ public class CalendarController {
     	checkBoxContainer.getChildren().addAll(eventCheckBoxes);
     }
     
+    /**
+     * adds all labels to their corresponding ArrayLists
+     */
     void initializeLabels() {
     	labels.add(Sunday1);
     	labels.add(Monday1);
@@ -289,6 +303,9 @@ public class CalendarController {
     	labels.add(Saturday6);
     }
     
+    /**
+     * clears the calendar
+     */
     void clearCalendar() {
     	for(Label label : labels) {
     		label.setText("");
@@ -297,6 +314,9 @@ public class CalendarController {
     	}
     }
     
+    /**
+     * fills the calendar based on the current/selected day and User HubEvents
+     */
     void updateCalendar() {
     	clearCalendar();
     	
@@ -325,7 +345,10 @@ public class CalendarController {
     	}
 	}
 
-
+    /**
+     * @param label : the label to fill
+     * @param i : the day of the month to display
+     */
     void fillDay(Label label, int i) {
     	YearMonth ym = YearMonth.of(displayYear, displayMonth);
     	
@@ -344,6 +367,12 @@ public class CalendarController {
 		}
     }
     
+    /**
+     * @param year : the year to find events for
+     * @param month : the month to find events for
+     * @param day : the day to find events for
+     * @return a String containing events with the given year/month/day
+     */
     String getEvent(int year, int month, int day) {
     	String display = " " + day + "\n";
     	
@@ -361,6 +390,10 @@ public class CalendarController {
     	return display;
     }
     
+    /**
+     * @param e : HubEvent being checked
+     * @return whether HubEvent e is a child of one of the checked Hubs
+     */
     boolean inHub(HubEvent e) {
     	String name = e.getHubName();
     	
@@ -380,31 +413,55 @@ public class CalendarController {
     	System.out.println("testChangeTheme");
     }
     
+    /**Top menu item. Unused at this time.
+	 * 
+     * @param event : the triggering event
+     */    
     @FXML
     void addHub(ActionEvent event) {
     	System.out.println("testAddHub");
     }
     
+    /**Top menu item. Unused at this time.
+	 * 
+     * @param event : the triggering event
+     */    
 	 @FXML
 	    void tutorial(ActionEvent event) {
 		 System.out.println("testTutorial");
 	    }
 	 
+	 /**Top menu item. Unused at this time.
+		 * 
+	     * @param event : the triggering event
+	     */    
 	 @FXML
 	    void about(ActionEvent event) {
 		 System.out.println("testAbout");
 	    }
 	 
+	 /**Top menu item. Unused at this time.
+		 * 
+	     * @param event : the triggering event
+	     */    
 	    @FXML
 	    void logout(ActionEvent event) {
 	    	System.out.println("testLogout");
 	    }
-	    
+	 
+	/**Top menu item. Unused at this time.
+	 * 
+     * @param event : the triggering event
+     */    
     @FXML
     void close(ActionEvent event) {
     	System.out.println("testClose");
     }
 
+    /**Top menu item. Unused at this time.
+	 * 
+     * @param event : the triggering event
+     */    
     @FXML
     void deleteHub(ActionEvent event) {
     	System.out.println("testDelete");
@@ -599,6 +656,10 @@ public class CalendarController {
     	updateCalendar();
     }
 
+    /**Sidebar item. Unused at this time.
+     * 
+     * @param event : the triggering event
+     */
     @FXML
     void deleteEvent(ActionEvent event) {
 
@@ -615,6 +676,12 @@ public class CalendarController {
         updateCalendar();
     }
 
+    /**This method accepts an ActionEvent, changes the scene to the last scene,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     * @throws IOException- handles issues with the fxml documents.
+     */
     @FXML
     void goBack(ActionEvent event) throws IOException {
    		//URL url = new File("src/EducationHome.fxml").toURI().toURL();
@@ -628,6 +695,12 @@ public class CalendarController {
 	    window.show();
 	}
 
+    /**This method accepts an ActionEvent, changes the scene to the UserHome,
+     * and returns nothing.
+     * 
+     * @param event- the ActionEvent that triggers this method
+     * @throws IOException- handles issues with the fxml documents.
+     */
     @FXML
     void goHome(ActionEvent event) throws IOException {
    		URL url = new File("src/application/view/UserHome.fxml").toURI().toURL();
@@ -640,6 +713,13 @@ public class CalendarController {
 	    window.show();
 	}
     
+    
+    /**This method accepts a String, returns true if the String is not empty
+     * and not null, otherwise returns false.
+     * 
+     * @param input : The String being validated.
+     * @return : the Boolean value determined by the String being null or empty.
+     */
     public boolean validateInput(String input)
     {
     	if(input != null)
