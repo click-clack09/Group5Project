@@ -1,5 +1,6 @@
 # Group5Project
 Repo for semester project
+
 Project Name: LifeHub
 
 Name of your team: Team Cinco
