@@ -28,6 +28,11 @@ public class Date implements Comparable<Date> {
 		display = -1;
 	}
 	
+	/**
+	 * @param year : the user inputed year to set
+	 * @param month : the user inputed month to set
+	 * @param day : the user inputed day to set
+	 */
 	public Date(int year, int month, int day) {
 		this();
 		
@@ -40,6 +45,13 @@ public class Date implements Comparable<Date> {
 		}	
 	}
 	
+	/**
+	 * @param year : the user inputed year to set
+	 * @param month : the user inputed month to set
+	 * @param day : the user inputed day to set
+	 * @param hour : the user inputed hour to set
+	 * @param minute : the user inputed minute to set
+	 */
 	public Date(int year, int month, int day, int hour, int minute) {
 		this(year, month, day);
 		
@@ -56,6 +68,12 @@ public class Date implements Comparable<Date> {
 	 * HELPER METHODS
 	 */
 	
+	/**
+	 * @param year : year to check validity of
+	 * @param month : month to check validity of
+	 * @param day : day to check validity of
+	 * @return : the validity of the given year/month/day combination
+	 */
 	public boolean validateDate(int year, int month, int day) {
 		if(year < 0) return false;
 		if(month < 1 || month > 12) return false;
@@ -97,6 +115,11 @@ public class Date implements Comparable<Date> {
 		return true;
 	}
 	
+	/**
+	 * @param hour : hour to check validity of
+	 * @param minute : minute to check validity of
+	 * @return the validity of the given hour:minute combination
+	 */
 	public boolean validateTime(int hour, int minute) {
 		if(hour < 0 || hour > 24) return false;
 		if(minute < 0 || minute > 59) return false;
@@ -108,30 +131,53 @@ public class Date implements Comparable<Date> {
 	 * GETTERS
 	 */
 	
+	/**
+	 * @return the variable valid
+	 */
 	public boolean isValid() {
 		return valid;
 	}
 	
+	/**
+	 * @return the variable year
+	 */
 	public int getYear() {
 		return year;
 	}
 	
+	/**
+	 * @return the variable month
+	 */
 	public int getMonth() {
 		return month;
 	}
 	
+	
+	/**
+	 * @return the variable day
+	 */
 	public int getDay() {
 		return day;
 	}
 	
+	
+	/**
+	 * @return the variable hour
+	 */
 	public int getHour() {
 		return hour;
 	}
 	
+	/**
+	 * @return the variable minute
+	 */
 	public int getMinute() {
 		return minute;
 	}
 	
+	/**
+	 * @return the variable display
+	 */
 	public int getDisplay() {
 		return display;
 	}
@@ -140,31 +186,57 @@ public class Date implements Comparable<Date> {
 	 * SETTERS
 	 */
 	
+	/**
+	 * @param valid : the boolean to set
+	 */
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
+	
+	/**
+	 * @param year : the int to set
+	 */
 	public void setYear(int year) {
 		this.year = year;
 	}
 	
+	/**
+	 * @param month : the int to set
+	 */
 	public void setMonth(int month) {
 		this.month = month;
 	}
 	
+	/**
+	 * @param day : the int to set
+	 */
 	public void setDay(int day) {
 		this.day = day;
 	}
 	
+	/**
+	 * @param hour : the int to set
+	 */
 	public void setHour(int hour) {
 		this.hour = hour;
 	}
 	
+	/**
+	 * @param minute : the int to set
+	 */
 	public void setMinute(int minute) {
 		this.minute = minute;
 	}
 	
+	/**
+	 * @param type : the String to set
+	 */
 	public void setDisplay(String type) {
-		//write based on acceptable formats
+		switch(type) {
+			default:
+				display = 0;
+				break;
+		}
 	}
 	
 	/*
