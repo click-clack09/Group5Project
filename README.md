@@ -24,3 +24,5 @@ Known bugs: The top navigation bar is not functional at this time, but these fun
 Login info: LifeHub emplements a backend MySQL database which must be installed on the end-user's machine. While the program will load the login page, login is not possible without a database connection.
 
 Versions or other requirements: As stated above, a MySQL database must be used to log into LifeHub.
+
+NOTE: UML is in the data folder.
