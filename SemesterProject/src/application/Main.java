@@ -12,7 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 
-
+/**This class launches the initial view for LifeHub.
+ * 
+ * @author group 5 11-23-21
+ *
+ */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
